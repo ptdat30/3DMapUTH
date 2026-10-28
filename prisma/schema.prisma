@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Campus {
+  id               String     @id @default(cuid())
+  code             String     @unique // VD: "cs1", "cs2", "cs3"
+  name             String     // VD: "Cơ sở 1 - Số 2 Võ Oanh"
+  overviewModelUrl String     // URL file .glb toàn cảnh cơ sở
+  buildings        Building[]
+  qrNodes          QrNode[]
+}
+
+model Building {
+  id             String         @id @default(cuid())
+  code           String         // VD: "toa_a", "toa_b"
+  name           String         // VD: "Tòa nhà B"
+  campusId       String
+  campus         Campus         @relation(fields: [campusId], references: [id])
+  hubCoordinates Json           // Tọa độ sảnh chính [x, y, z] để nối Chặng 1 và Chặng 2
+  floors         Floor[]
+  qrNodes        QrNode[]
+  routesToHub    RouteSegment[] @relation("ToBuildingHub")
+  routesFromHub  RouteSegment[] @relation("FromBuildingHub")
+
+  @@unique([campusId, code])
+}
+
+model Floor {
+  id         String   @id @default(cuid())
+  level      Int      // VD: 1, 2, 3
+  name       String   // VD: "Tầng 1", "Tầng 2"
+  modelUrl   String   // URL file .glb mặt cắt riêng của tầng này
+  buildingId String
+  building   Building @relation(fields: [buildingId], references: [id])
+  rooms      Room[]
+
+  @@unique([buildingId, level])
+}
+
+model QrNode {
+  id                  String         @id @default(cuid())
+  code                String         @unique // VD: "cs1_qr_cong_chinh", "cs1_toa_b_t1"
+  name                String         // VD: "Cổng chính Cơ sở 1"
+  campusId            String
+  campus              Campus         @relation(fields: [campusId], references: [id])
+  buildingId          String?        // Null nếu QR dán ngoài sân trường
+  building            Building?      @relation(fields: [buildingId], references: [id])
+  floorLevel          Int?           // Null nếu ở ngoài sân
+  coordinates         Json           // [x, y, z] vị trí đặt ghim "Bạn đang ở đây"
+  initialCameraPos    Json           // [x, y, z] vị trí Camera ban đầu khớp hướng mắt người quét
+  initialCameraTarget Json           // [x, y, z] điểm nhìn của Camera ban đầu
+  routes              RouteSegment[]
+}
+
+model Room {
+  id              String         @id @default(cuid())
+  code            String         // VD: "B302"
+  name            String         // VD: "Phòng Lab AI B302"
+  searchKeywords  String         // VD: "lab ai, thực hành máy tính, b302"
+  floorId         String
+  floor           Floor          @relation(fields: [floorId], references: [id])
+  doorCoordinates Json           // [x, y, z]
+  routes          RouteSegment[]
+}
+
+enum SegmentType {
+  OUTDOOR_QR_TO_HUB   // Chặng 1: Từ điểm QR ngoài sân/tòa khác -> Sảnh tòa nhà đích
+  INDOOR_HUB_TO_ROOM  // Chặng 2: Từ Sảnh tòa nhà đích -> Phòng đích
+  DIRECT_QR_TO_ROOM   // Trường hợp QR nằm cùng tầng/cùng tòa với Phòng đích
+}
+
+enum ViewMode {
+  OVERALL_CAMPUS      // Hiển thị mô hình toàn cảnh các tòa trong cơ sở
+  BUILDING_FLOOR      // Zoom vào 1 tòa và tách tầng
+}
+
+model RouteSegment {
+  id             String      @id @default(cuid())
+  type           SegmentType
+  fromQrId       String?
+  fromQr         QrNode?     @relation(fields: [fromQrId], references: [id])
+  toBuildingId   String?
+  toBuilding     Building?   @relation("ToBuildingHub", fields: [toBuildingId], references: [id])
+  fromBuildingId String?
+  fromBuilding   Building?   @relation("FromBuildingHub", fields: [fromBuildingId], references: [id])
+  toRoomId       String?
+  toRoom         Room?       @relation(fields: [toRoomId], references: [id])
+  steps          RouteStep[]
+}
+
+model RouteStep {
+  id               String       @id @default(cuid())
+  segmentId        String
+  segment          RouteSegment @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+  stepOrder        Int          // Thứ tự bước: 1, 2, 3...
+  instruction      String       // VD: "Đi qua sân trường 50m hướng về sảnh chính Tòa B"
+  directionType    String       // "STRAIGHT" | "LEFT" | "RIGHT" | "STAIRS_UP" | "ARRIVED"
+  viewMode         ViewMode     // OVERALL_CAMPUS hoặc BUILDING_FLOOR
+  buildingCode     String?      // VD: "toa_b" (nếu ở chế độ BUILDING_FLOOR)
+  floorLevel       Int?         // VD: 1, 2, 3 (tầng cần bật sáng ở bước này)
+  pathPoints       Json         // Mảng tọa độ [[x1,y1,z1], [x2,y2,z2]] để vẽ đường ống 3D của bước này
+  cameraPos        Json         // [x, y, z] vị trí Camera bay tới ở bước này
+  cameraTarget     Json         // [x, y, z] góc nhìn Camera ở bước này
+  landmarkPhotoUrl String?      // Ảnh chụp thực tế tại điểm rẽ/cầu thang (nếu có)
+}
