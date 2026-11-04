@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "cad:status": "cadgen +0.8.4 status",
+    "cad:export": "cadgen +0.8.4 run cad_models/exports.py",
+    "cad:build:h": "cadgen +0.8.4 run cad_models/building_h.py",
+    "models:optimize": "node scripts/optimize-models.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Wrench, Sparkles } from 'lucide-react';
 import { CampusMaquetteScene } from '@/components/canvas/CampusMaquetteScene';
+import { CampusCS3Scene } from '@/components/canvas/CampusCS3Scene';
 import { TopSearchBar } from '@/components/ui/TopSearchBar';
 import { FloorSelector } from '@/components/ui/FloorSelector';
 import { StepBottomSheet } from '@/components/ui/StepBottomSheet';
@@ -16,6 +17,7 @@ function NavigationAppContent() {
   const campusParam = searchParams.get('campus');
   const qrParam = searchParams.get('qr');
 
+  const currentCampusCode = useNavigationStore((state) => state.currentCampusCode);
   const setCampus = useNavigationStore((state) => state.setCampus);
   const setCurrentQr = useNavigationStore((state) => state.setCurrentQr);
   const setRouteSteps = useNavigationStore((state) => state.setRouteSteps);
@@ -49,14 +51,41 @@ function NavigationAppContent() {
 
       {/* Layer 2: Center 3D Viewport (Full-screen Canvas) */}
       <div className="absolute inset-0 z-0">
-        <CampusMaquetteScene />
+        {currentCampusCode === 'cs3' ? <CampusCS3Scene /> : <CampusMaquetteScene />}
       </div>
 
-      {/* Map Editor Tool Link */}
-      <div className="absolute top-4 left-4 z-20 pointer-events-auto hidden md:block">
+      {/* Campus Switcher & Map Editor Controls */}
+      <div className="absolute top-4 left-4 z-20 pointer-events-auto flex items-center gap-2">
+        {/* Campus Switcher Pill */}
+        <div className="flex items-center p-1 rounded-2xl bg-white/90 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => setCampus('cs1')}
+            className={`px-2.5 py-1 rounded-xl transition-all ${
+              currentCampusCode === 'cs1'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Cơ sở 1
+          </button>
+          <button
+            type="button"
+            onClick={() => setCampus('cs3')}
+            className={`px-2.5 py-1 rounded-xl transition-all ${
+              currentCampusCode === 'cs3'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Cơ sở 3 (3D Masterplan)
+          </button>
+        </div>
+
+        {/* Map Editor Tool Link */}
         <Link
           href="/admin/map-editor"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 text-xs font-semibold shadow-md border border-slate-200/80 backdrop-blur-md transition-all"
+          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 text-xs font-semibold shadow-md border border-slate-200/80 backdrop-blur-md transition-all"
         >
           <Wrench className="w-3.5 h-3.5 text-blue-600" strokeWidth={1.5} />
           <span>Map Editor</span>
