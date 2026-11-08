@@ -76,7 +76,7 @@ export const CS3_BUILDINGS_LAYOUT: CS3BuildingConfig[] = [
     name: 'Tòa Nhà I Lớn',
     shortName: 'Tòa I Lớn',
     subTitle: 'Khu Giảng Đường 5 Tầng (I001 - I402)',
-    modelUrl: '/models/cs3/Toa I Big.glb',
+    modelUrl: '/models/cs3/toa_i_lon.glb',
     // Vị trí: Góc Tây Bắc, X = -16.0, Z = -19.5 (Trải từ Z = -24.5 đến Z = -14.5)
     // Cách mép đường ngang (Z = -12.9) là 1.6m; Cách Sân bóng (X = -8.0) là 3.2m
     position: [-16.0, 2.95, -19.5],

@@ -49,3 +49,24 @@ __pycache__/
 /*.glb
 Meshy_AI*.glb
 *_original.glb
+*_backup.glb
+
+# personal documentation, reports and jira task imports
+/docs/
+/import_safe.csv
+*.csv
+
+# agent scaffolding, internal specifications & constitution
+/.agents/
+/.specify/
+/specs/
+constitution.md
+
+# local ide configuration & personal tool settings
+/.cursor/
+/.antigravity/
+
+# one-off migration & verification scripts
+scripts/make_import_safe.py
+scripts/verify-db.ts
+scripts/generate-real-rooms.ts
