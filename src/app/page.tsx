@@ -2,8 +2,7 @@
 
 import React, { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { Wrench, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { CampusMaquetteScene } from '@/components/canvas/CampusMaquetteScene';
 import { CampusCS3Scene } from '@/components/canvas/CampusCS3Scene';
 import { TopSearchBar } from '@/components/ui/TopSearchBar';
@@ -49,19 +48,23 @@ function NavigationAppContent() {
       {/* Floating Floor Selector Pill on the Right */}
       <FloorSelector />
 
-      {/* Layer 2: Center 3D Viewport (Full-screen Canvas) */}
+      {/* Layer 2: Center 3D Viewport (Mount only active canvas to prevent dual WebGL frame drop) */}
       <div className="absolute inset-0 z-0">
-        {currentCampusCode === 'cs3' ? <CampusCS3Scene /> : <CampusMaquetteScene />}
+        {currentCampusCode === 'cs3' ? (
+          <CampusCS3Scene />
+        ) : (
+          <CampusMaquetteScene />
+        )}
       </div>
 
-      {/* Campus Switcher & Map Editor Controls */}
+      {/* Campus Switcher Controls */}
       <div className="absolute top-4 left-4 z-20 pointer-events-auto flex items-center gap-2">
         {/* Campus Switcher Pill */}
         <div className="flex items-center p-1 rounded-2xl bg-white/90 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold">
           <button
             type="button"
             onClick={() => setCampus('cs1')}
-            className={`px-2.5 py-1 rounded-xl transition-all ${
+            className={`px-2.5 py-1 rounded-xl transition-all cursor-pointer ${
               currentCampusCode === 'cs1'
                 ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
@@ -72,7 +75,7 @@ function NavigationAppContent() {
           <button
             type="button"
             onClick={() => setCampus('cs3')}
-            className={`px-2.5 py-1 rounded-xl transition-all ${
+            className={`px-2.5 py-1 rounded-xl transition-all cursor-pointer ${
               currentCampusCode === 'cs3'
                 ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
@@ -81,15 +84,6 @@ function NavigationAppContent() {
             Cơ sở 3 (3D Masterplan)
           </button>
         </div>
-
-        {/* Map Editor Tool Link */}
-        <Link
-          href="/admin/map-editor"
-          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 text-xs font-semibold shadow-md border border-slate-200/80 backdrop-blur-md transition-all"
-        >
-          <Wrench className="w-3.5 h-3.5 text-blue-600" strokeWidth={1.5} />
-          <span>Map Editor</span>
-        </Link>
       </div>
 
       {/* Layer 3: Bottom Sheet Card (Full width on mobile, centered max-w-md on desktop) */}

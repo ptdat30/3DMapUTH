@@ -62,6 +62,8 @@ model Room {
   id              String         @id @default(cuid())
   code            String         // VD: "B302"
   name            String         // VD: "Phòng Lab AI B302"
+  roomType        String?        // "CLASSROOM" | "RESTROOM" | "OFFICE" | "HALL" | "WORKSHOP"
+  notes           String?        // Ghi chú thêm (VD: "Phòng lớn", "Cần khảo sát thêm")
   searchKeywords  String         // VD: "lab ai, thực hành máy tính, b302"
   floorId         String
   floor           Floor          @relation(fields: [floorId], references: [id])
@@ -73,6 +75,7 @@ enum SegmentType {
   OUTDOOR_QR_TO_HUB   // Chặng 1: Từ điểm QR ngoài sân/tòa khác -> Sảnh tòa nhà đích
   INDOOR_HUB_TO_ROOM  // Chặng 2: Từ Sảnh tòa nhà đích -> Phòng đích
   DIRECT_QR_TO_ROOM   // Trường hợp QR nằm cùng tầng/cùng tòa với Phòng đích
+  OUTDOOR_HUB_TO_HUB  // Chặng giữa 2 sảnh tòa nhà ngoài trời (ví dụ Tòa H -> Tòa J)
 }
 
 enum ViewMode {

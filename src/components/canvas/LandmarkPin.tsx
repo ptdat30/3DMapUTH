@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Html } from '@react-three/drei';
-import { MapPin, Navigation, Camera, CheckCircle2 } from 'lucide-react';
+import { Navigation, Camera, CheckCircle2 } from 'lucide-react';
 import { Vector3Tuple } from '@/types/navigation';
 import { useNavigationStore } from '@/store/useNavigationStore';
 
@@ -18,7 +18,6 @@ export function LandmarkPin({
   type,
   position,
   title,
-  subtitle,
   photoUrl,
 }: LandmarkPinProps) {
   const setSelectedLandmarkPhoto = useNavigationStore(

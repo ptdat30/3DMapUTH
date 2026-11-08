@@ -1,213 +1,259 @@
-# 🏛️ 3DMapUTH — Hệ Thống Bản Đồ Số & Dẫn Đường Nội Khu 3D UTH
+# 3DMapUTH
 
-> Bản đồ số 3D tương tác kiến trúc và hệ thống dẫn đường nội khu thông minh cho các cơ sở của **Trường Đại học Giao thông Vận tải TP.HCM (UTH)**. Hỗ trợ quét mã QR tại chỗ, định vị phòng học theo thời gian thực, xem bản đồ phân tầng (Floor Map) và trải nghiệm sa bàn 3D chân thực.
+Hệ thống bản đồ số 3D Isometric và dẫn đường tương tác phục vụ số hóa không gian học đường tại Trường Đại học Giao thông Vận tải TP.HCM (UTH). Nền tảng giải quyết bài toán định vị không gian thời gian thực thông qua mã QR vật lý và thuật toán dẫn đường liên tầng từ sa bàn tổng thể ngoài trời đến từng phòng học cụ thể.
 
-![Next.js](https://img.shields.io/badge/Next.js-16.4.3-black?style=flat-square&logo=next.js)
-![React](https://img.shields.io/badge/React-19.3.0-blue?style=flat-square&logo=react)
-![Three.js](https://img.shields.io/badge/Three.js-0.186-orange?style=flat-square&logo=three.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v4-38bdf8?style=flat-square&logo=tailwind-css)
-![Prisma](https://img.shields.io/badge/Prisma-6.19-green?style=flat-square&logo=prisma)
-
----
-
-## 📌 Tính Năng Nổi Bật
-
-- **🌐 Đa Khuôn Viên (Multi-Campus):**
-  - **Cơ sở 1 (Võ Oanh):** Sa bàn kiến trúc tổng quan các Tòa A, B, C, E và khu hiệu bộ.
-  - **Cơ sở 3 (Tân Triều - 3D Masterplan):** Sa bàn quy hoạch 3D đầy đủ hệ thống giao thông vòng xuyến, vạch kẻ đường, sân bóng đá cỏ nhân tạo và các khối nhà thực tế (Tòa H, Tòa L, Tòa J, Nhà Đa Năng, Xưởng Ô Tô, Nhà I...).
-- **🧭 Dẫn Đường 2 Chặng Liên Hoàn (Dual-Segment Navigation):**
-  - *Chặng 1 (Ngoài trời / Sa bàn):* Dẫn từ cổng vào / vị trí hiện tại đến sảnh chính tòa nhà mục tiêu.
-  - *Chặng 2 (Trong nhà / Từng tầng):* Tự động chuyển camera vào sơ đồ mặt bằng tầng và dẫn từng bước đến cửa phòng học.
-- **📱 Quét Mã QR Định Vị Tức Thì:** Đặt tham số URL `?qr=QR_CS1_GATE_MAIN` để xác định ngay vị trí sinh viên đang đứng.
-- **🏢 Bản Đồ Phân Tầng (Interactive Floor Selector):** Chuyển đổi mượt mà giữa các tầng (Tầng 1, 2, 3...) với góc nhìn mặt cắt trực quan.
-- **🚀 Tối Ưu Hóa Siêu Nhẹ (Mobile & 4G Ready):**
-  - Toàn bộ mô hình 3D được nén giảm tải đa giác **> 92%** bằng thuật toán `meshoptimizer`.
-  - Cơ chế **Progressive Loading**: Sa bàn và lô đất hiển thị tức thì (0.1 giây), mô hình 3D tải ngầm phía sau mà không gây trắng màn hình.
+[![Next.js](https://img.shields.io/badge/Next.js-16.4.3-000000?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.3.0-23272f?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x_(Strict)-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Three.js](https://img.shields.io/badge/Three.js-r186-049ef4?style=flat-square&logo=threedotjs&logoColor=white)](https://threejs.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-6.19-2d3748?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16+-336791?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06b6d4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
 ---
 
-## 💻 Yêu Cầu Môi Trường (Prerequisites)
+## 1. Key Features
 
-Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt:
+- **Hiển thị 3D Isometric & Tối ưu hóa Mesh (LOD / Draco Compression):**
+  Khởi tạo sa bàn kiến trúc trực quan bằng Three.js / React Three Fiber. Toàn bộ mô hình CAD (`.glb`) được xử lý qua pipeline nén đa giác `meshoptimizer` và Draco Compression, giảm tải hơn 90% dung lượng hình học mà vẫn bảo đảm độ phân giải và tỷ lệ thực của các tòa nhà. Tự động áp dụng Level of Detail (LOD) và đổ bóng phần cứng bằng `THREE.PCFShadowMap`.
 
-- **Node.js:** Phiên bản **`v20.x`** trở lên (khuyến nghị **v20 LTS** hoặc **v22 LTS**).
-- **Trình quản lý gói:** `npm` (đi kèm Node.js) hoặc `pnpm` / `yarn`.
-- **Git:** Đã cài đặt trên máy.
-- *(Tùy chọn)* **Python 3.10+ / uv:** Chỉ cần thiết nếu bạn muốn chạy các script sinh mô hình CAD tham số tự động (`cadgen`).
+- **Định vị & Dẫn đường liên tầng thông qua QR Node:**
+  Giải quyết bài toán định vị trong nhà (Indoor Positioning) mà không phụ thuộc vào GPS sai số cao. Người dùng quét mã QR tại các vị trí mốc (cổng trường, chân cầu thang, sảnh thang máy), hệ thống đồng bộ Camera Rig với hướng nhìn thực tế và vẽ luồng đường đi 3D (3D Spline Path) theo 2 giai đoạn:
+  1. *Chặng 1 (Outdoor Hub):* Di chuyển trên mặt bằng sa bàn khuôn viên đến sảnh tòa nhà đích.
+  2. *Chặng 2 (Indoor Floor):* Tự động chuyển ngữ cảnh camera vào mặt cắt tầng tương ứng và dẫn trực diện tới cửa phòng học.
+
+- **Phân tách kiến trúc UI / Canvas (Decoupled Architectural Rendering):**
+  Toàn bộ ngữ cảnh WebGL 3D (`src/components/canvas/`) chạy độc lập với cây phân cấp giao diện 2D DOM (`src/components/ui/`). Quản lý trạng thái camera, chế độ xem (Overall Campus / Floor Plan), và bộ điều hướng thông qua bộ nhớ tập trung Zustand, loại bỏ hiện tượng re-render dư thừa trên Canvas.
+
+- **Quản lý dữ liệu không gian phân cấp (Hierarchical Spatial Data):**
+  Cấu trúc cơ sở dữ liệu định chuẩn quan hệ chặt chẽ từ Cơ sở (`Campus`), Khối nhà (`Building`), Mặt sàn (`Floor`), Phòng học (`Room`) đến Điểm mốc quét mã (`QrNode`), cho phép truy vấn định tuyến có trọng số và khả năng mở rộng đa cơ sở (Cơ sở 1 Võ Oanh, Cơ sở 3 Tân Triều...).
 
 ---
 
-## 🚀 Hướng Dẫn Cài Đặt Cho Máy Mới Vừa Clone Code
+## 2. System Architecture & Data Model
 
-Thực hiện lần lượt các bước sau trên Terminal / Command Prompt:
+Dữ liệu không gian và logic định tuyến tuân thủ nghiêm ngặt mô hình thực thể một chiều theo Hiến pháp Kỹ thuật dự án:
 
-### Bước 1: Clone mã nguồn về máy
+```
+[ Campus ]
+    │
+    ├── 1:N ──> [ Building ]
+    │               │
+    │               ├── 1:N ──> [ Floor ]
+    │               │               │
+    │               │               └── 1:N ──> [ Room ]
+    │               │                             │ (doorCoordinates)
+    │               │                             ▼
+    └── 1:N ──> [ QrNode ] ─────────> [ RouteSegment ] ── 1:N ──> [ RouteStep ]
+```
 
+### Chi tiết lược đồ quan hệ thực thể (ERD)
+
+```mermaid
+erDiagram
+    Campus ||--o{ Building : contains
+    Campus ||--o{ QrNode : locates
+    Building ||--o{ Floor : has
+    Building ||--o{ QrNode : anchors
+    Floor ||--o{ Room : houses
+    QrNode ||--o{ RouteSegment : initiates
+    Building ||--o{ RouteSegment : routes_via_hub
+    Room ||--o{ RouteSegment : targets
+    RouteSegment ||--o{ RouteStep : executes
+
+    Campus {
+        string id PK
+        string code UK "cs1, cs2, cs3"
+        string name
+        string overviewModelUrl
+    }
+    Building {
+        string id PK
+        string code UK
+        string name
+        json hubCoordinates "[x, y, z]"
+    }
+    Floor {
+        string id PK
+        int level "0 (Trệt), 1, 2..."
+        string name
+        string modelUrl
+    }
+    Room {
+        string id PK
+        string code
+        string name
+        string roomType "CLASSROOM, LAB, OFFICE..."
+        json doorCoordinates "[x, y, z]"
+    }
+    QrNode {
+        string id PK
+        string code UK
+        json coordinates "[x, y, z]"
+        json initialCameraPos "[x, y, z]"
+        json initialCameraTarget "[x, y, z]"
+    }
+    RouteSegment {
+        string id PK
+        enum type "OUTDOOR_HUB, INDOOR_FLOOR..."
+    }
+    RouteStep {
+        string id PK
+        int stepOrder
+        string instruction
+        enum directionType "STRAIGHT, LEFT, RIGHT, STAIRS_UP..."
+        json pathPoints "Array of [x, y, z]"
+    }
+```
+
+---
+
+## 3. Tech Stack
+
+| Tầng kiến trúc | Công nghệ sử dụng | Mục đích triển khai |
+| :--- | :--- | :--- |
+| **Frontend Framework** | **Next.js 16.4 (App Router)** | Kiến trúc Server/Client Components, Turbopack bundler, tối ưu SEO và routing |
+| **Runtime & Language** | **React 19 + TypeScript (Strict)** | Xử lý logic trạng thái bất biến, kiểm soát kiểu dữ liệu tĩnh 100% không dùng `any` |
+| **Styling & Components** | **Tailwind CSS v4 + shadcn/ui** | Hệ thống utility-first styling, Lucide React icons, giao diện responsive Desktop/Mobile |
+| **3D WebGL Graphics** | **Three.js + R3F + Drei** | Render mesh 3D, camera rig động, xử lý đổ bóng phần cứng và shader đường dẫn sáng |
+| **Animation Engine** | **GSAP (GreenSock)** | Chuyển cảnh camera tọa độ mượt mà giữa các điểm nhìn kiến trúc |
+| **State Management** | **Zustand** | Quản lý state toàn cục tinh gọn, không boilerplate, tương thích WebGL render loops |
+| **Database & ORM** | **PostgreSQL + Prisma ORM v6** | Lưu trữ quan hệ phân cấp, truy vấn định tuyến, bảo đảm toàn vẹn khóa ngoại |
+
+---
+
+## 4. Project Structure
+
+Mã nguồn được phân tách theo nguyên tắc Atomic Design và Decoupled Graphics Pipeline:
+
+```text
+3DMapUTH/
+├── public/                       # Static assets
+│   ├── models/                   # 3D GLB models đã qua Draco/Meshopt
+│   │   ├── cs1/                  # Assets Cơ sở 1 (toa_b_t1.glb, ...)
+│   │   └── cs3/                  # Assets Cơ sở 3 (toa_h, toa_j, toa_l, xuong_oto, ...)
+│   └── landmarks/                # Hình ảnh tham chiếu điểm mốc thực tế
+├── src/
+│   ├── app/                      # Next.js App Router
+│   │   ├── layout.tsx            # Root layout, client patches, meta viewport
+│   │   ├── page.tsx              # Viewport điều phối 3D và giao diện người dùng
+│   │   └── api/                  # Serverless Route Handlers
+│   │       ├── init-qr/route.ts  # Endpoint giải mã mã QR và trả về tọa độ điểm đứng
+│   │       └── route-path/route.ts # Endpoint sinh lộ trình di chuyển đa điểm
+│   ├── components/
+│   │   ├── canvas/               # Graphics Layer (Three.js / WebGL Only)
+│   │   │   ├── CampusCS3Scene.tsx    # Sa bàn 3D quy hoạch CS3 (Đường nội bộ, sân bóng, khối nhà)
+│   │   │   ├── CampusMaquetteScene.tsx # Sa bàn quy hoạch CS1
+│   │   │   ├── CADBuildingModel.tsx  # Dynamic loader với Error Boundary & material tuning
+│   │   │   ├── CameraRig.tsx         # Điều khiển chuyển động camera với OrbitControls
+│   │   │   ├── NavigationPath3D.tsx  # Catmull-Rom tube spline phát sáng chỉ hướng
+│   │   │   └── BuildingTooltip.tsx   # 3D HTML annotation neo theo tọa độ mô hình
+│   │   └── ui/                   # DOM Layer (React 2D UI Components)
+│   │       ├── TopSearchBar.tsx      # Thanh tìm kiếm phòng học, bộ lọc phòng & khu vực
+│   │       ├── FloorSelector.tsx     # Bộ chuyển tầng cho các tòa nhà đa tầng
+│   │       ├── StepBottomSheet.tsx   # Bảng chỉ dẫn bước di chuyển (Mobile / Desktop)
+│   │       └── CampusSwitcher.tsx    # Chuyển đổi giữa các cơ sở đào tạo
+│   ├── data/
+│   │   ├── realRoomsData.json    # Bộ dữ liệu 108 phòng học thực tế tại Cơ sở 3
+│   │   └── mockNavigationData.ts # Fallback data source khi ngắt kết nối cơ sở dữ liệu
+│   ├── store/
+│   │   └── useNavigationStore.ts # Centralized Zustand store
+│   └── types/
+│       └── navigation.ts         # TypeScript interfaces & types định chuẩn dữ liệu
+├── prisma/
+│   ├── schema.prisma             # Lược đồ cơ sở dữ liệu quan hệ
+│   └── seed.ts                   # Idempotent database seeder (upsert toàn bộ CS1 & CS3)
+├── scripts/
+│   ├── optimize-models.mjs       # Script nén Draco / meshoptimizer cho file .glb
+│   └── generate-real-rooms.ts    # Parser dữ liệu phòng học thực tế từ CSV sang JSON
+├── constitution.md               # Hiến pháp Kỹ thuật và chuẩn mực kiến trúc dự án
+└── package.json
+```
+
+---
+
+## 5. Getting Started
+
+### 5.1. Yêu cầu hệ thống (Prerequisites)
+- **Node.js:** Phiên bản `>= 20.x` (khuyến nghị `v20 LTS` hoặc `v22 LTS`).
+- **PostgreSQL:** Phiên bản `>= 15` (cục bộ hoặc điện toán đám mây như Aiven, Supabase).
+- **Trình quản lý gói:** `npm` (mặc định) hoặc `pnpm`.
+
+### 5.2. Các bước cài đặt chi tiết
+
+**Bước 1: Clone mã nguồn**
 ```bash
 git clone https://github.com/ptdat30/3DMapUTH.git
 cd 3DMapUTH
 ```
 
-### Bước 2: Cài đặt các thư viện (Dependencies)
-
+**Bước 2: Cài đặt dependencies**
 ```bash
 npm install
 ```
 
-> **Lưu ý:** Dự án sử dụng React 19 và Next.js 16. Nếu gặp cảnh báo tương thích trên một số hệ điều hành, lệnh `npm install` vẫn hoàn tất bình thường.
-
-### Bước 3: Thiết lập biến môi trường (`.env`)
-
-Sao chép file cấu hình mẫu `.env.example` thành `.env`:
-
-- **Trên Windows (PowerShell):**
-  ```powershell
-  Copy-Item .env.example .env
-  ```
-- **Trên macOS / Linux:**
-  ```bash
-  cp .env.example .env
-  ```
-
-Nội dung cơ bản của file `.env`:
-```env
-# Chuỗi kết nối PostgreSQL (Mặc định có thể để trống hoặc dùng URI từ Aiven/Supabase/PostgreSQL cục bộ)
-DATABASE_URL="postgresql://avnadmin:YOUR_PASSWORD@pg-campus-nav.aivencloud.com:12345/defaultdb?sslmode=require"
-
-# Tiền tố CDN cho tài nguyên 3D (để trống để lấy trực tiếp từ thư mục public/ cục bộ)
-NEXT_PUBLIC_ASSET_PREFIX=""
-```
-
-> **Ghi chú về Database:** Dự án đã tích hợp sẵn cơ chế **Mock Data độc lập** trong `src/data/mockNavigationData.ts`. Kể cả khi bạn chưa có Database PostgreSQL, ứng dụng vẫn chạy đầy đủ 100% tính năng bản đồ và dẫn đường offline!
-
-### Bước 4: Tạo Prisma Client
-
-Khởi tạo mã nguồn Prisma Client tương thích với phiên bản máy bạn:
-
+**Bước 3: Thiết lập biến môi trường**
+Tạo file `.env` tại thư mục gốc của dự án:
 ```bash
-npx prisma generate
+# Windows PowerShell
+Copy-Item .env.example .env
+
+# Linux / macOS
+cp .env.example .env
 ```
 
-*(Nếu bạn có sẵn Database PostgreSQL và muốn nạp dữ liệu vào bảng, chạy tiếp: `npx prisma db push` và `npm run db:seed`).*
+Cấu hình các tham số môi trường theo bảng dưới đây:
 
-### Bước 5: Khởi chạy môi trường phát triển (Development Server)
+| Biến môi trường | Bắt buộc | Giá trị mẫu / Mô tả |
+| :--- | :---: | :--- |
+| `DATABASE_URL` | Có | `postgresql://user:password@host:port/dbname?sslmode=require` |
+| `NEXT_PUBLIC_ASSET_PREFIX` | Không | Để trống nếu tải tài nguyên từ thư mục `/public` cục bộ |
 
+**Bước 4: Đồng bộ cơ sở dữ liệu và nạp dữ liệu (Idempotent Seed)**
+Chạy migration và script nạp 108 phòng học thực tế kèm mạng lưới định vị:
+```bash
+# Đồng bộ schema vào cơ sở dữ liệu PostgreSQL
+npx prisma db push
+
+# Nạp dữ liệu hạt giống (Script an toàn lặp lại, không gây duplicate key)
+npm run db:seed
+```
+
+**Bước 5: Khởi chạy môi trường phát triển (Development Server)**
 ```bash
 npm run dev
 ```
 
-Mở trình duyệt và truy cập:
-👉 **[http://localhost:3000](http://localhost:3000)**
-
-Để trải nghiệm tính năng QR dẫn đường thử nghiệm, bạn có thể truy cập các đường dẫn mẫu:
-- **Cơ sở 1 (Từ Cổng chính đến Phòng B302):** `http://localhost:3000/?campus=cs1&qr=QR_CS1_GATE_MAIN`
-- **Cơ sở 3 (Sa bàn 3D Masterplan):** `http://localhost:3000/?campus=cs3`
+Truy cập hệ thống tại: `http://localhost:3000`
 
 ---
 
-## 📂 Cấu Trúc Thư Mục Dự Án (Project Structure)
+## 6. Development Scripts
 
-```text
-3DMapUTH/
-├── public/                       # Tài nguyên tĩnh phục vụ Web
-│   ├── models/                   # Thư mục chứa các mô hình 3D (.glb)
-│   │   ├── cs1/                  # Mô hình Cơ sở 1
-│   │   └── cs3/                  # Mô hình Cơ sở 3 (toa_h, toa_l, toa_j, xuong_oto...)
-│   └── landmarks/                # Ảnh sa bàn, mốc định vị
-├── src/
-│   ├── app/                      # Next.js 16 App Router
-│   │   ├── page.tsx              # Giao diện chính bản đồ & điều hướng
-│   │   ├── admin/map-editor/     # Công cụ biên tập tọa độ bản đồ
-│   │   └── api/                  # API routes (route-path, init-qr)
-│   ├── components/
-│   │   ├── canvas/               # Toàn bộ mã nguồn đồ họa 3D WebGL
-│   │   │   ├── CampusCS3Scene.tsx    # Sa bàn 3D Cơ sở 3 (Đường, sân bóng, lô đất)
-│   │   │   ├── CampusMaquetteScene.tsx # Sa bàn 3D Cơ sở 1
-│   │   │   ├── CADBuildingModel.tsx  # Bộ nạp 3D đa năng (tự đổ bóng, Error Boundary)
-│   │   │   └── CameraRig.tsx         # Điều khiển chuyển động camera GSAP mượt mà
-│   │   └── ui/                   # Giao diện tương tác người dùng
-│   │       ├── TopSearchBar.tsx      # Thanh tìm kiếm phòng học & tòa nhà
-│   │       ├── FloorSelector.tsx     # Bộ nút chọn tầng (Lầu 1, Lầu 2, Lầu 3)
-│   │       └── StepBottomSheet.tsx   # Khung chỉ đường từng bước dưới đáy màn hình
-│   ├── data/
-│   │   └── mockNavigationData.ts # Dữ liệu tọa độ phòng học, node QR, đường đi
-│   └── store/
-│       └── useNavigationStore.ts # Quản lý trạng thái bản đồ toàn cục (Zustand)
-├── scripts/
-│   └── optimize-models.mjs       # Pipeline nén mô hình 3D tự động (giảm >92% dung lượng)
-├── cad_models/                   # Code Python thiết kế CAD tham số (build123d / cadgen)
-├── prisma/
-│   ├── schema.prisma             # Lược đồ cơ sở dữ liệu quan hệ
-│   └── seed.ts                   # Dữ liệu hạt giống (Seed database)
-└── package.json                  # Cấu hình dự án và danh mục script
-```
-
----
-
-## 🛠️ Quy Trình Thêm & Tối Ưu Mô Hình 3D Mới (3D Asset Workflow)
-
-Các mô hình 3D xuất từ AI (Meshy AI) hoặc Blender thường rất nặng (**30 MB – 60 MB/file** với hàng triệu đa giác), dễ gây đơ máy hoặc giật lag trên điện thoại.
-
-Dự án đã tích hợp sẵn công cụ tự động nén tối ưu hóa:
-
-1. **Bước 1:** Đặt file `.glb` mới vào thư mục: `public/models/cs3/` (ví dụ: `toa_k.glb`).
-2. **Bước 2:** Chạy lệnh nén tối ưu tự động:
-   ```bash
-   npm run models:optimize
-   ```
-   *Công cụ sẽ tự động hàn đỉnh (`weld`), lược bớt đa giác rác (`simplify`) qua thư viện `meshoptimizer` để giảm hơn **90% dung lượng** (từ 50 MB xuống còn ~2 MB – 4 MB) mà vẫn giữ nguyên đường nét kiến trúc.*
-3. **Bước 3:** Sử dụng component trong [CampusCS3Scene.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/canvas/CampusCS3Scene.tsx):
-   ```tsx
-   <CADBuildingModel
-     modelUrl="/models/cs3/toa_k.glb"
-     position={[15.0, 2.5, 4.2]}
-     rotation={[0, 0, 0]}
-     scale={[5.0, 5.0, 5.0]}
-     buildingCode="toa_k"
-     buildingName="KHU NHÀ K (7 TẦNG)"
-     fallback={<MarkedBuildingPlot ... />}
-   />
-   ```
-
----
-
-## 📜 Danh Mục Lệnh Thường Dùng (NPM Scripts)
-
-| Lệnh | Ý nghĩa |
+| Lệnh thực thi | Mô tả chức năng |
 | :--- | :--- |
-| `npm run dev` | Khởi động máy chủ phát triển cục bộ (`localhost:3000`) |
-| `npm run build` | Kiểm tra lỗi TypeScript và đóng gói bản phát hành Production |
-| `npm run start` | Chạy máy chủ sau khi đã build thành công |
-| `npm run lint` | Quét kiểm tra lỗi cú pháp và quy chuẩn code ESLint |
-| `npm run models:optimize` | Tự động quét và nén giảm dung lượng toàn bộ file 3D `.glb` |
-| `npm run db:seed` | Nạp dữ liệu mẫu vào cơ sở dữ liệu qua Prisma |
-| `npx prisma studio` | Mở giao diện Web quản trị dữ liệu Prisma trực quan |
+| `npm run dev` | Khởi động Next.js development server với Turbopack tại port 3000 |
+| `npm run build` | Kiểm tra tính đúng đắn của TypeScript và đóng gói bản phát hành Production |
+| `npm run start` | Khởi chạy máy chủ Production sau khi hoàn tất lệnh build |
+| `npm run lint` | Chạy bộ kiểm tra tĩnh mã nguồn ESLint v9 |
+| `npm run db:seed` | Nạp toàn bộ dữ liệu cơ sở, tòa nhà, tầng, phòng học vào PostgreSQL qua Prisma |
+| `npm run models:optimize` | Quét thư mục `public/models/` và nén tự động các mô hình `.glb` qua `meshoptimizer` |
+| `npx prisma studio` | Khởi chạy giao diện web quản trị cơ sở dữ liệu trực quan |
 
 ---
 
-## ❓ Xử Lý Lỗi Thường Gặp (Troubleshooting)
+## 7. Engineering Standards
 
-### 1. Lỗi: `Cannot find module '@prisma/client'`
-👉 **Cách khắc phục:** Chạy lệnh:
-```bash
-npx prisma generate
-```
+Toàn bộ quy trình phát triển và kiểm thử mã nguồn được kiểm soát bởi các nguyên tắc trong tài liệu `constitution.md`:
 
-### 2. Màn hình 3D bị giật lag trên máy tính dùng card đồ họa rời
-👉 **Cách khắc phục:**
-- Kiểm tra cài đặt trình duyệt Chrome/Edge: Vào `Settings` ➔ tìm `Hardware Acceleration` (Sử dụng tăng tốc phần cứng khi khả dụng) ➔ Bật `On` và khởi động lại trình duyệt.
-- Chạy lệnh `npm run models:optimize` để đảm bảo các file `.glb` đã được nén về mức tối ưu.
-
-### 3. Cổng `3000` bị chiếm dụng bởi tiến trình khác
-👉 **Cách khắc phục:** Next.js sẽ tự động chuyển sang cổng tiếp theo (ví dụ: `http://localhost:3001`). Hoặc bạn có thể chỉ định cổng tùy ý:
-```bash
-npm run dev -- -p 3005
-```
-
----
-
-## 👨‍💻 Tác Quyền & Đóng Góp
-
-Dự án được phát triển nhằm mục đích hiện đại hóa trải nghiệm sinh viên, hỗ trợ tìm đường và số hóa không gian học tập tại **Trường Đại học Giao thông Vận tải TP.HCM (UTH)**.
-Mọi đóng góp (Pull Request / Issue) đều được hoan nghênh!
+- **Type Safety Tuyệt Đối (Zero `any`):** Mọi dữ liệu vào/ra từ API, Component Props và State Store phải được định kiểu tường minh bằng TypeScript Interface/Type. Sử dụng `unknown` kết hợp type guards trong trường hợp dữ liệu dynamic.
+- **Tính Lặp Lại Của Dữ Liệu (Idempotent Seed):** Mọi thao tác ghi dữ liệu mẫu trong `prisma/seed.ts` bắt buộc sử dụng `upsert` hoặc xóa theo cascade để đảm bảo script có thể chạy vô số lần mà không gây ra lỗi xung đột khóa chính (`Unique constraint failed`).
+- **Chính Sách Soft Delete:** Tuyệt đối không xóa cứng (hard delete) dữ liệu phòng học (`Room`) hoặc điểm mốc định vị (`QrNode`) trên môi trường vận hành. Trạng thái hoạt động được quản lý bằng trường `isActive`.
+- **Phân Định Trách Nhiệm Ngôn Ngữ:**
+  - Định danh kỹ thuật (Tên file, component, hàm, biến, type): 100% bằng tiếng Anh.
+  - Chú thích kỹ thuật (Code comments), tài liệu giải thích (Architecture docs) và giao diện người dùng: Tiếng Việt chuẩn mực kỹ thuật.
+- **Quy Chuẩn Commit (Conventional Commits):** Mọi commit phải tuân thủ định dạng chuẩn (`feat:`, `fix:`, `docs:`, `perf:`, `refactor:`).
+- **Quality Gates Trước Khi Merge:** Bắt buộc vượt qua 3 chốt chặn:
+  1. `npx tsc --noEmit` đạt 0 lỗi biên dịch.
+  2. `npm run lint` đạt 0 lỗi và 0 cảnh báo.
+  3. `npm run build` tạo artifact production thành công.

@@ -28,7 +28,7 @@ export function GlowingArrowPath({
   const pEnd = points && points.length >= 2 ? points[points.length - 1] : end;
 
   // Calculate length and direction vector
-  const { angle, totalLength, center, segments } = useMemo(() => {
+  const { angle, center, segments } = useMemo(() => {
     const vStart = new THREE.Vector3(pStart[0], pStart[1], pStart[2]);
     const vEnd = new THREE.Vector3(pEnd[0], pEnd[1], pEnd[2]);
 
@@ -45,7 +45,6 @@ export function GlowingArrowPath({
 
     return {
       angle: yaw,
-      totalLength: len,
       center: mid,
       segments: Array.from({ length: segCount }).map((_, i) => ({
         offsetZ: (i - (segCount - 1) / 2) * (segLength + 0.4),
@@ -59,7 +58,6 @@ export function GlowingArrowPath({
     const shape = new THREE.Shape();
     const halfW = width / 2;
     const arrowHeadLen = Math.min(1.2, segLen * 0.4);
-    const bodyLen = segLen - arrowHeadLen;
 
     shape.moveTo(-halfW, -segLen / 2);
     shape.lineTo(halfW, -segLen / 2);

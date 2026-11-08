@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import {
   NavigationStoreState,
   NavigationStep,
+  NavigationRouteResult,
   QrNodeData,
   RoomData,
   Vector3Tuple,
@@ -11,6 +12,7 @@ import {
   MOCK_QR_NODES,
   MOCK_ROOMS,
   MOCK_STEPS_CS1_TO_B302,
+  MOCK_ROUTE_CS3_H_TO_J,
 } from '@/data/mockNavigationData';
 
 const DEFAULT_ORIGIN_QR = MOCK_QR_NODES[0];
@@ -21,6 +23,8 @@ export const useNavigationStore = create<NavigationStoreState>((set, get) => ({
   currentCampusCode: 'cs1',
   currentQr: DEFAULT_ORIGIN_QR,
   targetRoom: DEFAULT_TARGET_ROOM,
+  selectedBuildingCode: null,
+  activeRoute: null,
 
   activeSteps: MOCK_STEPS_CS1_TO_B302,
   currentStepIndex: 0,
@@ -50,6 +54,66 @@ export const useNavigationStore = create<NavigationStoreState>((set, get) => ({
 
   setTargetRoom: (room: RoomData | null) => {
     set({ targetRoom: room });
+  },
+
+  setSelectedBuilding: (code: string | null) => {
+    set({ selectedBuildingCode: code });
+    if (!code) return;
+
+    // Smoothly focus camera when a building is selected
+    if (code === 'toa_j') {
+      set({
+        cameraPosition: [25, 18, -6],
+        cameraTarget: [13.5, 2, -15.4],
+        isCameraAnimating: true,
+      });
+    } else if (code === 'toa_h') {
+      set({
+        cameraPosition: [6, 18, 18],
+        cameraTarget: [-4.5, 2, 7],
+        isCameraAnimating: true,
+      });
+    }
+  },
+
+  setActiveRoute: (route: NavigationRouteResult | null) => {
+    if (!route) {
+      set({
+        activeRoute: null,
+        activeSteps: [],
+        currentStepIndex: 0,
+        isNavigating: false,
+      });
+      return;
+    }
+
+    set({
+      activeRoute: route,
+      activeSteps: route.steps,
+      currentStepIndex: 0,
+      isNavigating: true,
+      viewMode: 'OVERALL_CAMPUS',
+      cameraPosition: [16, 26, 22],
+      cameraTarget: [4, 0, -3],
+      isCameraAnimating: true,
+    });
+  },
+
+  startRouteBetweenBuildings: (originCode: string, targetCode: string) => {
+    if (originCode === 'toa_h' && targetCode === 'toa_j') {
+      const route = MOCK_ROUTE_CS3_H_TO_J;
+      set({
+        activeRoute: route,
+        activeSteps: route.steps,
+        currentStepIndex: 0,
+        isNavigating: true,
+        selectedBuildingCode: 'toa_j',
+        viewMode: 'OVERALL_CAMPUS',
+        cameraPosition: [16, 26, 22],
+        cameraTarget: [4, 0, -3],
+        isCameraAnimating: true,
+      });
+    }
   },
 
   setRouteSteps: (steps: NavigationStep[]) => {
@@ -160,6 +224,8 @@ export const useNavigationStore = create<NavigationStoreState>((set, get) => ({
       currentStepIndex: 0,
       isNavigating: false,
       targetRoom: null,
+      selectedBuildingCode: null,
+      activeRoute: null,
       viewMode: 'OVERALL_CAMPUS',
       activeBuildingCode: null,
       activeFloorLevel: null,

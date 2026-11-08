@@ -8,7 +8,8 @@ const models = [
   'toa_j',
   'toa_i_duong',
   'xuong_oto',
-  'toa_l'
+  'toa_l',
+  'toa_k'
 ];
 
 const dir = 'public/models/cs3';

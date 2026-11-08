@@ -4,17 +4,93 @@ import {
   MOCK_QR_NODES,
   MOCK_ROOMS,
   MOCK_STEPS_CS1_TO_B302,
+  MOCK_ROUTE_CS3_H_TO_J,
 } from '@/data/mockNavigationData';
-import { NavigationStep } from '@/types/navigation';
+import {
+  NavigationStep,
+  DirectionType,
+  ViewMode,
+  Vector3Tuple,
+} from '@/types/navigation';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { originQrCode, targetRoomCode } = body;
+    const { originBuildingCode, targetBuildingCode, originQrCode, targetRoomCode } = body;
 
-    if (!originQrCode || !targetRoomCode) {
+    // Handle Inter-building navigation (e.g. Tòa H -> Tòa J)
+    if (originBuildingCode && targetBuildingCode) {
+      // 1. Try querying cloud database first
+      try {
+        const fromBuilding = await prisma.building.findFirst({
+          where: { code: originBuildingCode },
+        });
+        const toBuilding = await prisma.building.findFirst({
+          where: { code: targetBuildingCode },
+        });
+
+        if (fromBuilding && toBuilding) {
+          const segment = await prisma.routeSegment.findFirst({
+            where: {
+              fromBuildingId: fromBuilding.id,
+              toBuildingId: toBuilding.id,
+              type: 'OUTDOOR_HUB_TO_HUB',
+            },
+            include: { steps: { orderBy: { stepOrder: 'asc' } } },
+          });
+
+          if (segment && segment.steps.length > 0) {
+            const steps: NavigationStep[] = segment.steps.map((st) => ({
+              id: st.id,
+              stepOrder: st.stepOrder,
+              stage: 'OUTDOOR' as const,
+              instruction: st.instruction,
+              directionType: st.directionType as unknown as DirectionType,
+              viewMode: st.viewMode as unknown as ViewMode,
+              buildingCode: st.buildingCode || undefined,
+              floorLevel: st.floorLevel || undefined,
+              pathPoints: st.pathPoints as unknown as Vector3Tuple[],
+              cameraPos: st.cameraPos as unknown as Vector3Tuple,
+              cameraTarget: st.cameraTarget as unknown as Vector3Tuple,
+              landmarkPhotoUrl: st.landmarkPhotoUrl || undefined,
+            }));
+
+            const flatPathPoints = steps.flatMap((s) => s.pathPoints);
+            return NextResponse.json({
+              success: true,
+              source: 'database',
+              route: {
+                originBuildingCode,
+                targetBuildingCode,
+                totalDistance: 75.5,
+                estimatedMinutes: 1.2,
+                fullPathPoints: flatPathPoints,
+                steps,
+              },
+              steps,
+              totalSteps: steps.length,
+            });
+          }
+        }
+      } catch {
+        // Fallback to offline mock below if DB query fails
+      }
+
+      // 2. Offline fallback if database unreachable
+      if (originBuildingCode === 'toa_h' && targetBuildingCode === 'toa_j') {
+        return NextResponse.json({
+          success: true,
+          source: 'OFFLINE_FALLBACK',
+          route: MOCK_ROUTE_CS3_H_TO_J,
+          steps: MOCK_ROUTE_CS3_H_TO_J.steps,
+          totalSteps: MOCK_ROUTE_CS3_H_TO_J.steps.length,
+        });
+      }
+    }
+
+    if (!originQrCode && !targetRoomCode && !targetBuildingCode) {
       return NextResponse.json(
-        { success: false, error: 'originQrCode and targetRoomCode are required' },
+        { success: false, error: 'originBuildingCode/targetBuildingCode or originQrCode/targetRoomCode are required' },
         { status: 400 }
       );
     }
@@ -53,13 +129,13 @@ export async function POST(request: NextRequest) {
                 stepOrder: idx + 1,
                 stage: 'INDOOR' as const,
                 instruction: st.instruction,
-                directionType: st.directionType as any,
-                viewMode: st.viewMode as any,
+                directionType: st.directionType as unknown as DirectionType,
+                viewMode: st.viewMode as unknown as ViewMode,
                 buildingCode: st.buildingCode || undefined,
                 floorLevel: st.floorLevel || undefined,
-                pathPoints: st.pathPoints as any,
-                cameraPos: st.cameraPos as any,
-                cameraTarget: st.cameraTarget as any,
+                pathPoints: st.pathPoints as unknown as Vector3Tuple[],
+                cameraPos: st.cameraPos as unknown as Vector3Tuple,
+                cameraTarget: st.cameraTarget as unknown as Vector3Tuple,
                 landmarkPhotoUrl: st.landmarkPhotoUrl || undefined,
               }))
             );
@@ -93,13 +169,13 @@ export async function POST(request: NextRequest) {
                 stepOrder: currentOrder++,
                 stage: 'OUTDOOR',
                 instruction: st.instruction,
-                directionType: st.directionType as any,
-                viewMode: st.viewMode as any,
+                directionType: st.directionType as unknown as DirectionType,
+                viewMode: st.viewMode as unknown as ViewMode,
                 buildingCode: st.buildingCode || undefined,
                 floorLevel: st.floorLevel || undefined,
-                pathPoints: st.pathPoints as any,
-                cameraPos: st.cameraPos as any,
-                cameraTarget: st.cameraTarget as any,
+                pathPoints: st.pathPoints as unknown as Vector3Tuple[],
+                cameraPos: st.cameraPos as unknown as Vector3Tuple,
+                cameraTarget: st.cameraTarget as unknown as Vector3Tuple,
                 landmarkPhotoUrl: st.landmarkPhotoUrl || undefined,
               });
             }
@@ -112,13 +188,13 @@ export async function POST(request: NextRequest) {
                 stepOrder: currentOrder++,
                 stage: 'INDOOR',
                 instruction: st.instruction,
-                directionType: st.directionType as any,
-                viewMode: st.viewMode as any,
+                directionType: st.directionType as unknown as DirectionType,
+                viewMode: st.viewMode as unknown as ViewMode,
                 buildingCode: st.buildingCode || undefined,
                 floorLevel: st.floorLevel || undefined,
-                pathPoints: st.pathPoints as any,
-                cameraPos: st.cameraPos as any,
-                cameraTarget: st.cameraTarget as any,
+                pathPoints: st.pathPoints as unknown as Vector3Tuple[],
+                cameraPos: st.cameraPos as unknown as Vector3Tuple,
+                cameraTarget: st.cameraTarget as unknown as Vector3Tuple,
                 landmarkPhotoUrl: st.landmarkPhotoUrl || undefined,
               });
             }

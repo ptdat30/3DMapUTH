@@ -1,4 +1,5 @@
-import { CampusData, BuildingData, FloorData, QrNodeData, RoomData, NavigationStep } from '@/types/navigation';
+import { CampusData, BuildingData, FloorData, QrNodeData, RoomData, NavigationStep, NavigationRouteResult } from '@/types/navigation';
+import realRoomsJson from './realRoomsData.json';
 
 export const MOCK_CAMPUSES: CampusData[] = [
   {
@@ -46,9 +47,51 @@ export const MOCK_BUILDINGS: BuildingData[] = [
   {
     id: 'bld_toa_h',
     code: 'toa_h',
-    name: 'Tòa Nhà H (Giảng Đường & Văn Phòng Cơ Sở 3)',
+    name: 'Tòa Nhà H (Hành Chính & Giảng Đường 7 Tầng)',
     campusId: 'campus_cs3',
     hubCoordinates: [-4.5, 0, 7],
+  },
+  {
+    id: 'bld_toa_i_lon',
+    code: 'toa_i_lon',
+    name: 'Tòa Nhà I Lớn (Khu Giảng Đường 5 Tầng)',
+    campusId: 'campus_cs3',
+    hubCoordinates: [-13.5, 0, -15.4],
+  },
+  {
+    id: 'bld_toa_k',
+    code: 'toa_k',
+    name: 'Tòa Nhà K (Viện Nghiên Cứu & Đào Tạo)',
+    campusId: 'campus_cs3',
+    hubCoordinates: [15.0, 0, 4.2],
+  },
+  {
+    id: 'bld_xuong_oto',
+    code: 'xuong_oto',
+    name: 'Tòa I Nhỏ (Xưởng Thực Hành Ô Tô - Cơ Khí Động Lực)',
+    campusId: 'campus_cs3',
+    hubCoordinates: [-24.0, 0, 3.5],
+  },
+  {
+    id: 'bld_toa_j',
+    code: 'toa_j',
+    name: 'Tòa Nhà J (Khu Giảng Đường 6 Tầng)',
+    campusId: 'campus_cs3',
+    hubCoordinates: [13.5, 0, -12],
+  },
+  {
+    id: 'bld_toa_i_duong',
+    code: 'toa_i_duong',
+    name: 'Nhà I (Khu Đất Phụ Trợ & Dịch Vụ)',
+    campusId: 'campus_cs3',
+    hubCoordinates: [-21.5, 0, -15.4],
+  },
+  {
+    id: 'bld_nha_da_nang',
+    code: 'nha_da_nang',
+    name: 'Nhà Thi Đấu Đa Năng (Thể Thao & Sự Kiện)',
+    campusId: 'campus_cs3',
+    hubCoordinates: [22.8, 0, 14.6],
   },
   {
     id: 'bld_toa_l',
@@ -60,6 +103,7 @@ export const MOCK_BUILDINGS: BuildingData[] = [
 ];
 
 export const MOCK_FLOORS: FloorData[] = [
+  // CS1 Tòa B
   {
     id: 'flr_b_1',
     level: 1,
@@ -81,41 +125,33 @@ export const MOCK_FLOORS: FloorData[] = [
     modelUrl: '/models/cs1/toa_b_t3.glb',
     buildingId: 'bld_toa_b',
   },
-  {
-    id: 'flr_h_1',
-    level: 1,
-    name: 'Tầng 1 (Trệt - Văn phòng & Giảng đường lớn)',
-    modelUrl: '/models/cs3/toa_h_t1.glb',
-    buildingId: 'bld_toa_h',
-  },
-  {
-    id: 'flr_h_2',
-    level: 2,
-    name: 'Tầng 2 (Lầu 1)',
-    modelUrl: '/models/cs3/toa_h_t2.glb',
-    buildingId: 'bld_toa_h',
-  },
-  {
-    id: 'flr_h_3',
-    level: 3,
-    name: 'Tầng 3 (Lầu 2)',
-    modelUrl: '/models/cs3/toa_h_t3.glb',
-    buildingId: 'bld_toa_h',
-  },
-  {
-    id: 'flr_h_4',
-    level: 4,
-    name: 'Tầng 4 (Lầu 3)',
-    modelUrl: '/models/cs3/toa_h_t4.glb',
-    buildingId: 'bld_toa_h',
-  },
-  {
-    id: 'flr_h_5',
-    level: 5,
-    name: 'Tầng 5 (Lầu 4)',
-    modelUrl: '/models/cs3/toa_h_t5.glb',
-    buildingId: 'bld_toa_h',
-  },
+
+  // CS3 Tòa H (7 Tầng: Trệt level 0, Tầng 1-6 level 1-6)
+  { id: 'flr_h_0', level: 0, name: 'Tầng Trệt (Phòng chức năng H001 - H013 & WC)', modelUrl: '/models/cs3/toa_h_t1.glb', buildingId: 'bld_toa_h' },
+  { id: 'flr_h_1', level: 1, name: 'Tầng 1 (Phòng học H101 - H108 & WC)', modelUrl: '/models/cs3/toa_h_t2.glb', buildingId: 'bld_toa_h' },
+  { id: 'flr_h_2', level: 2, name: 'Tầng 2 (Phòng học H201 - H208 & WC)', modelUrl: '/models/cs3/toa_h_t3.glb', buildingId: 'bld_toa_h' },
+  { id: 'flr_h_3', level: 3, name: 'Tầng 3 (Phòng học H301 - H308 & WC)', modelUrl: '/models/cs3/toa_h_t4.glb', buildingId: 'bld_toa_h' },
+  { id: 'flr_h_4', level: 4, name: 'Tầng 4 (Phòng học H401 - H408 & WC)', modelUrl: '/models/cs3/toa_h_t5.glb', buildingId: 'bld_toa_h' },
+  { id: 'flr_h_5', level: 5, name: 'Tầng 5 (Phòng học H501 - H508 & WC)', modelUrl: '/models/cs3/toa_h_t5.glb', buildingId: 'bld_toa_h' },
+  { id: 'flr_h_6', level: 6, name: 'Tầng 6 (Phòng học H601 - H608 & WC)', modelUrl: '/models/cs3/toa_h_t5.glb', buildingId: 'bld_toa_h' },
+
+  // CS3 Tòa I Lớn (5 Tầng: Trệt level 0, Tầng 1-4 level 1-4)
+  { id: 'flr_i_lon_0', level: 0, name: 'Tầng Trệt (Phòng học I001, I002 & WC)', modelUrl: '/models/cs3/toa_i_t1.glb', buildingId: 'bld_toa_i_lon' },
+  { id: 'flr_i_lon_1', level: 1, name: 'Tầng 1 (Phòng học I101, I102 & WC)', modelUrl: '/models/cs3/toa_i_t2.glb', buildingId: 'bld_toa_i_lon' },
+  { id: 'flr_i_lon_2', level: 2, name: 'Tầng 2 (Phòng học I201, I202 & WC)', modelUrl: '/models/cs3/toa_i_t3.glb', buildingId: 'bld_toa_i_lon' },
+  { id: 'flr_i_lon_3', level: 3, name: 'Tầng 3 (Phòng học I301, I302 & WC)', modelUrl: '/models/cs3/toa_i_t4.glb', buildingId: 'bld_toa_i_lon' },
+  { id: 'flr_i_lon_4', level: 4, name: 'Tầng 4 (Phòng học I401, I402 & WC)', modelUrl: '/models/cs3/toa_i_t5.glb', buildingId: 'bld_toa_i_lon' },
+
+  // CS3 Tòa K (4 Tầng: Trệt level 0, Tầng 1-3 level 1-3)
+  { id: 'flr_k_0', level: 0, name: 'Tầng Trệt (Viện Đèo Cả, Viện CNTT, Viện Cơ khí, VP Trưởng & Đào tạo)', modelUrl: '/models/cs3/toa_k_t1.glb', buildingId: 'bld_toa_k' },
+  { id: 'flr_k_1', level: 1, name: 'Tầng 1 (Trung tâm Thông tin Thư viện K101)', modelUrl: '/models/cs3/toa_k_t2.glb', buildingId: 'bld_toa_k' },
+  { id: 'flr_k_2', level: 2, name: 'Tầng 2 (Hội trường Kỹ năng K201)', modelUrl: '/models/cs3/toa_k_t3.glb', buildingId: 'bld_toa_k' },
+  { id: 'flr_k_3', level: 3, name: 'Tầng 3 (Hội trường Kỹ năng K301)', modelUrl: '/models/cs3/toa_k_t4.glb', buildingId: 'bld_toa_k' },
+
+  // CS3 Tòa I Nhỏ / Xưởng Ô Tô (Trệt level 0)
+  { id: 'flr_oto_0', level: 0, name: 'Tầng Trệt (Xưởng Ô Tô - Tòa I Nhỏ)', modelUrl: '/models/cs3/xuong_oto.glb', buildingId: 'bld_xuong_oto' },
+
+  // CS3 Tòa L
   {
     id: 'flr_l_1',
     level: 1,
@@ -159,9 +195,31 @@ export const MOCK_QR_NODES: QrNodeData[] = [
     initialCameraPos: [-15, 8, 16],
     initialCameraTarget: [-15, 1, 5],
   },
+  {
+    id: 'qr_cs3_sanh_toa_h',
+    code: 'cs3_qr_toa_h_sanh',
+    name: 'Sảnh Chính Tòa Nhà H (Cơ Sở 3)',
+    campusId: 'campus_cs3',
+    buildingId: 'bld_toa_h',
+    floorLevel: 0,
+    coordinates: [-4.5, 0.2, 7.0],
+    initialCameraPos: [10, 24, 25],
+    initialCameraTarget: [-4.5, 1, 7.0],
+  },
+  {
+    id: 'qr_cs3_sanh_toa_j',
+    code: 'cs3_qr_toa_j_sanh',
+    name: 'Sảnh Chính Tòa Nhà J (Cơ Sở 3)',
+    campusId: 'campus_cs3',
+    buildingId: 'bld_toa_j',
+    floorLevel: 1,
+    coordinates: [13.5, 0.2, -12.0],
+    initialCameraPos: [20, 18, -5],
+    initialCameraTarget: [13.5, 1, -12.0],
+  },
 ];
 
-export const MOCK_ROOMS: RoomData[] = [
+const CS1_ROOMS: RoomData[] = [
   {
     id: 'room_b302',
     code: 'B302',
@@ -172,6 +230,7 @@ export const MOCK_ROOMS: RoomData[] = [
     buildingCode: 'toa_b',
     buildingName: 'Tòa Nhà B',
     floorLevel: 3,
+    roomType: 'CLASSROOM',
   },
   {
     id: 'room_b301',
@@ -183,6 +242,7 @@ export const MOCK_ROOMS: RoomData[] = [
     buildingCode: 'toa_b',
     buildingName: 'Tòa Nhà B',
     floorLevel: 3,
+    roomType: 'HALL',
   },
   {
     id: 'room_b201',
@@ -194,6 +254,7 @@ export const MOCK_ROOMS: RoomData[] = [
     buildingCode: 'toa_b',
     buildingName: 'Tòa Nhà B',
     floorLevel: 2,
+    roomType: 'CLASSROOM',
   },
   {
     id: 'room_b101',
@@ -205,6 +266,7 @@ export const MOCK_ROOMS: RoomData[] = [
     buildingCode: 'toa_b',
     buildingName: 'Tòa Nhà B',
     floorLevel: 1,
+    roomType: 'OFFICE',
   },
   {
     id: 'room_a101',
@@ -216,243 +278,39 @@ export const MOCK_ROOMS: RoomData[] = [
     buildingCode: 'toa_a',
     buildingName: 'Tòa Nhà A',
     floorLevel: 1,
+    roomType: 'HALL',
   },
-  // --- TÒA H (CƠ SỞ 3) ROOMS ---
-  // Cánh trái (Dãy 7 phòng nhỏ: P.01 - P.07)
-  {
-    id: 'room_h101',
-    code: 'H101',
-    name: 'Phòng Trực Kỹ Thuật H101 (P.01)',
-    searchKeywords: 'ky thuat, p01, h101, toa h, cs3, canh trai',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-8.5, 0.4, 2],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h102',
-    code: 'H102',
-    name: 'Văn Phòng Ban Khoa H102 (P.02)',
-    searchKeywords: 'van phong khoa, ban khoa, p02, h102, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-8.5, 0.4, 4],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h103',
-    code: 'H103',
-    name: 'Phòng Làm Việc Cán Bộ H103 (P.03)',
-    searchKeywords: 'can bo, giang vien, p03, h103, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-8.5, 0.4, 6],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h104',
-    code: 'H104',
-    name: 'Phòng Thiết Bị & Kho Tài Liệu H104 (P.04)',
-    searchKeywords: 'kho, thiet bi, p04, h104, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-8.5, 0.4, 8],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h105',
-    code: 'H105',
-    name: 'Phòng Hành Chính Bộ Môn H105 (P.05)',
-    searchKeywords: 'hanh chinh, bo mon, p05, h105, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-8.5, 0.4, 10],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h106',
-    code: 'H106',
-    name: 'Văn Phòng Nghiên Cứu H106 (P.06)',
-    searchKeywords: 'nghien cuu, p06, h106, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-8.5, 0.4, 12],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h107',
-    code: 'H107',
-    name: 'Phòng Kho Lưu Trữ Hồ Sơ H107 (P.07)',
-    searchKeywords: 'kho luu tru, ho so, p07, h107, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-8.5, 0.4, 14],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  // Cánh phải (Dãy 4 phòng lớn: P.08 - P.11)
-  {
-    id: 'room_h108',
-    code: 'H108',
-    name: 'Giảng Đường Đa Năng H108 (P.08)',
-    searchKeywords: 'giang duong, phong hoc lon, p08, h108, toa h, cs3, canh phai',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-3.5, 0.4, 2],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h109',
-    code: 'H109',
-    name: 'Phòng Lab Thực Hành Máy Tính H109 (P.09)',
-    searchKeywords: 'lab may tinh, thuc hanh, p09, h109, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-3.5, 0.4, 5.5],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h110',
-    code: 'H110',
-    name: 'Xưởng Mô Phỏng Chuyên Đề H110 (P.10)',
-    searchKeywords: 'mo phong, xuong, p10, h110, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-3.5, 0.4, 9],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  {
-    id: 'room_h111',
-    code: 'H111',
-    name: 'Hội Trường Lý Thuyết H111 (P.11)',
-    searchKeywords: 'hoi truong, 50 cho, p11, h111, toa h, cs3',
-    floorId: 'flr_h_1',
-    doorCoordinates: [-3.5, 0.4, 12.5],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 1,
-  },
-  // --- TẦNG 2 (TÒA H - 8 PHÒNG HỌC LỚN ĐỐI XỨNG: H201 - H208) ---
-  {
-    id: 'room_h201',
-    code: 'H201',
-    name: 'Phòng Học Lý Thuyết H201 (Lầu 1 - Cánh Trái)',
-    searchKeywords: 'h201, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-8.5, 2.8, 2],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  {
-    id: 'room_h202',
-    code: 'H202',
-    name: 'Phòng Học Lý Thuyết H202 (Lầu 1 - Cánh Trái)',
-    searchKeywords: 'h202, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-8.5, 2.8, 5.5],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  {
-    id: 'room_h203',
-    code: 'H203',
-    name: 'Phòng Học Lý Thuyết H203 (Lầu 1 - Cánh Trái)',
-    searchKeywords: 'h203, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-8.5, 2.8, 9],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  {
-    id: 'room_h204',
-    code: 'H204',
-    name: 'Phòng Học Lý Thuyết H204 (Lầu 1 - Cánh Trái)',
-    searchKeywords: 'h204, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-8.5, 2.8, 12.5],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  {
-    id: 'room_h205',
-    code: 'H205',
-    name: 'Phòng Học Lý Thuyết H205 (Lầu 1 - Cánh Phải)',
-    searchKeywords: 'h205, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-3.5, 2.8, 2],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  {
-    id: 'room_h206',
-    code: 'H206',
-    name: 'Phòng Học Lý Thuyết H206 (Lầu 1 - Cánh Phải)',
-    searchKeywords: 'h206, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-3.5, 2.8, 5.5],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  {
-    id: 'room_h207',
-    code: 'H207',
-    name: 'Phòng Học Lý Thuyết H207 (Lầu 1 - Cánh Phải)',
-    searchKeywords: 'h207, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-3.5, 2.8, 9],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  {
-    id: 'room_h208',
-    code: 'H208',
-    name: 'Phòng Học Lý Thuyết H208 (Lầu 1 - Cánh Phải)',
-    searchKeywords: 'h208, phong hoc, toa h, lau 1, tang 2',
-    floorId: 'flr_h_2',
-    doorCoordinates: [-3.5, 2.8, 12.5],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 2,
-  },
-  // --- TẦNG 3 (TÒA H - H301 - H308) ---
-  {
-    id: 'room_h301',
-    code: 'H301',
-    name: 'Phòng Chuyên Đề H301 (Lầu 2)',
-    searchKeywords: 'h301, phong hoc, toa h, lau 2, tang 3',
-    floorId: 'flr_h_3',
-    doorCoordinates: [-8.5, 5.2, 2],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 3,
-  },
-  {
-    id: 'room_h302',
-    code: 'H302',
-    name: 'Phòng Lab AI & IoT H302 (Lầu 2)',
-    searchKeywords: 'h302, lab ai, iot, toa h, lau 2, tang 3',
-    floorId: 'flr_h_3',
-    doorCoordinates: [-8.5, 5.2, 5.5],
-    buildingCode: 'toa_h',
-    buildingName: 'Tòa Nhà H',
-    floorLevel: 3,
-  },
+];
+
+const CS3_REAL_ROOMS: RoomData[] = (realRoomsJson as unknown as Array<{
+  id: string;
+  code: string;
+  name: string;
+  roomType: string;
+  notes?: string;
+  buildingCode: string;
+  buildingName: string;
+  floorLevel: number;
+  floorName: string;
+  searchKeywords: string;
+  doorCoordinates: [number, number, number];
+}>).map((r) => ({
+  id: r.id,
+  code: r.code,
+  name: r.name,
+  roomType: r.roomType,
+  notes: r.notes,
+  buildingCode: r.buildingCode,
+  buildingName: r.buildingName,
+  floorLevel: r.floorLevel,
+  floorId: `flr_${r.buildingCode}_${r.floorLevel}`,
+  searchKeywords: r.searchKeywords,
+  doorCoordinates: r.doorCoordinates,
+}));
+
+export const MOCK_ROOMS: RoomData[] = [
+  ...CS1_ROOMS,
+  ...CS3_REAL_ROOMS,
   {
     id: 'room_l_fitness',
     code: 'L_FITNESS',
@@ -463,6 +321,7 @@ export const MOCK_ROOMS: RoomData[] = [
     buildingCode: 'toa_l',
     buildingName: 'Tòa Nhà L (UTH Fitness)',
     floorLevel: 1,
+    roomType: 'WORKSHOP',
   },
 ];
 
@@ -546,3 +405,76 @@ export const MOCK_STEPS_CS1_TO_B302: NavigationStep[] = [
     distanceMeters: 12,
   },
 ];
+
+export const MOCK_STEPS_CS3_H_TO_J: NavigationStep[] = [
+  {
+    id: 'step_cs3_h_j_1',
+    stepOrder: 1,
+    stage: 'OUTDOOR',
+    instruction: 'Từ sảnh Tòa H, đi thẳng ra trục đường chính sân trường',
+    subText: 'Đi thẳng 25m qua sân trước Tòa H',
+    directionType: 'STRAIGHT',
+    viewMode: 'OVERALL_CAMPUS',
+    buildingCode: 'toa_h',
+    pathPoints: [
+      [-4.5, 0.2, 7.0],
+      [-2.0, 0.2, 7.0],
+      [0.0, 0.2, 3.5],
+    ],
+    cameraPos: [10, 24, 25],
+    cameraTarget: [0, 0, 3.5],
+    distanceMeters: 25,
+  },
+  {
+    id: 'step_cs3_h_j_2',
+    stepOrder: 2,
+    stage: 'OUTDOOR',
+    instruction: 'Rẽ trái theo đường nội bộ hướng về phía Tòa Nhà J',
+    subText: 'Đi theo vỉa hè qua vòng xuyến nội khu 30m',
+    directionType: 'LEFT',
+    viewMode: 'OVERALL_CAMPUS',
+    pathPoints: [
+      [0.0, 0.2, 3.5],
+      [4.0, 0.2, -2.0],
+      [8.0, 0.2, -6.0],
+    ],
+    cameraPos: [15, 22, 10],
+    cameraTarget: [6, 0, -4],
+    distanceMeters: 30,
+  },
+  {
+    id: 'step_cs3_h_j_3',
+    stepOrder: 3,
+    stage: 'OUTDOOR',
+    instruction: 'Tiến thẳng vào sảnh chính Tòa Nhà J (Khu Giảng Đường 6 Tầng)',
+    subText: 'Đã đến sảnh chính Tòa J bên tay phải',
+    directionType: 'ARRIVED',
+    viewMode: 'OVERALL_CAMPUS',
+    buildingCode: 'toa_j',
+    pathPoints: [
+      [8.0, 0.2, -6.0],
+      [11.0, 0.2, -10.0],
+      [13.5, 0.2, -12.0],
+    ],
+    cameraPos: [20, 18, -5],
+    cameraTarget: [13.5, 1, -12.0],
+    distanceMeters: 20.5,
+  },
+];
+
+export const MOCK_ROUTE_CS3_H_TO_J: NavigationRouteResult = {
+  originBuildingCode: 'toa_h',
+  targetBuildingCode: 'toa_j',
+  totalDistance: 75.5,
+  estimatedMinutes: 1.2,
+  fullPathPoints: [
+    [-4.5, 0.2, 7.0],
+    [-2.0, 0.2, 7.0],
+    [0.0, 0.2, 3.5],
+    [4.0, 0.2, -2.0],
+    [8.0, 0.2, -6.0],
+    [11.0, 0.2, -10.0],
+    [13.5, 0.2, -12.0],
+  ],
+  steps: MOCK_STEPS_CS3_H_TO_J,
+};

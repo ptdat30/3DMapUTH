@@ -1,4 +1,5 @@
 export type Vector3Tuple = [number, number, number];
+export type Vector3Array = Vector3Tuple;
 
 export type ViewMode = 'OVERALL_CAMPUS' | 'BUILDING_FLOOR';
 
@@ -62,6 +63,8 @@ export interface RoomData {
   buildingCode?: string;
   buildingName?: string;
   floorLevel?: number;
+  roomType?: string;
+  notes?: string;
 }
 
 export interface NavigationStep {
@@ -89,11 +92,22 @@ export interface RoutePlan {
   totalSteps: number;
 }
 
+export interface NavigationRouteResult {
+  originBuildingCode: string;
+  targetBuildingCode: string;
+  totalDistance: number;
+  estimatedMinutes: number;
+  fullPathPoints: Vector3Tuple[];
+  steps: NavigationStep[];
+}
+
 export interface NavigationStoreState {
   // Current Campus and Context
   currentCampusCode: string;
   currentQr: QrNodeData | null;
   targetRoom: RoomData | null;
+  selectedBuildingCode: string | null;
+  activeRoute: NavigationRouteResult | null;
   
   // Navigation Route State
   activeSteps: NavigationStep[];
@@ -115,6 +129,9 @@ export interface NavigationStoreState {
   setCampus: (campusCode: string) => void;
   setCurrentQr: (qr: QrNodeData) => void;
   setTargetRoom: (room: RoomData | null) => void;
+  setSelectedBuilding: (code: string | null) => void;
+  setActiveRoute: (route: NavigationRouteResult | null) => void;
+  startRouteBetweenBuildings: (originCode: string, targetCode: string) => void;
   setRouteSteps: (steps: NavigationStep[]) => void;
   nextStep: () => void;
   prevStep: () => void;

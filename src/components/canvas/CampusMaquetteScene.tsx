@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useMemo } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { OrbitControls, ContactShadows, Html } from '@react-three/drei';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
@@ -363,7 +363,7 @@ export function CampusMaquetteScene() {
   return (
     <div className="w-full h-full relative select-none">
       <Canvas
-        shadows
+        shadows={{ enabled: true, type: THREE.PCFShadowMap }}
         camera={{
           position: [24, 26, 24],
           fov: 32,

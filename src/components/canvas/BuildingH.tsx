@@ -33,7 +33,6 @@ export function BuildingH({
 }: BuildingHProps) {
   const activeFloorLevel = useNavigationStore((state) => state.activeFloorLevel);
   const activeBuildingCode = useNavigationStore((state) => state.activeBuildingCode);
-  const viewMode = useNavigationStore((state) => state.viewMode);
 
   const isBuildingHActive = activeBuildingCode === 'toa_h';
 

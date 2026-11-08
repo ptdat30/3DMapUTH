@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 import { useThree } from '@react-three/fiber';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import gsap from 'gsap';
-import * as THREE from 'three';
 import { useNavigationStore } from '@/store/useNavigationStore';
 
 interface CameraRigProps {

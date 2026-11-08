@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { ClientPatch } from '@/components/common/ClientPatch';
 
 const inter = Inter({
   subsets: ['latin', 'vietnamese'],
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="vi" className="h-full bg-slate-950 text-slate-100">
       <body className={`${inter.className} h-full overflow-hidden select-none antialiased`}>
+        <ClientPatch />
         {children}
       </body>
     </html>

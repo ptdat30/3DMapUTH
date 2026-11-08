@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Html } from '@react-three/drei';
-import * as THREE from 'three';
-import { BuildingData, ViewMode } from '@/types/navigation';
+import { BuildingData } from '@/types/navigation';
 import { useNavigationStore } from '@/store/useNavigationStore';
 
 interface BuildingModelProps {

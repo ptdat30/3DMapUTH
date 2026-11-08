@@ -49,6 +49,9 @@ class ModelErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryStat
   }
 }
 
+// Cache tuned scenes to prevent garbage collection spikes on component re-renders
+const tunedSceneCache = new WeakMap<THREE.Group, THREE.Group>();
+
 // Internal GLTF Loader Mesh
 function LoadedGLTFMesh({
   modelUrl,
@@ -62,24 +65,28 @@ function LoadedGLTFMesh({
 }: CADBuildingModelProps) {
   const { scene } = useGLTF(modelUrl);
   const viewMode = useNavigationStore((state) => state.viewMode);
-  const setViewMode = useNavigationStore((state) => state.setViewMode);
   const activeBuildingCode = useNavigationStore((state) => state.activeBuildingCode);
+  const selectedBuildingCode = useNavigationStore((state) => state.selectedBuildingCode);
+  const setSelectedBuilding = useNavigationStore((state) => state.setSelectedBuilding);
 
-  const isSelected = activeBuildingCode === buildingCode;
+  const isSelected = selectedBuildingCode === buildingCode || activeBuildingCode === buildingCode;
 
-  // Clone scene to avoid shared mutation between instances
+  // Retrieve cached tuned scene or clone once
   const clonedScene = useMemo(() => {
+    const cached = tunedSceneCache.get(scene);
+    if (cached) return cached;
+
     const clone = scene.clone(true);
 
     clone.traverse((child) => {
+      child.frustumCulled = true;
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
+        mesh.frustumCulled = true;
         mesh.castShadow = true;
-        // Optimization: Disable receiveShadow on building meshes to eliminate heavy per-fragment shadow sampling
         mesh.receiveShadow = false;
 
         if (mesh.material) {
-          // Tune material for clean architectural maquette clay rendering
           const origMat = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
           if (origMat instanceof THREE.MeshStandardMaterial) {
             origMat.roughness = Math.max(origMat.roughness ?? 0.65, 0.45);
@@ -87,12 +94,12 @@ function LoadedGLTFMesh({
             if (origMat.color.r === 1 && origMat.color.g === 1 && origMat.color.b === 1) {
               origMat.color.set('#f8fafc');
             }
-            origMat.needsUpdate = true;
           }
         }
       }
     });
 
+    tunedSceneCache.set(scene, clone);
     return clone;
   }, [scene]);
 
@@ -101,25 +108,45 @@ function LoadedGLTFMesh({
     if (onClick) {
       onClick();
     } else if (buildingCode) {
-      setViewMode('BUILDING_FLOOR', buildingCode, 1);
+      setSelectedBuilding(buildingCode);
     }
+  };
+
+  const handlePointerOver = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+    document.body.style.cursor = 'pointer';
+  };
+
+  const handlePointerOut = () => {
+    document.body.style.cursor = 'default';
   };
 
   const scaleVec: [number, number, number] =
     typeof scale === 'number' ? [scale, scale, scale] : scale;
 
   return (
-    <group position={position} rotation={rotation} scale={scaleVec} onClick={handleClick}>
+    <group
+      position={position}
+      rotation={rotation}
+      scale={scaleVec}
+      onClick={handleClick}
+      onPointerOver={handlePointerOver}
+      onPointerOut={handlePointerOut}
+    >
       {/* 3D CAD Mesh */}
-      <primitive object={clonedScene} />
+      <primitive object={clonedScene} frustumCulled={true} />
 
       {/* Building Name Tag in Overall View */}
-      {buildingName && viewMode === 'OVERALL_CAMPUS' && (
+      {buildingName && (
         <Html
           position={[0, heightOffset + 1.8, 0]}
           center
           distanceFactor={36}
           zIndexRange={[100, 0]}
+          style={{
+            display: viewMode === 'OVERALL_CAMPUS' ? 'block' : 'none',
+            pointerEvents: viewMode === 'OVERALL_CAMPUS' ? 'auto' : 'none',
+          }}
         >
           <button
             type="button"

@@ -1,0 +1,1734 @@
+[
+  {
+    "id": "room_toa_i_lon_i001",
+    "code": "I001",
+    "name": "Phòng học I001",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "i001, phòng học i001, phong hoc i001, tòa i lớn, toa i lon, toa_i_lon, classroom, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -15,
+      0.4,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i002",
+    "code": "I002",
+    "name": "Phòng học I002",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "i002, phòng học i002, phong hoc i002, tòa i lớn, toa i lon, toa_i_lon, classroom, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -12,
+      0.4,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_tret_nam",
+    "code": "WC-I-TRET-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "wc-i-tret-nam, wc i tret nam, nhà vệ sinh nam, nha ve sinh nam, tòa i lớn, toa i lon, toa_i_lon, restroom, trệt, tret, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -16,
+      0.4,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_tret_nu",
+    "code": "WC-I-TRET-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "wc-i-tret-nu, wc i tret nu, nhà vệ sinh nữ, nha ve sinh nu, tòa i lớn, toa i lon, toa_i_lon, restroom, trệt, tret, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -11,
+      0.4,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i101",
+    "code": "I101",
+    "name": "Phòng học I101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "i101, phòng học i101, phong hoc i101, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -15,
+      2.8,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i102",
+    "code": "I102",
+    "name": "Phòng học I102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "i102, phòng học i102, phong hoc i102, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -12,
+      2.8,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t1_nam",
+    "code": "WC-I-T1-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "wc-i-t1-nam, wc i t1 nam, nhà vệ sinh nam, nha ve sinh nam, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 1, tang 1, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -16,
+      2.8,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t1_nu",
+    "code": "WC-I-T1-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "wc-i-t1-nu, wc i t1 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 1, tang 1, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -11,
+      2.8,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i201",
+    "code": "I201",
+    "name": "Phòng học I201",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "i201, phòng học i201, phong hoc i201, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -15,
+      5.2,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i202",
+    "code": "I202",
+    "name": "Phòng học I202",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "i202, phòng học i202, phong hoc i202, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -12,
+      5.2,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t2_nam",
+    "code": "WC-I-T2-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "wc-i-t2-nam, wc i t2 nam, nhà vệ sinh nam, nha ve sinh nam, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 2, tang 2, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -16,
+      5.2,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t2_nu",
+    "code": "WC-I-T2-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "wc-i-t2-nu, wc i t2 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 2, tang 2, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -11,
+      5.2,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i301",
+    "code": "I301",
+    "name": "Phòng học I301",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "i301, phòng học i301, phong hoc i301, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -15,
+      7.6,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i302",
+    "code": "I302",
+    "name": "Phòng học I302",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "i302, phòng học i302, phong hoc i302, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -12,
+      7.6,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t3_nam",
+    "code": "WC-I-T3-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "wc-i-t3-nam, wc i t3 nam, nhà vệ sinh nam, nha ve sinh nam, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 3, tang 3, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -16,
+      7.6,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t3_nu",
+    "code": "WC-I-T3-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "wc-i-t3-nu, wc i t3 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 3, tang 3, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -11,
+      7.6,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i401",
+    "code": "I401",
+    "name": "Phòng học I401",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "i401, phòng học i401, phong hoc i401, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -15,
+      10,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_i402",
+    "code": "I402",
+    "name": "Phòng học I402",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "i402, phòng học i402, phong hoc i402, tòa i lớn, toa i lon, toa_i_lon, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -12,
+      10,
+      -15.4
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t4_nam",
+    "code": "WC-I-T4-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "wc-i-t4-nam, wc i t4 nam, nhà vệ sinh nam, nha ve sinh nam, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 4, tang 4, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -16,
+      10,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_i_lon_wc_i_t4_nu",
+    "code": "WC-I-T4-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_i_lon",
+    "buildingName": "Tòa I Lớn",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "wc-i-t4-nu, wc i t4 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa i lớn, toa i lon, toa_i_lon, restroom, tầng 4, tang 4, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -11,
+      10,
+      -17.5
+    ]
+  },
+  {
+    "id": "room_toa_k_k001",
+    "code": "K001",
+    "name": "Viện nghiên cứu - Đào tạo Đèo Cả",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "k001, viện nghiên cứu - đào tạo đèo cả, vien nghien cuu - dao tao deo ca, tòa k, toa k, toa_k, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      13.2,
+      0.4,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_k_k002",
+    "code": "K002",
+    "name": "Viện Công nghệ thông tin",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "k002, viện công nghệ thông tin, vien cong nghe thong tin, tòa k, toa k, toa_k, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      13.2,
+      0.4,
+      5
+    ]
+  },
+  {
+    "id": "room_toa_k_k003",
+    "code": "K003",
+    "name": "Viện Cơ khí",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "k003, viện cơ khí, vien co khi, tòa k, toa k, toa_k, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      13.2,
+      0.4,
+      8
+    ]
+  },
+  {
+    "id": "room_toa_k_k004",
+    "code": "K004",
+    "name": "Phòng chức năng K004",
+    "roomType": "OFFICE",
+    "notes": "Cần khảo sát thêm",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "k004, phòng chức năng k004, phong chuc nang k004, tòa k, toa k, toa_k, office, trệt, tret, cs3, co so 3, cần khảo sát thêm, can khao sat them",
+    "doorCoordinates": [
+      16.8,
+      0.4,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_k_k005",
+    "code": "K005",
+    "name": "Văn phòng Trưởng",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "k005, văn phòng trưởng, van phong truong, tòa k, toa k, toa_k, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      16.8,
+      0.4,
+      5
+    ]
+  },
+  {
+    "id": "room_toa_k_k006",
+    "code": "K006",
+    "name": "Văn phòng Đào tạo - Tiếp nhận SV",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "k006, văn phòng đào tạo - tiếp nhận sv, van phong dao tao - tiep nhan sv, tòa k, toa k, toa_k, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      16.8,
+      0.4,
+      8
+    ]
+  },
+  {
+    "id": "room_toa_k_k101",
+    "code": "K101",
+    "name": "Trung tâm Thông tin Thư viện",
+    "roomType": "HALL",
+    "notes": "Phòng lớn",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "k101, trung tâm thông tin thư viện, trung tam thong tin thu vien, tòa k, toa k, toa_k, hall, tầng 1, tang 1, cs3, co so 3, phòng lớn, phong lon",
+    "doorCoordinates": [
+      15,
+      2.8,
+      5
+    ]
+  },
+  {
+    "id": "room_toa_k_k201",
+    "code": "K201",
+    "name": "Hội trường Kỹ năng",
+    "roomType": "HALL",
+    "notes": "Phòng lớn",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "k201, hội trường kỹ năng, hoi truong ky nang, tòa k, toa k, toa_k, hall, tầng 2, tang 2, cs3, co so 3, phòng lớn, phong lon",
+    "doorCoordinates": [
+      15,
+      5.2,
+      5
+    ]
+  },
+  {
+    "id": "room_toa_k_k301",
+    "code": "K301",
+    "name": "Hội trường Kỹ năng",
+    "roomType": "HALL",
+    "notes": "Phòng lớn",
+    "buildingCode": "toa_k",
+    "buildingName": "Tòa K",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "k301, hội trường kỹ năng, hoi truong ky nang, tòa k, toa k, toa_k, hall, tầng 3, tang 3, cs3, co so 3, phòng lớn, phong lon",
+    "doorCoordinates": [
+      15,
+      7.6,
+      5
+    ]
+  },
+  {
+    "id": "room_xuong_oto_xuong_dong_co",
+    "code": "XUONG-DONG-CO",
+    "name": "Phòng thực hành Động cơ Ô tô",
+    "roomType": "WORKSHOP",
+    "buildingCode": "xuong_oto",
+    "buildingName": "Tòa I Nhỏ",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "xuong-dong-co, xuong dong co, phòng thực hành động cơ ô tô, phong thuc hanh dong co o to, tòa i nhỏ, toa i nho, xuong_oto, workshop, trệt, tret, cs3, co so 3, thuc hanh, xuong, gara",
+    "doorCoordinates": [
+      -24,
+      0.4,
+      -3
+    ]
+  },
+  {
+    "id": "room_xuong_oto_xuong_dien",
+    "code": "XUONG-DIEN",
+    "name": "Phòng thực hành Điện Ô tô",
+    "roomType": "WORKSHOP",
+    "buildingCode": "xuong_oto",
+    "buildingName": "Tòa I Nhỏ",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "xuong-dien, xuong dien, phòng thực hành điện ô tô, phong thuc hanh dien o to, tòa i nhỏ, toa i nho, xuong_oto, workshop, trệt, tret, cs3, co so 3, thuc hanh, xuong, gara",
+    "doorCoordinates": [
+      -24,
+      0.4,
+      1
+    ]
+  },
+  {
+    "id": "room_xuong_oto_xuong_gam",
+    "code": "XUONG-GAM",
+    "name": "Phòng thực hành Khung gầm Ô tô",
+    "roomType": "WORKSHOP",
+    "buildingCode": "xuong_oto",
+    "buildingName": "Tòa I Nhỏ",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "xuong-gam, xuong gam, phòng thực hành khung gầm ô tô, phong thuc hanh khung gam o to, tòa i nhỏ, toa i nho, xuong_oto, workshop, trệt, tret, cs3, co so 3, thuc hanh, xuong, gara",
+    "doorCoordinates": [
+      -24,
+      0.4,
+      5
+    ]
+  },
+  {
+    "id": "room_xuong_oto_lt_o_to",
+    "code": "LT-O-TO",
+    "name": "Phòng học Lý thuyết Ô tô",
+    "roomType": "CLASSROOM",
+    "buildingCode": "xuong_oto",
+    "buildingName": "Tòa I Nhỏ",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "lt-o-to, lt o to, phòng học lý thuyết ô tô, phong hoc ly thuyet o to, tòa i nhỏ, toa i nho, xuong_oto, classroom, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -24,
+      0.4,
+      9
+    ]
+  },
+  {
+    "id": "room_toa_h_h001",
+    "code": "H001",
+    "name": "Phòng chức năng H001",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h001, phòng chức năng h001, phong chuc nang h001, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      0.4,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h002",
+    "code": "H002",
+    "name": "Phòng chức năng H002",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h002, phòng chức năng h002, phong chuc nang h002, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      0.4,
+      3.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h003",
+    "code": "H003",
+    "name": "Phòng chức năng H003",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h003, phòng chức năng h003, phong chuc nang h003, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      0.4,
+      5.6
+    ]
+  },
+  {
+    "id": "room_toa_h_h004",
+    "code": "H004",
+    "name": "Phòng chức năng H004",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h004, phòng chức năng h004, phong chuc nang h004, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      0.4,
+      7.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h005",
+    "code": "H005",
+    "name": "Phòng chức năng H005",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h005, phòng chức năng h005, phong chuc nang h005, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      0.4,
+      9.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h006",
+    "code": "H006",
+    "name": "Phòng chức năng H006",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h006, phòng chức năng h006, phong chuc nang h006, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      0.4,
+      11
+    ]
+  },
+  {
+    "id": "room_toa_h_h007",
+    "code": "H007",
+    "name": "Phòng chức năng H007",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h007, phòng chức năng h007, phong chuc nang h007, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      0.4,
+      12.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h008",
+    "code": "H008",
+    "name": "Phòng chức năng H008",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h008, phòng chức năng h008, phong chuc nang h008, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      0.4,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h009",
+    "code": "H009",
+    "name": "Phòng chức năng H009",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h009, phòng chức năng h009, phong chuc nang h009, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      0.4,
+      4.1
+    ]
+  },
+  {
+    "id": "room_toa_h_h010",
+    "code": "H010",
+    "name": "Phòng chức năng H010",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h010, phòng chức năng h010, phong chuc nang h010, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      0.4,
+      6.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h011",
+    "code": "H011",
+    "name": "Phòng chức năng H011",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h011, phòng chức năng h011, phong chuc nang h011, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      0.4,
+      8.3
+    ]
+  },
+  {
+    "id": "room_toa_h_h012",
+    "code": "H012",
+    "name": "Phòng chức năng H012",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h012, phòng chức năng h012, phong chuc nang h012, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      0.4,
+      10.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h013",
+    "code": "H013",
+    "name": "Phòng chức năng H013",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "h013, phòng chức năng h013, phong chuc nang h013, tòa h, toa h, toa_h, office, trệt, tret, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      0.4,
+      12.5
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_tret_nam",
+    "code": "WC-H-TRET-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "wc-h-tret-nam, wc h tret nam, nhà vệ sinh nam, nha ve sinh nam, tòa h, toa h, toa_h, restroom, trệt, tret, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -6.5,
+      0.4,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_tret_nu",
+    "code": "WC-H-TRET-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "wc-h-tret-nu, wc h tret nu, nhà vệ sinh nữ, nha ve sinh nu, tòa h, toa h, toa_h, restroom, trệt, tret, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -5.5,
+      0.4,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_h101",
+    "code": "H101",
+    "name": "Phòng học lý thuyết H101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h101, phòng học lý thuyết h101, phong hoc ly thuyet h101, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      2.8,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h102",
+    "code": "H102",
+    "name": "Phòng học lý thuyết H102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h102, phòng học lý thuyết h102, phong hoc ly thuyet h102, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      2.8,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h103",
+    "code": "H103",
+    "name": "Phòng học lý thuyết H103",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h103, phòng học lý thuyết h103, phong hoc ly thuyet h103, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      2.8,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h104",
+    "code": "H104",
+    "name": "Phòng học lý thuyết H104",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h104, phòng học lý thuyết h104, phong hoc ly thuyet h104, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      2.8,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h105",
+    "code": "H105",
+    "name": "Phòng học lý thuyết H105",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h105, phòng học lý thuyết h105, phong hoc ly thuyet h105, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      2.8,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h106",
+    "code": "H106",
+    "name": "Phòng học lý thuyết H106",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h106, phòng học lý thuyết h106, phong hoc ly thuyet h106, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      2.8,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h107",
+    "code": "H107",
+    "name": "Phòng học lý thuyết H107",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h107, phòng học lý thuyết h107, phong hoc ly thuyet h107, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      2.8,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h108",
+    "code": "H108",
+    "name": "Phòng học lý thuyết H108",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "h108, phòng học lý thuyết h108, phong hoc ly thuyet h108, tòa h, toa h, toa_h, classroom, tầng 1, tang 1, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      2.8,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t1_nam",
+    "code": "WC-H-T1-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "wc-h-t1-nam, wc h t1 nam, nhà vệ sinh nam, nha ve sinh nam, tòa h, toa h, toa_h, restroom, tầng 1, tang 1, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -6.5,
+      2.8,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t1_nu",
+    "code": "WC-H-T1-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "wc-h-t1-nu, wc h t1 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa h, toa h, toa_h, restroom, tầng 1, tang 1, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -5.5,
+      2.8,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_h201",
+    "code": "H201",
+    "name": "Phòng học lý thuyết H201",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h201, phòng học lý thuyết h201, phong hoc ly thuyet h201, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      5.2,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h202",
+    "code": "H202",
+    "name": "Phòng học lý thuyết H202",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h202, phòng học lý thuyết h202, phong hoc ly thuyet h202, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      5.2,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h203",
+    "code": "H203",
+    "name": "Phòng học lý thuyết H203",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h203, phòng học lý thuyết h203, phong hoc ly thuyet h203, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      5.2,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h204",
+    "code": "H204",
+    "name": "Phòng học lý thuyết H204",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h204, phòng học lý thuyết h204, phong hoc ly thuyet h204, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      5.2,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h205",
+    "code": "H205",
+    "name": "Phòng học lý thuyết H205",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h205, phòng học lý thuyết h205, phong hoc ly thuyet h205, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      5.2,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h206",
+    "code": "H206",
+    "name": "Phòng học lý thuyết H206",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h206, phòng học lý thuyết h206, phong hoc ly thuyet h206, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      5.2,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h207",
+    "code": "H207",
+    "name": "Phòng học lý thuyết H207",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h207, phòng học lý thuyết h207, phong hoc ly thuyet h207, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      5.2,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h208",
+    "code": "H208",
+    "name": "Phòng học lý thuyết H208",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "h208, phòng học lý thuyết h208, phong hoc ly thuyet h208, tòa h, toa h, toa_h, classroom, tầng 2, tang 2, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      5.2,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t2_nam",
+    "code": "WC-H-T2-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "wc-h-t2-nam, wc h t2 nam, nhà vệ sinh nam, nha ve sinh nam, tòa h, toa h, toa_h, restroom, tầng 2, tang 2, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -6.5,
+      5.2,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t2_nu",
+    "code": "WC-H-T2-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "wc-h-t2-nu, wc h t2 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa h, toa h, toa_h, restroom, tầng 2, tang 2, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -5.5,
+      5.2,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_h301",
+    "code": "H301",
+    "name": "Phòng học lý thuyết H301",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h301, phòng học lý thuyết h301, phong hoc ly thuyet h301, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      7.6,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h302",
+    "code": "H302",
+    "name": "Phòng học lý thuyết H302",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h302, phòng học lý thuyết h302, phong hoc ly thuyet h302, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      7.6,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h303",
+    "code": "H303",
+    "name": "Phòng học lý thuyết H303",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h303, phòng học lý thuyết h303, phong hoc ly thuyet h303, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      7.6,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h304",
+    "code": "H304",
+    "name": "Phòng học lý thuyết H304",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h304, phòng học lý thuyết h304, phong hoc ly thuyet h304, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      7.6,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h305",
+    "code": "H305",
+    "name": "Phòng học lý thuyết H305",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h305, phòng học lý thuyết h305, phong hoc ly thuyet h305, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      7.6,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h306",
+    "code": "H306",
+    "name": "Phòng học lý thuyết H306",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h306, phòng học lý thuyết h306, phong hoc ly thuyet h306, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      7.6,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h307",
+    "code": "H307",
+    "name": "Phòng học lý thuyết H307",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h307, phòng học lý thuyết h307, phong hoc ly thuyet h307, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      7.6,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h308",
+    "code": "H308",
+    "name": "Phòng học lý thuyết H308",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "h308, phòng học lý thuyết h308, phong hoc ly thuyet h308, tòa h, toa h, toa_h, classroom, tầng 3, tang 3, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      7.6,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t3_nam",
+    "code": "WC-H-T3-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "wc-h-t3-nam, wc h t3 nam, nhà vệ sinh nam, nha ve sinh nam, tòa h, toa h, toa_h, restroom, tầng 3, tang 3, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -6.5,
+      7.6,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t3_nu",
+    "code": "WC-H-T3-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "wc-h-t3-nu, wc h t3 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa h, toa h, toa_h, restroom, tầng 3, tang 3, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -5.5,
+      7.6,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_h401",
+    "code": "H401",
+    "name": "Phòng học lý thuyết H401",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h401, phòng học lý thuyết h401, phong hoc ly thuyet h401, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      10,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h402",
+    "code": "H402",
+    "name": "Phòng học lý thuyết H402",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h402, phòng học lý thuyết h402, phong hoc ly thuyet h402, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      10,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h403",
+    "code": "H403",
+    "name": "Phòng học lý thuyết H403",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h403, phòng học lý thuyết h403, phong hoc ly thuyet h403, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      10,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h404",
+    "code": "H404",
+    "name": "Phòng học lý thuyết H404",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h404, phòng học lý thuyết h404, phong hoc ly thuyet h404, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      10,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h405",
+    "code": "H405",
+    "name": "Phòng học lý thuyết H405",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h405, phòng học lý thuyết h405, phong hoc ly thuyet h405, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      10,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h406",
+    "code": "H406",
+    "name": "Phòng học lý thuyết H406",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h406, phòng học lý thuyết h406, phong hoc ly thuyet h406, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      10,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h407",
+    "code": "H407",
+    "name": "Phòng học lý thuyết H407",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h407, phòng học lý thuyết h407, phong hoc ly thuyet h407, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      10,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h408",
+    "code": "H408",
+    "name": "Phòng học lý thuyết H408",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "h408, phòng học lý thuyết h408, phong hoc ly thuyet h408, tòa h, toa h, toa_h, classroom, tầng 4, tang 4, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      10,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t4_nam",
+    "code": "WC-H-T4-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "wc-h-t4-nam, wc h t4 nam, nhà vệ sinh nam, nha ve sinh nam, tòa h, toa h, toa_h, restroom, tầng 4, tang 4, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -6.5,
+      10,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t4_nu",
+    "code": "WC-H-T4-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "wc-h-t4-nu, wc h t4 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa h, toa h, toa_h, restroom, tầng 4, tang 4, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -5.5,
+      10,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_h501",
+    "code": "H501",
+    "name": "Phòng học lý thuyết H501",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h501, phòng học lý thuyết h501, phong hoc ly thuyet h501, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      12.4,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h502",
+    "code": "H502",
+    "name": "Phòng học lý thuyết H502",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h502, phòng học lý thuyết h502, phong hoc ly thuyet h502, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      12.4,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h503",
+    "code": "H503",
+    "name": "Phòng học lý thuyết H503",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h503, phòng học lý thuyết h503, phong hoc ly thuyet h503, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      12.4,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h504",
+    "code": "H504",
+    "name": "Phòng học lý thuyết H504",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h504, phòng học lý thuyết h504, phong hoc ly thuyet h504, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      12.4,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h505",
+    "code": "H505",
+    "name": "Phòng học lý thuyết H505",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h505, phòng học lý thuyết h505, phong hoc ly thuyet h505, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      12.4,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h506",
+    "code": "H506",
+    "name": "Phòng học lý thuyết H506",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h506, phòng học lý thuyết h506, phong hoc ly thuyet h506, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      12.4,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h507",
+    "code": "H507",
+    "name": "Phòng học lý thuyết H507",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h507, phòng học lý thuyết h507, phong hoc ly thuyet h507, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      12.4,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h508",
+    "code": "H508",
+    "name": "Phòng học lý thuyết H508",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "h508, phòng học lý thuyết h508, phong hoc ly thuyet h508, tòa h, toa h, toa_h, classroom, tầng 5, tang 5, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      12.4,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t5_nam",
+    "code": "WC-H-T5-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "wc-h-t5-nam, wc h t5 nam, nhà vệ sinh nam, nha ve sinh nam, tòa h, toa h, toa_h, restroom, tầng 5, tang 5, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -6.5,
+      12.4,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t5_nu",
+    "code": "WC-H-T5-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "wc-h-t5-nu, wc h t5 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa h, toa h, toa_h, restroom, tầng 5, tang 5, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -5.5,
+      12.4,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_h601",
+    "code": "H601",
+    "name": "Phòng học lý thuyết H601",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h601, phòng học lý thuyết h601, phong hoc ly thuyet h601, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      14.799999999999999,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h602",
+    "code": "H602",
+    "name": "Phòng học lý thuyết H602",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h602, phòng học lý thuyết h602, phong hoc ly thuyet h602, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      14.799999999999999,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h603",
+    "code": "H603",
+    "name": "Phòng học lý thuyết H603",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h603, phòng học lý thuyết h603, phong hoc ly thuyet h603, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      14.799999999999999,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h604",
+    "code": "H604",
+    "name": "Phòng học lý thuyết H604",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h604, phòng học lý thuyết h604, phong hoc ly thuyet h604, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -8.5,
+      14.799999999999999,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_h605",
+    "code": "H605",
+    "name": "Phòng học lý thuyết H605",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h605, phòng học lý thuyết h605, phong hoc ly thuyet h605, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      14.799999999999999,
+      2
+    ]
+  },
+  {
+    "id": "room_toa_h_h606",
+    "code": "H606",
+    "name": "Phòng học lý thuyết H606",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h606, phòng học lý thuyết h606, phong hoc ly thuyet h606, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      14.799999999999999,
+      5.4
+    ]
+  },
+  {
+    "id": "room_toa_h_h607",
+    "code": "H607",
+    "name": "Phòng học lý thuyết H607",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h607, phòng học lý thuyết h607, phong hoc ly thuyet h607, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      14.799999999999999,
+      8.8
+    ]
+  },
+  {
+    "id": "room_toa_h_h608",
+    "code": "H608",
+    "name": "Phòng học lý thuyết H608",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "h608, phòng học lý thuyết h608, phong hoc ly thuyet h608, tòa h, toa h, toa_h, classroom, tầng 6, tang 6, cs3, co so 3",
+    "doorCoordinates": [
+      -3.5,
+      14.799999999999999,
+      12.2
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t6_nam",
+    "code": "WC-H-T6-NAM",
+    "name": "Nhà vệ sinh Nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "wc-h-t6-nam, wc h t6 nam, nhà vệ sinh nam, nha ve sinh nam, tòa h, toa h, toa_h, restroom, tầng 6, tang 6, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -6.5,
+      14.799999999999999,
+      15
+    ]
+  },
+  {
+    "id": "room_toa_h_wc_h_t6_nu",
+    "code": "WC-H-T6-NU",
+    "name": "Nhà vệ sinh Nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_h",
+    "buildingName": "Tòa H",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "wc-h-t6-nu, wc h t6 nu, nhà vệ sinh nữ, nha ve sinh nu, tòa h, toa h, toa_h, restroom, tầng 6, tang 6, cs3, co so 3, ve sinh, wc, toilet, nha ve sinh",
+    "doorCoordinates": [
+      -5.5,
+      14.799999999999999,
+      15
+    ]
+  }
+]

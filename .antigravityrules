@@ -1,0 +1,28 @@
+# Vibe Coding & 3D Graphics Development Rules (Web 3D + Blender MCP)
+
+## 1. Documentation & Latest API Synchronization (Context7 MCP)
+- Luôn gọi **Context7 MCP** (`@upstash/context7-mcp`) trước khi viết code mới hoặc refactor các tính năng liên quan đến Three.js, React Three Fiber (R3F), Drei, Rapier hoặc Next.js để đảm bảo sử dụng chính xác cú pháp và API mới nhất (đặc biệt đối với React 19 và Next.js App Router).
+
+## 2. Tiêu chuẩn dựng hình 3D trên Web (@react-three/fiber & Three.js)
+- **Asynchronous Models & Error Handling:**
+  - Luôn bọc các model 3D tải bất đồng bộ (GLTF/GLB) trong `<Suspense fallback={null}>` hoặc component ErrorBoundary tùy biến để chống crash scene khi tải tài nguyên mạng.
+- **Tối ưu hóa hiệu năng & bộ nhớ (Zero Allocation in Loops):**
+  - Tuyệt đối KHÔNG khởi tạo đối tượng mới (ví dụ `new THREE.Vector3()`, `new THREE.Matrix4()`, `new THREE.Color()`, hoặc `scene.clone()`) bên trong vòng lặp `useFrame` hoặc render body. Luôn khai báo biến static tái sử dụng bên ngoài hook hoặc sử dụng `useRef`.
+  - Sử dụng `InstancedMesh` hoặc Drei `<Instances>` khi render số lượng lớn vật thể tương đồng (cây cối, cột mốc, ghế, vạch kẻ, hàng rào) để gộp draw calls.
+  - Luôn gọi `geometry.dispose()` và `material.dispose()` khi unmount hoặc thay đổi model để giải phóng VRAM GPU, tránh rò rỉ bộ nhớ.
+  - Bật `frustumCulled={true}` cho các mesh để Three.js tự động loại bỏ vật thể nằm ngoài nón quan sát camera.
+  - Cân nhắc tắt `castShadow` / `receiveShadow` trên các bề mặt tĩnh không quan trọng (mặt đường, vạch sơn, rào chắn) để tiết kiệm shadow pass.
+- **Công cụ hỗ trợ hệ sinh thái (@react-three/drei & Physics):**
+  - Tận dụng tối đa các helper từ `@react-three/drei`: `OrbitControls`, `Environment`, `useGLTF`, `Float`, `Text3D`, `Html`, `Center`.
+  - Khi cần mô phỏng vật lý, sử dụng `@react-three/rapier` (`<Physics>`, `<RigidBody>`).
+
+## 3. Quy trình làm việc với Blender (Blender MCP)
+- Trước khi thực hiện lệnh tạo hoặc chỉnh sửa mesh, luôn kiểm tra trạng thái scene hiện tại (`get_scene_info` hoặc kiểm tra objects hiện hữu).
+- Đặt tên định danh tường minh, có cấu trúc cho từng Object và Material (ví dụ: `Building_J_Facade`, `Mat_Asphalt_Road`).
+- Luôn đặt gốc tọa độ (origin / pivot point) hợp lý ở chân hoặc tâm vật thể để việc import vào WebGL dễ dàng kiểm soát transform.
+- Ưu tiên xuất model dưới định dạng `.glb` (glTF Binary) kèm tối ưu hóa (weld vertices, compress texture, decimate poly count) để tải nhanh trên trình duyệt.
+
+## 4. Kiểm thử tự động & Bắt lỗi WebGL (Playwright MCP)
+- Sử dụng **Playwright MCP** để tự động khởi chạy trình duyệt kiểm thử UI, render Canvas và đọc log lỗi console/WebGL sau khi hoàn thiện tính năng.
+- Kiểm tra tính ổn định của FPS, đảm bảo không có warning context lost, shader compilation error hoặc layout shift.
+

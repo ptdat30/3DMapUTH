@@ -4,6 +4,7 @@ import React, { useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Grid, ContactShadows } from '@react-three/drei';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import * as THREE from 'three';
 import { useNavigationStore } from '@/store/useNavigationStore';
 import { MOCK_BUILDINGS } from '@/data/mockNavigationData';
 import { CameraRig } from './CameraRig';
@@ -24,7 +25,7 @@ export function CampusScene() {
   return (
     <div className="w-full h-full relative select-none">
       <Canvas
-        shadows
+        shadows={{ enabled: true, type: THREE.PCFShadowMap }}
         camera={{
           position: currentQr?.initialCameraPos ?? [0, 24, 42],
           fov: 45,

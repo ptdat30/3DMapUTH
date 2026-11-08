@@ -48,3 +48,4 @@ __pycache__/
 # raw 3D generator exports in root (optimized assets reside in public/models/)
 /*.glb
 Meshy_AI*.glb
+*_original.glb

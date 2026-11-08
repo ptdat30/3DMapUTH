@@ -1,18 +1,40 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, Search, X, School, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Search, X, ChevronRight, MapPin } from 'lucide-react';
 import { useNavigationStore } from '@/store/useNavigationStore';
 import { MOCK_ROOMS, MOCK_STEPS_CS1_TO_B302 } from '@/data/mockNavigationData';
 import { RoomData } from '@/types/navigation';
+
+function getRoomTypeBadge(type?: string) {
+  switch (type) {
+    case 'CLASSROOM':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-700 border border-blue-200">Lớp học</span>;
+    case 'RESTROOM':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-rose-50 text-rose-700 border border-rose-200">WC</span>;
+    case 'OFFICE':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Văn phòng</span>;
+    case 'HALL':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-purple-50 text-purple-700 border border-purple-200">Hội trường</span>;
+    case 'WORKSHOP':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-200">Xưởng TH</span>;
+    default:
+      return null;
+  }
+}
 
 export function TopSearchBar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const targetRoom = useNavigationStore((state) => state.targetRoom);
+  const activeRoute = useNavigationStore((state) => state.activeRoute);
+  const selectedBuildingCode = useNavigationStore((state) => state.selectedBuildingCode);
   const setTargetRoom = useNavigationStore((state) => state.setTargetRoom);
   const setRouteSteps = useNavigationStore((state) => state.setRouteSteps);
+  const setCampus = useNavigationStore((state) => state.setCampus);
+  const setSelectedBuilding = useNavigationStore((state) => state.setSelectedBuilding);
+  const startRouteBetweenBuildings = useNavigationStore((state) => state.startRouteBetweenBuildings);
   const resetNavigation = useNavigationStore((state) => state.resetNavigation);
 
   const filteredRooms = useMemo(() => {
@@ -31,27 +53,36 @@ export function TopSearchBar() {
     setIsSearchOpen(false);
     setSearchQuery('');
 
+    if (room.buildingCode) {
+      setSelectedBuilding(room.buildingCode);
+    }
+
+    if (room.buildingCode && ['toa_h', 'toa_i_lon', 'toa_k', 'xuong_oto', 'toa_j', 'toa_l'].includes(room.buildingCode)) {
+      setCampus('cs3');
+    }
+
     if (room.code === 'B302') {
       setRouteSteps(MOCK_STEPS_CS1_TO_B302);
     } else {
+      const isIndoor = room.floorLevel !== undefined && room.floorLevel > 0;
       setRouteSteps([
         {
           id: `step_to_${room.code}`,
           stepOrder: 1,
-          stage: room.floorLevel && room.floorLevel > 1 ? 'INDOOR' : 'OUTDOOR',
+          stage: isIndoor ? 'INDOOR' : 'OUTDOOR',
           instruction: `Di chuyển đến ${room.name} (${room.code})`,
-          subText: `${room.buildingName ?? 'Tòa nhà'} - Tầng ${room.floorLevel ?? 1}`,
+          subText: `${room.buildingName ?? 'Tòa nhà'} • ${room.floorLevel === 0 ? 'Tầng Trệt' : `Tầng ${room.floorLevel}`}${room.notes ? ` • ${room.notes}` : ''}`,
           directionType: 'STRAIGHT',
-          viewMode: room.floorLevel && room.floorLevel > 1 ? 'BUILDING_FLOOR' : 'OVERALL_CAMPUS',
+          viewMode: isIndoor ? 'BUILDING_FLOOR' : 'OVERALL_CAMPUS',
           buildingCode: room.buildingCode,
           floorLevel: room.floorLevel,
           pathPoints: [
-            [-6, 0.15, 14],
+            [-4.5, 0.2, 7.0],
             room.doorCoordinates,
           ],
-          cameraPos: [24, 26, 24],
-          cameraTarget: [0, 2, 0],
-          distanceMeters: 45,
+          cameraPos: [room.doorCoordinates[0] + 12, (room.floorLevel ?? 0) * 2.4 + 16, room.doorCoordinates[2] + 18],
+          cameraTarget: room.doorCoordinates,
+          distanceMeters: 35,
         },
       ]);
     }
@@ -83,26 +114,61 @@ export function TopSearchBar() {
 
           {/* Search Text */}
           <div className="flex-1 text-[13px] leading-tight truncate">
-            <span className="text-slate-500 font-normal">Điểm đến: </span>
-            <span className="text-slate-900 font-semibold">
-              {targetRoom ? `${targetRoom.code} - ${targetRoom.buildingName ?? 'Tòa B'} (Cơ sở 1)` : 'Phòng B302 - Tòa B (Cơ sở 1)'}
-            </span>
+            {activeRoute ? (
+              <>
+                <span className="text-sky-600 font-semibold">Lộ trình: </span>
+                <span className="text-slate-900 font-bold">Tòa H → Tòa J (Cơ sở 3)</span>
+              </>
+            ) : selectedBuildingCode ? (
+              <>
+                <span className="text-slate-500 font-normal">Đang chọn: </span>
+                <span className="text-slate-900 font-semibold uppercase">{selectedBuildingCode.replace(/_/g, ' ')}</span>
+              </>
+            ) : (
+              <>
+                <span className="text-slate-400 font-normal">Đến: </span>
+                <span className="text-slate-900 font-bold">
+                  {targetRoom ? `${targetRoom.code} - ${targetRoom.name}` : 'Tìm phòng (I001, K001, H101...)'}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Search Modal */}
+      {/* Search Modal Overlay */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm p-4 flex flex-col justify-start items-center">
-          <div className="w-full max-w-sm bg-white rounded-3xl shadow-2xl p-4 mt-12 border border-slate-100">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <span className="text-sm font-bold text-slate-900">Chọn phòng đích đến</span>
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-start justify-center p-4 pt-16 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl w-full max-w-md p-4 shadow-2xl border border-slate-100">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <div className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-blue-600" />
+                <span>Tra cứu phòng & khu chức năng UTH</span>
+              </div>
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(false)}
-                className="p-1 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                className="p-1 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
               >
                 <X className="w-4 h-4" strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {/* Quick Actions (CS3 Route) */}
+            <div className="mt-3 p-2.5 rounded-xl bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-100 flex items-center justify-between">
+              <div>
+                <div className="text-xs font-bold text-sky-900">Lộ trình mẫu Cơ sở 3</div>
+                <div className="text-[11px] text-sky-700">Tòa H → Tòa J (75m, ~1 phút)</div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  startRouteBetweenBuildings('toa_h', 'toa_j');
+                  setIsSearchOpen(false);
+                }}
+                className="px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold shadow-sm transition-all cursor-pointer"
+              >
+                Dẫn đường
               </button>
             </div>
 
@@ -111,14 +177,14 @@ export function TopSearchBar() {
               <input
                 type="text"
                 autoFocus
-                placeholder="Tìm phòng (B302, B301, Lab AI...)"
+                placeholder="Nhập mã phòng, tên phòng hoặc viện (I001, K001, H101, Viện CNTT, WC...)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-blue-500"
               />
             </div>
 
-            <div className="mt-3 max-h-64 overflow-y-auto space-y-1 pr-1">
+            <div className="mt-3 max-h-72 overflow-y-auto space-y-1 pr-1">
               {filteredRooms.map((room) => (
                 <button
                   key={room.id}
@@ -127,19 +193,23 @@ export function TopSearchBar() {
                   className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors text-left group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">
                       {room.code.slice(0, 1)}
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
-                        {room.code} - {room.name}
+                      <div className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5 flex-wrap">
+                        <span>{room.code}</span>
+                        <span>-</span>
+                        <span>{room.name}</span>
+                        {getRoomTypeBadge(room.roomType)}
                       </div>
                       <div className="text-xs text-slate-500">
-                        {room.buildingName ?? 'Tòa nhà'} • Tầng {room.floorLevel ?? 1}
+                        {room.buildingName ?? 'Tòa nhà'} • {room.floorLevel === 0 ? 'Tầng Trệt' : `Tầng ${room.floorLevel}`}
+                        {room.notes && <span className="text-slate-400 ml-1">({room.notes})</span>}
                       </div>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" strokeWidth={1.5} />
+                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors shrink-0" strokeWidth={1.5} />
                 </button>
               ))}
 
