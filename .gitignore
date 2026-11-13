@@ -70,3 +70,10 @@ constitution.md
 scripts/make_import_safe.py
 scripts/verify-db.ts
 scripts/generate-real-rooms.ts
+
+# uncompressed heavy raw models (>50MB, web uses optimized assets)
+public/models/cs1/T*.glb
+!public/models/cs1/toa_*.glb
+public/models/cs1/*.zip
+*.skp
+tools/analyze_*.js

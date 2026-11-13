@@ -1,5 +1,30 @@
 # Vibe Coding & 3D Graphics Development Rules (Web 3D + Blender MCP)
 
+## 0. GIAO THỨC TỰ ĐỘNG NHẬN DIỆN VÀ KÍCH HOẠT SKILL (AUTO-SKILL ROUTER PROTOCOL)
+TRƯỚC KHI thực hiện bất kỳ yêu cầu nào của User, Agent BẮT BUỘC phải thực hiện quy trình 4 bước:
+
+1. **Đọc Bối Cảnh (Context Loading):**
+   - Tự động đọc `.agent/memory/architecture.md` và `.agent/memory/progress.md` trước khi xử lý hoặc sinh mã.
+
+2. **Phân Tích Ý Định & Kích Hoạt Kỹ Năng (Intent -> Skill Mapping):**
+   - Đối chiếu từ khóa yêu cầu của User với 6 kỹ năng chuyên sâu trong `.agent/skills/`:
+     - `vibe-fullstack-architect`: UI, Next.js, React 19, Tailwind, Zustand, Lucide, State, Layout.
+     - `r3f-3d-architect`: Three.js, R3F, Canvas, 3D, GLTF/GLB, Mesh, Ánh sáng, Shadow, Tối ưu 60 FPS, Z-fighting.
+     - `glsl-shader-wizard`: Shader, GLSL, Vertex/Fragment, Simplex Noise, Glow, Bloom, Postprocessing.
+     - `blender-python-animator`: Blender, Bpy, Modeling, Mesh, Rigging, Draco GLB export.
+     - `web-3d-motion-director`: Scroll animation, GSAP, Camera chuyển động mượt mà, Drei ScrollControls, HTML Overlay, Pointer-events.
+     - `vibe-debugger-memory`: Bắt lỗi, WebGL Crash, Playwright testing, Tự phục hồi lỗi (Self-healing).
+   - Tự động nạp file `SKILL.md` tương ứng và liên kết các MCP Servers cần thiết (`context7`, `playwright`, `sequential-thinking`, `magic-ui`, `blender`).
+
+3. **Xuất Huy Hiệu Kích Hoạt (Activation Badge):**
+   - BẮT BUỘC mở đầu mọi câu trả lời bằng dòng huy hiệu chính xác:
+     `⚡ [Auto-Skills Activated: <danh_sách_tên_skill_đã_nạp>] | 🔌 [MCPs: <danh_sách_mcp_sử_dụng>]`
+
+4. **Tự Động Kiểm Thử & Cập Nhật Trí Nhớ:**
+   - Sau khi hoàn thành code, kiểm thử bằng Playwright MCP (nếu có UI/WebGL) và cập nhật tiến độ vào `.agent/memory/progress.md`.
+
+---
+
 ## 1. Documentation & Latest API Synchronization (Context7 MCP)
 - Luôn gọi **Context7 MCP** (`@upstash/context7-mcp`) trước khi viết code mới hoặc refactor các tính năng liên quan đến Three.js, React Three Fiber (R3F), Drei, Rapier hoặc Next.js để đảm bảo sử dụng chính xác cú pháp và API mới nhất (đặc biệt đối với React 19 và Next.js App Router).
 
@@ -25,4 +50,3 @@
 ## 4. Kiểm thử tự động & Bắt lỗi WebGL (Playwright MCP)
 - Sử dụng **Playwright MCP** để tự động khởi chạy trình duyệt kiểm thử UI, render Canvas và đọc log lỗi console/WebGL sau khi hoàn thiện tính năng.
 - Kiểm tra tính ổn định của FPS, đảm bảo không có warning context lost, shader compilation error hoặc layout shift.
-
