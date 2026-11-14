@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" className="h-full bg-slate-950 text-slate-100">
+    <html lang="vi" className="h-full bg-slate-950 text-slate-100" suppressHydrationWarning>
       <body className={`${inter.className} h-full overflow-hidden select-none antialiased`}>
         <ClientPatch />
         {children}

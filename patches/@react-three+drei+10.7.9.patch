@@ -1,0 +1,41 @@
+diff --git a/node_modules/@react-three/drei/web/Html.js b/node_modules/@react-three/drei/web/Html.js
+index 81d68b7..e29d58b 100644
+--- a/node_modules/@react-three/drei/web/Html.js
++++ b/node_modules/@react-three/drei/web/Html.js
+@@ -114,6 +114,7 @@ const Html = /* @__PURE__ */React.forwardRef(({
+   } = useThree();
+   const [el] = React.useState(() => document.createElement(as));
+   const root = React.useRef(null);
++  const unmountTimeout = React.useRef(null);
+   const group = React.useRef(null);
+   const oldZoom = React.useRef(0);
+   const oldPosition = React.useRef([0, 0]);
+@@ -140,7 +141,12 @@ const Html = /* @__PURE__ */React.forwardRef(({
+   }, [occlude]);
+   React.useLayoutEffect(() => {
+     if (group.current) {
+-      const currentRoot = root.current = ReactDOM.createRoot(el);
++      if (unmountTimeout.current !== null) {
++        clearTimeout(unmountTimeout.current);
++        unmountTimeout.current = null;
++      }
++      const currentRoot = root.current || ReactDOM.createRoot(el);
++      root.current = currentRoot;
+       scene.updateMatrixWorld();
+       if (transform) {
+         el.style.cssText = `position:absolute;top:0;left:0;pointer-events:none;overflow:hidden;`;
+@@ -153,7 +159,13 @@ const Html = /* @__PURE__ */React.forwardRef(({
+       }
+       return () => {
+         if (target) target.removeChild(el);
+-        currentRoot.unmount();
++        unmountTimeout.current = setTimeout(() => {
++          if (root.current === currentRoot) {
++            root.current = null;
++            currentRoot.unmount();
++          }
++          unmountTimeout.current = null;
++        }, 0);
+       };
+     }
+   }, [target, transform]);
