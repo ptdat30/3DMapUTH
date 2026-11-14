@@ -122,7 +122,7 @@ export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
     shortName: 'Tòa C',
     subTitle: 'Khu Giảng Đường Đa Ngành C1 - C5',
     modelUrl: '/models/cs1/toa_c.glb',
-    position: [14.9, 4.05, 0.4],
+    position: [11.9, 4.05, -2],
     rotation: [0, -Math.PI / 2, 0], // Xoay -90 độ để góc chữ L ở Đông Bắc, nhánh dọc ở mép Đông
     scale: [15.0, 15.0, 14.0],
     plotSize: [22.3, 26.6],
@@ -205,7 +205,7 @@ export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
     name: 'Tòa Nhà E (Khu Đào Tạo Phía Đông)',
     shortName: 'Tòa E',
     subTitle: 'Viện Đào Tạo Quốc Tế & Khu Văn Phòng Khoa',
-    position: [25.9, 4.25, 14.7],
+    position: [29, 4.25, 11.7],
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     plotSize: [8.3, 28.9],
@@ -229,7 +229,7 @@ export const CS1_PARKINGS_LAYOUT: CS1ParkingConfig[] = [
     id: 'pkg_cs1_center',
     code: 'bai_xe_trung_tam',
     name: 'Bãi Xe Trung Tâm (Sân Trường LỚn)',
-    position: [-5.1, 0.05, 4.7],
+    position: [-4.1, 0.05, 2.7],
     size: [33.3, 18.6],
     color: '#ff3131',
     relativeLocationComment:
