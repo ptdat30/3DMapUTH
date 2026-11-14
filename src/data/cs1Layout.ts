@@ -54,7 +54,7 @@ export interface CS1ParkingConfig {
  */
 export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
   // --------------------------------------------------------------------------
-  // 1. TÒA A (KHỐI DUY NHẤT - TRUNG TÂM HIỆU BỘ & ĐÀO TẠO MẶT TIỀN)
+  // 1. TÒA A (MODEL 3D .GLB THỰC TẾ - TRUNG TÂM HIỆU BỘ & ĐÀO TẠO MẶT TIỀN)
   // --------------------------------------------------------------------------
   {
     id: 'bld_cs1_toa_a',
@@ -62,9 +62,10 @@ export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
     name: 'Tòa Nhà A (Hiệu Bộ & Đào Tạo)',
     shortName: 'Tòa A',
     subTitle: 'Khu Trung Tâm Hành Chính, Hiệu Bộ, Hội Trường & Phòng Đào Tạo',
-    position: [2.0, 4.25, 18.2],
+    modelUrl: '/models/cs1/toa_a.glb',
+    position: [2.0, 4.3, 18.2],
     rotation: [0, 0, 0],
-    scale: [1, 1, 1],
+    scale: [18.7, 13.2, 8.5],
     plotSize: [35.6, 8.3],
     height: 8.5,
     floors: 5,
@@ -73,7 +74,7 @@ export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
     primaryColor: '#f8fafc',
     accentColor: '#3b82f6',
     relativeLocationComment:
-      'Khối Tòa A duy nhất trải dài suốt mặt tiền trung tâm trường (kích thước 35.6m x 8.3m), nằm ngay phía sau dải Bãi xe cổng chính Võ Oanh và phía trước Bãi xe trung tâm.',
+      'Khối model 3D thực tế Tòa A duy nhất trải dài suốt mặt tiền trung tâm trường (kích thước 35.6m x 8.3m), nằm ngay phía sau dải Bãi xe cổng chính Võ Oanh và phía trước Bãi xe trung tâm.',
   },
 
   // --------------------------------------------------------------------------
@@ -197,7 +198,7 @@ export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
   },
 
   // --------------------------------------------------------------------------
-  // 6. TÒA E (KHỐI NHÀ DỌC PHÍA ĐÔNG)
+  // 6. TÒA E (MODEL 3D .GLB THỰC TẾ - KHU ĐÀO TẠO PHÍA ĐÔNG)
   // --------------------------------------------------------------------------
   {
     id: 'bld_cs1_toa_e',
@@ -205,9 +206,10 @@ export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
     name: 'Tòa Nhà E (Khu Đào Tạo Phía Đông)',
     shortName: 'Tòa E',
     subTitle: 'Viện Đào Tạo Quốc Tế & Khu Văn Phòng Khoa',
-    position: [29, 4.25, 11.7],
-    rotation: [0, 0, 0],
-    scale: [1, 1, 1],
+    modelUrl: '/models/cs1/toa_e.glb',
+    position: [25.9, 4.25, 14.7],
+    rotation: [0, -Math.PI / 2, 0], // Xoay 180 độ so với góc ban đầu để mặt tiền/hành lang hướng chuẩn vào sân trường
+    scale: [15.2, 13.5, 11.4],
     plotSize: [8.3, 28.9],
     height: 8.5,
     floors: 5,
@@ -216,7 +218,7 @@ export const CS1_BUILDINGS_LAYOUT: CS1BuildingConfig[] = [
     primaryColor: '#f8fafc',
     accentColor: '#94a3b8',
     relativeLocationComment:
-      'Nằm độc lập chạy dọc ranh giới phía Đông khuôn viên, cách Tòa C và Tòa A một khoảng hành lang thông thoáng 2.0m. Kéo dài từ ngang Tòa C xuống gần hết mặt tiền phía Nam.',
+      'Khối model 3D thực tế Tòa E nằm độc lập chạy dọc ranh giới phía Đông khuôn viên, cách Tòa C và Tòa A một khoảng hành lang thông thoáng 2.0m. Kéo dài từ ngang Tòa C xuống gần hết mặt tiền phía Nam.',
   },
 ];
 

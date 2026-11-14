@@ -94,12 +94,12 @@ Quản lý tập trung qua `src/data/cs1Layout.ts` và render tại `src/compone
 
 | Mã tòa / Khu vực | Tên công trình | Vị trí Three.js [X, Y, Z] | File Model (.glb) | Dung lượng | Chức năng |
 | --- | --- | --- | --- | --- | --- |
-| `toa_a` | Tòa Nhà A (Khối duy nhất) | `[2.0, 4.25, 18.2]` | Procedural Maquette | - | Khối Hiệu Bộ, Ban Giám Hiệu, Hội Trường & Phòng Đào Tạo |
+| `toa_a` | Tòa Nhà A (Hiệu Bộ & Đào Tạo) | `[2.0, 4.3, 18.2]` | `/models/cs1/toa_a.glb` | 2.40 MB (gốc 66.4MB) | Khối Hiệu Bộ, Ban Giám Hiệu, Hội Trường & Phòng Đào Tạo (Mặt tiền) |
 | `toa_b` | Tòa Nhà B (Chữ L) | `[-18.9, 4.25, 8.0]` | `/models/cs1/toa_b.glb` | 4.26 MB (gốc 96.6MB) | Giảng đường B, Khoa CNTT & Hệ thống Lab máy tính / AI |
 | `toa_c` | Tòa Nhà C (Chữ L) | `[14.9, 4.05, 0.4]` | `/models/cs1/toa_c.glb` | 2.60 MB (gốc 60.6MB) | Giảng đường C đa ngành & Văn phòng các Viện |
 | `toa_d` | Tòa Nhà D | `[-3.6, 4.0, -21.5]` | `/models/cs1/toa_d.glb` | 4.12 MB (gốc 82.5MB) | Giảng đường chuyên đề phía sau (cuối hành lang thông gió B-C) |
 | `toa_f` | Tòa Nhà F | `[-19.9, 3.5, -17.3]` | `/models/cs1/toa_f.glb` | 5.22 MB (gốc 120.8MB) | Phòng học chuyên ngành & Sau đại học (Góc Tây Bắc) |
-| `toa_e` | Tòa Nhà E | `[25.9, 4.25, 14.7]` | Procedural Maquette | - | Viện Đào Tạo Quốc Tế (Chạy dọc mép ranh giới phía Đông) |
+| `toa_e` | Tòa Nhà E | `[25.9, 4.25, 14.7]` | `/models/cs1/toa_e.glb` | 2.24 MB (gốc 44.5MB) | Viện Đào Tạo Quốc Tế (Chạy dọc mép ranh giới phía Đông) |
 | `pkg_cs1_center` | Bãi Xe Trung Tâm | `[-5.1, 0.05, 4.7]` | Sàn đỏ `#ff3131` | - | Sân sinh hoạt chung & Bãi xe trung tâm lớn |
 | `pkg_cs1_front` | Bãi Xe Mặt Tiền | `[2.0, 0.05, 25.7]` | Sàn đỏ `#ff3131` | - | Dải bãi đỗ xe dọc cổng chính đường Võ Oanh |
 | `pkg_cs1_southwest` | Nhà Xe Cán Bộ | `[-18.9, 0.05, 23.0]` | Sàn đỏ `#ff3131` | - | Nhà xe có mái che góc Tây Nam |

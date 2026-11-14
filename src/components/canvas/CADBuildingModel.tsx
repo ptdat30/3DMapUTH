@@ -52,6 +52,11 @@ class ModelErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryStat
 // Cache tuned scenes to prevent garbage collection spikes on component re-renders
 const tunedSceneCache = new WeakMap<THREE.Group, THREE.Group>();
 
+// Static reusable objects for zero-allocation bounding-box raycasting
+const _inverseMatrix = new THREE.Matrix4();
+const _ray = new THREE.Ray();
+const _hitPoint = new THREE.Vector3();
+
 // Internal GLTF Loader Mesh
 function LoadedGLTFMesh({
   modelUrl,
@@ -85,6 +90,31 @@ function LoadedGLTFMesh({
         mesh.frustumCulled = true;
         mesh.castShadow = true;
         mesh.receiveShadow = false;
+
+        // CRITICAL PERFORMANCE: Bypass per-triangle raycasting on heavy CAD meshes
+        // Test only the bounding box instead of 600,000+ triangles per frame on mouse move
+        mesh.raycast = function (raycaster, intersects) {
+          if (!this.geometry.boundingBox) this.geometry.computeBoundingBox();
+          const box = this.geometry.boundingBox;
+          if (!box) return;
+
+          _inverseMatrix.copy(this.matrixWorld).invert();
+          _ray.copy(raycaster.ray).applyMatrix4(_inverseMatrix);
+
+          if (_ray.intersectsBox(box)) {
+            if (_ray.intersectBox(box, _hitPoint)) {
+              const worldPoint = _hitPoint.clone().applyMatrix4(this.matrixWorld);
+              const distance = raycaster.ray.origin.distanceTo(worldPoint);
+              if (distance >= raycaster.near && distance <= raycaster.far) {
+                intersects.push({
+                  distance,
+                  point: worldPoint,
+                  object: this,
+                });
+              }
+            }
+          }
+        };
 
         if (mesh.material) {
           const origMat = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;

@@ -101,7 +101,7 @@ export function GlowingArrowPath({
         return (
           <group key={`chevron-${idx}`} position={[0, seg.offsetZ, 0]}>
             {/* Main Glowing Arrow Mesh */}
-            <mesh castShadow>
+            <mesh>
               <extrudeGeometry args={[shape, extrudeSettings]} />
               <meshStandardMaterial
                 ref={idx === 0 ? glowMatRef : undefined}

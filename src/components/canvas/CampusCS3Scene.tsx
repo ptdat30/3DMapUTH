@@ -2,7 +2,7 @@
 
 import React, { useRef, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Html } from '@react-three/drei';
+import { OrbitControls, Html, AdaptiveDpr, AdaptiveEvents } from '@react-three/drei';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
 import { CameraRig } from './CameraRig';
@@ -433,6 +433,10 @@ export function CampusCS3Scene() {
         }}
         className="w-full h-full"
       >
+        {/* Adaptive resolution and event throttling for sustained 60 FPS */}
+        <AdaptiveDpr pixelated />
+        <AdaptiveEvents />
+
         {/* Studio Clean Architectural Maquette Background */}
         <color attach="background" args={['#eef2f6']} />
 
