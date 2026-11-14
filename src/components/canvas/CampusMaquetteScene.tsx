@@ -307,15 +307,17 @@ function ParkingZones({ materials }: { materials: ReturnType<typeof useMaquetteM
         <mesh receiveShadow material={materials.parkingRed}>
           <boxGeometry args={[central.size[0], 0.08, central.size[1]]} />
         </mesh>
-        <mesh position={[0, 0.05, 0]}>
+        {/* 1. Comment khối này để mất khung viền ngoài & 2 đường chéo */}
+        {/*<mesh position={[0, 0.05, 0]}>
           <boxGeometry args={[central.size[0] + 0.3, 0.02, central.size[1] + 0.3]} />
           <meshBasicMaterial color="#ffffff" wireframe />
-        </mesh>
-        {[-10, -5, 0, 5, 10].map((x) => (
+        </mesh>*/}
+        {/* 2. Comment vòng lặp này để mất 5 vạch kẻ dọc */}
+        {/*{[-10, -5, 0, 5, 10].map((x) => (
           <mesh key={`pk-line-${x}`} position={[x, 0.05, 0]} material={materials.parkingMarking}>
             <boxGeometry args={[0.15, 0.02, central.size[1] - 4]} />
           </mesh>
-        ))}
+        ))}*/}
 
         {/* Nhãn BÃI XE trung tâm */}
         <Html position={[0, 0.2, 0]} center distanceFactor={26} zIndexRange={[90, 0]}>
