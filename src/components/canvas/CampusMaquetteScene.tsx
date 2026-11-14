@@ -43,7 +43,7 @@ function useMaquetteMaterials() {
         metalness: 0.15,
       }),
       parkingRed: new THREE.MeshStandardMaterial({
-        color: '#ff3131',
+        color: '#818183',
         roughness: 0.6,
         metalness: 0.05,
       }),
