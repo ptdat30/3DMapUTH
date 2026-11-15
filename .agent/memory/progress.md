@@ -2,6 +2,35 @@
 
 ## 1. Các tính năng đã hoàn thành (Completed Features)
 
+- [x] **3D Campus WiFi Digital Twin & NOC Command Center (Đặc tả Master Spec):**
+  - **Chế độ Bật / Tắt (ON/OFF Dual-Mode):**
+    - Nút chuyển đổi công nghệ cao `NocToggleBadge.tsx` trên giao diện sa bàn giúp bật chế độ Digital Twin.
+    - **Bổ sung 3 vị trí TẮT trực diện, nổi bật và không thể bỏ lỡ khi đang ở chế độ Digital Twin:**
+      1. **Góc trên bên trái ([TopCommandBar.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/hud/TopCommandBar.tsx)):** Nút badge `ĐANG BẬT [ TẮT ✕ ]` nằm ngay cạnh logo thương hiệu để bấm tắt tức thì tại vị trí vừa bật.
+      2. **Góc trên bên phải ([TopCommandBar.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/hud/TopCommandBar.tsx)):** Nút đỏ nổi bật `[ TẮT DIGITAL TWIN ]` với chữ to rõ ràng trên mọi kích thước màn hình.
+      3. **Thanh Toolbar 3D nổi giữa màn hình ([LayerFloatingPills.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/hud/LayerFloatingPills.tsx)):** Nút pill màu đỏ `[ TẮT DIGITAL TWIN ]` nằm ngay giữa tầm mắt phía trên viewport 3D.
+  - **Môi trường Tactical Dark Mode (Obsidian Glass):** Background `#090D16`, Dark Fog, ánh sáng đa chiều làm nổi bật 6 tòa nhà và các lớp trực quan hóa.
+  - **Hệ thống dữ liệu PRNG xác thực cố định (`mulberry32` seed 42):** 6 phân khu (Tòa A, B, C, D, E, Khu F), 75 Access Points, 5 kịch bản mô phỏng thực tế (`NORMAL_DAY`, `PEAK_SHIFT_CHANGE`, `ONLINE_EXAM_SURGE`, `COURTYARD_FESTIVAL`, `AP_POWER_OUTAGE`), và chuỗi thời gian 24h (48 mốc).
+  - **Hệ thống HUD Overlays & Biểu đồ Chuyển động Sinh động (Live Animated Charts):**
+    - **Live RF Spectrum Analyzer ([RfSpectrumChart.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/charts/RfSpectrumChart.tsx)):** Đường cong Gauss dao động nhịp nhàng theo thời gian thực mô phỏng nhiễu sóng và bùng nổ gói tin WiFi; tia quét laser quang phổ (Oscilloscope sweep line) quét liên tục 60 FPS qua các kênh.
+    - **Floating & Pulsing Scatter Plot ([ClientScatterChart.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/charts/ClientScatterChart.tsx)):** Các chấm AP bồng bềnh hữu cơ; các điểm vượt ngưỡng SLA 50ms và nguy cấp phát sóng gợn lan tỏa (ripple waves); vạch quét radar chạy qua toàn bộ vùng phân tích; AP đang chọn có vòng ngắm laser xoay 360°.
+    - **Tactical Rotating Radar ([QualityRadarChart.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/charts/QualityRadarChart.tsx)):** Chùm quét radar chiến thuật xoay tròn 360° quét qua 6 đỉnh đa giác; các điểm đỉnh phát sáng và xung động liên tục.
+    - **Orbiting SLA Score Gauge ([SlaScoreRing.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/charts/SlaScoreRing.tsx)):** Vòng quỹ đạo vệ tinh nét đứt xoay tròn mượt mà quanh đồng hồ SLA, tâm điểm số phát sáng nhịp thở và bộ đếm chuyển động mượt.
+    - **Shimmering Health Bars ([BuildingRankChart.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/charts/BuildingRankChart.tsx)):** Dải năng lượng ánh sáng (light shimmer) lướt liên tục dọc theo các thanh tiến độ xếp hạng của 6 tòa nhà.
+    - **Live Telemetry Scrubber ([TelemetryLineChart.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/charts/TelemetryLineChart.tsx)):** Đầu con trỏ thời gian phát xung nhịp pinging radar màu cyan, đồng bộ cùng thanh tua thời gian.
+    - `TopCommandBar.tsx`: 5 thẻ KPI tổng hợp (SLA Score, Online APs, Active Clients, Avg Latency, Throughput), Breadcrumb phân cấp (`Toàn trường > Tòa > Tầng > AP`), bộ chọn 5 kịch bản, nút So sánh và Reset View.
+    - `LayerFloatingPills.tsx`: 5 nút bật/tắt lớp 3D (Heatmap, Chùm sóng AP, Nhãn Tòa nhà, Tách tầng X-Ray, Cột sáng Cảnh báo).
+    - `LeftAnalyticsDock.tsx`: Thanh tìm kiếm nhanh, lọc theo 5 mức trạng thái, Biểu đồ 4 (Xếp hạng sức khỏe tòa nhà) và Biểu đồ 6 (Treemap nguyên nhân sự cố).
+    - `RightInspectorDock.tsx`: Biểu đồ 5 (SLA Score Ring), Biểu đồ 8 (Bảng Cảnh báo Ưu tiên với `[Định vị 3D]` và `[Tự động tối ưu / Auto-Fix]`), Biểu đồ 2 (Radar đối chiếu chất lượng 6 trục), Biểu đồ 7 (Scatter plot Client vs Latency có ngưỡng SLA 50ms), Biểu đồ 9 (Phổ giao thoa kênh RF 2.4GHz/5GHz), và thẻ thanh tra phần cứng AP cấp 4.
+    - `BottomTimelineBar.tsx`: Cụm tua thời gian 24h, Play/Pause, tốc độ (1x, 5x, 10x), Biểu đồ 3 (Telemetry Line Chart).
+    - `CompareModalDrawer.tsx`: Bảng đối chiếu trực tiếp 2 tòa nhà side-by-side.
+  - **Các lớp 3D tích hợp trên CS1:**
+    - `AlertPillars.tsx`: Cột sáng laser đỏ/cam thẳng đứng xung động trên các tòa/AP có sự cố nghiêm trọng (Tòa C AP-C4-02).
+    - `BuildingHealthBadges.tsx`: Huy hiệu Glassmorphism nổi trên nóc 6 tòa nhà hiển thị điểm sức khỏe và trạng thái.
+    - `ApNodesLayer.tsx`: Các quả cầu AP phát sáng theo màu trạng thái và sóng lan tỏa (Pulse Ring).
+    - `FloorXRaySlice.tsx`: Mặt cắt tầng Hologram 2.5D với bản đồ nhiệt Canvas Heatmap RSSI.
+    - `TwinCameraRig.tsx`: Bay camera mượt mà $0.6\text{s} - 0.8\text{s}$ tới tòa nhà hoặc AP được chọn.
+  - **Tính năng Tự động Tối ưu hóa (Auto-Fix):** Nhấn `[Tự động tối ưu]` lập tức phục hồi AP-C4-02, tăng điểm Tòa C từ 36 (CRITICAL) lên 86 (GOOD), giải tỏa cảnh báo đỏ.
 - [x] **Thiết kế & Tái cấu trúc Mặt bằng 3D Cơ sở 1 (CS1 - Số 2 Võ Oanh):**
   - **100% Hoàn thành tích hợp toàn bộ 6 mô hình 3D thực tế (.glb):** `toa_a.glb`, `toa_b.glb`, `toa_c.glb`, `toa_d.glb`, `toa_e.glb`, `toa_f.glb`.
   - Tối ưu hóa siêu nén Draco + texture PBR 2K giảm tải từ **~470 MB xuống chỉ còn ~21 MB** (giảm hơn 95% dung lượng, tải tức thì <1s, 60 FPS mượt mà trên mọi thiết bị):

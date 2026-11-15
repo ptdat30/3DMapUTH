@@ -6,8 +6,14 @@ import { OrbitControls, Html, useGLTF, AdaptiveDpr, AdaptiveEvents } from '@reac
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
 import { useNavigationStore } from '@/store/useNavigationStore';
+import { useTwinStore } from '@/store/useTwinStore';
 import { CameraRig } from './CameraRig';
 import { CADBuildingModel } from './CADBuildingModel';
+import { AlertPillars } from '@/components/scene3d/AlertPillars';
+import { BuildingHealthBadges } from '@/components/scene3d/BuildingHealthBadges';
+import { ApNodesLayer } from '@/components/scene3d/ApNodesLayer';
+import { FloorXRaySlice } from '@/components/scene3d/FloorXRaySlice';
+import { TwinCameraRig } from '@/components/scene3d/TwinCameraRig';
 import {
   CS1_BUILDINGS_LAYOUT,
   CS1_PARKINGS_LAYOUT,
@@ -408,6 +414,7 @@ function PerimeterAndGate({ materials }: { materials: ReturnType<typeof useMaque
 export function CampusMaquetteScene() {
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const materials = useMaquetteMaterials();
+  const isTwinMode = useTwinStore((state) => state.isTwinMode);
 
   // Ánh xạ 6 tòa nhà từ cs1Layout.ts
   const bldA = CS1_BUILDINGS_LAYOUT.find((b) => b.code === 'toa_a')!;
@@ -442,15 +449,16 @@ export function CampusMaquetteScene() {
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />
 
-        {/* Màu nền trời dịu mắt */}
-        <color attach="background" args={['#eef2f6']} />
+        {/* Màu nền trời & Fog */}
+        <color attach="background" args={[isTwinMode ? '#090D16' : '#eef2f6']} />
+        {isTwinMode && <fog attach="fog" args={['#090D16', 40, 150]} />}
 
-        {/* Hệ thống chiếu sáng Maquette Chuẩn */}
-        <ambientLight intensity={0.9} color="#ffffff" />
-        <hemisphereLight args={['#ffffff', '#cbd5e1', 0.65]} />
+        {/* Hệ thống chiếu sáng Maquette Chuẩn & Tactical Dark Mode */}
+        <ambientLight intensity={isTwinMode ? 0.6 : 0.9} color={isTwinMode ? '#94a3b8' : '#ffffff'} />
+        <hemisphereLight args={isTwinMode ? ['#38bdf8', '#090D16', 0.5] : ['#ffffff', '#cbd5e1', 0.65]} />
         <directionalLight
           position={[40, 55, 35]}
-          intensity={1.2}
+          intensity={isTwinMode ? 0.9 : 1.2}
           castShadow
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
@@ -463,8 +471,9 @@ export function CampusMaquetteScene() {
           shadow-normalBias={0.02}
         />
 
-        {/* GSAP Camera Rig */}
-        <CameraRig controlsRef={controlsRef} />
+        {/* Camera Rig (Standard Nav & Digital Twin NOC Fly-to) */}
+        {!isTwinMode && <CameraRig controlsRef={controlsRef} />}
+        {isTwinMode && <TwinCameraRig controlsRef={controlsRef} />}
 
         <OrbitControls
           ref={controlsRef}
@@ -472,21 +481,21 @@ export function CampusMaquetteScene() {
           enableDamping
           dampingFactor={0.08}
           maxPolarAngle={Math.PI / 2 - 0.08}
-          minDistance={12}
-          maxDistance={90}
+          minDistance={10}
+          maxDistance={110}
           target={[0, 2, 4]}
         />
 
         {/* Nền khuôn viên tổng thể (Khối đế vững chắc 140m x 140m) */}
         <mesh position={[0, -0.02, 0]} receiveShadow>
           <boxGeometry args={[140, 0.04, 140]} />
-          <meshStandardMaterial color="#e2e8f0" roughness={0.9} />
+          <meshStandardMaterial color={isTwinMode ? '#0b1120' : '#e2e8f0'} roughness={0.9} />
         </mesh>
 
         {/* Sân nền chính của cơ sở 1 (Khối đế sân trường 68m x 64m, cao độ +0.02m) */}
         <mesh position={[0, 0.01, 3.0]} receiveShadow>
           <boxGeometry args={[68, 0.02, 64]} />
-          <meshStandardMaterial color="#f1f5f9" roughness={0.8} />
+          <meshStandardMaterial color={isTwinMode ? '#131e32' : '#f1f5f9'} roughness={0.8} />
         </mesh>
 
         {/* ================================================================ */}
@@ -505,28 +514,42 @@ export function CampusMaquetteScene() {
         {/* CỔNG CHÍNH VÕ OANH, TƯỜNG RÀO & ĐƯỜNG NỘI BỘ */}
         <PerimeterAndGate materials={materials} />
 
-        {/* QR Cổng Chính 3D Pin (Tại mặt tiền đường Võ Oanh) */}
-        <group position={[0, 0.2, 28.0]}>
-          <mesh position={[0, 1.4, 0]} castShadow>
-            <sphereGeometry args={[0.38, 16, 16]} />
-            <meshStandardMaterial color="#22c55e" emissive="#16a34a" emissiveIntensity={0.6} />
-          </mesh>
-          <mesh position={[0, 0.9, 0]} rotation={[Math.PI, 0, 0]}>
-            <coneGeometry args={[0.36, 0.7, 16]} />
-            <meshStandardMaterial color="#22c55e" />
-          </mesh>
-          <mesh position={[0, 1.4, 0.3]}>
-            <sphereGeometry args={[0.13, 12, 12]} />
-            <meshBasicMaterial color="#ffffff" />
-          </mesh>
+        {/* ================================================================ */}
+        {/* CÁC LỚP 3D DIGITAL TWIN NOC CHUYÊN BIỆT (CHỈ HIỂN THỊ KHI BẬT)     */}
+        {/* ================================================================ */}
+        {isTwinMode && (
+          <>
+            <AlertPillars />
+            <BuildingHealthBadges />
+            <ApNodesLayer />
+            <FloorXRaySlice />
+          </>
+        )}
 
-          <Html position={[0, 0.1, 1.4]} center distanceFactor={28} zIndexRange={[100, 0]}>
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-800 text-[11px] font-bold shadow-lg border border-slate-200/90 whitespace-nowrap">
-              <span className="text-emerald-500 font-extrabold">QR</span>
-              <span>Cổng Chính (Số 2 Võ Oanh)</span>
-            </div>
-          </Html>
-        </group>
+        {/* QR Cổng Chính 3D Pin (Tại mặt tiền đường Võ Oanh) */}
+        {!isTwinMode && (
+          <group position={[0, 0.2, 28.0]}>
+            <mesh position={[0, 1.4, 0]} castShadow>
+              <sphereGeometry args={[0.38, 16, 16]} />
+              <meshStandardMaterial color="#22c55e" emissive="#16a34a" emissiveIntensity={0.6} />
+            </mesh>
+            <mesh position={[0, 0.9, 0]} rotation={[Math.PI, 0, 0]}>
+              <coneGeometry args={[0.36, 0.7, 16]} />
+              <meshStandardMaterial color="#22c55e" />
+            </mesh>
+            <mesh position={[0, 1.4, 0.3]}>
+              <sphereGeometry args={[0.13, 12, 12]} />
+              <meshBasicMaterial color="#ffffff" />
+            </mesh>
+
+            <Html position={[0, 0.1, 1.4]} center distanceFactor={28} zIndexRange={[100, 0]}>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-800 text-[11px] font-bold shadow-lg border border-slate-200/90 whitespace-nowrap">
+                <span className="text-emerald-500 font-extrabold">QR</span>
+                <span>Cổng Chính (Số 2 Võ Oanh)</span>
+              </div>
+            </Html>
+          </group>
+        )}
       </Canvas>
     </div>
   );

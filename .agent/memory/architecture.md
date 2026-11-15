@@ -31,11 +31,34 @@
 │   │   ├── canvas/               # WebGL R3F Scenes & 3D Components
 │   │   │   ├── CADBuildingModel.tsx      # Loader GLTF với WeakMap cache & Error Boundary
 │   │   │   ├── CampusCS3Scene.tsx        # Toàn cảnh Cơ sở 3 (Đường, sân bóng, bãi xe, khối nhà)
-│   │   │   ├── CampusMaquetteScene.tsx   # Toàn cảnh Cơ sở 1 (Sa bàn kiến trúc)
+│   │   │   ├── CampusMaquetteScene.tsx   # Toàn cảnh Cơ sở 1 (Sa bàn kiến trúc & Digital Twin)
 │   │   │   ├── CameraRig.tsx             # GSAP Timeline điều phối Orbit Camera
 │   │   │   ├── CinematicTourManager.tsx  # Quản lý tour bay camera khi tìm phòng Gym
 │   │   │   ├── NavigationPath3D.tsx      # Ống ánh sáng dẫn đường 3D (TubeGeometry)
 │   │   │   └── BuildingTooltip.tsx       # Html annotation tương tác trên đầu tòa nhà
+│   │   ├── charts/               # 8 Biểu đồ SVG/Canvas tối ưu 60 FPS cho Digital Twin
+│   │   │   ├── AlertActionTable.tsx      # Bảng cảnh báo P1/P2 kèm Fly-to 3D và Auto-Fix
+│   │   │   ├── BuildingRankChart.tsx     # Xếp hạng sức khỏe 6 phân khu (SLA 80)
+│   │   │   ├── ClientScatterChart.tsx    # Scatter plot tương quan Client vs Latency (SLA 50ms)
+│   │   │   ├── IssueTreemapChart.tsx     # Treemap tỷ trọng 5 nhóm nguyên nhân sự cố
+│   │   │   ├── QualityRadarChart.tsx     # Radar đối chiếu chất lượng 6 trục
+│   │   │   ├── RfSpectrumChart.tsx       # Phổ giao thoa kênh RF 2.4GHz / 5GHz
+│   │   │   ├── SlaScoreRing.tsx          # Vòng đo Doughnut SLA tâm điểm và phân bổ 75 AP
+│   │   │   └── TelemetryLineChart.tsx    # Chuỗi thời gian kép Latency/Jitter/Throughput
+│   │   ├── hud/                  # HUD Overlays phòng điều hành NOC Digital Twin
+│   │   │   ├── BottomTimelineBar.tsx     # Thanh tua 24h, Play/Pause, tốc độ 1x/5x/10x
+│   │   │   ├── CompareModalDrawer.tsx    # Đối chiếu trực tiếp 2 tòa nhà side-by-side
+│   │   │   ├── LayerFloatingPills.tsx    # Nút bật/tắt 5 lớp 3D
+│   │   │   ├── LeftAnalyticsDock.tsx     # Bảng phân tích bên trái (Xếp hạng & Treemap)
+│   │   │   ├── NocToggleBadge.tsx        # Nút chuyển đổi BẬT/TẮT chế độ Digital Twin NOC
+│   │   │   ├── RightInspectorDock.tsx    # Bảng thanh tra bên phải (SLA, Cảnh báo, RF, AP)
+│   │   │   └── TopCommandBar.tsx         # Thanh chỉ huy 5 KPI, Breadcrumb, 5 kịch bản
+│   │   ├── scene3d/              # Các lớp hiển thị 3D cho Digital Twin
+│   │   │   ├── AlertPillars.tsx          # Cột sáng laser đỏ/cam thẳng đứng xung động
+│   │   │   ├── ApNodesLayer.tsx          # 75 quả cầu AP và vòng sóng lan tỏa (Pulse Ring)
+│   │   │   ├── BuildingHealthBadges.tsx  # Huy hiệu Glassmorphism nổi trên nóc 6 tòa
+│   │   │   ├── FloorXRaySlice.tsx        # Mặt cắt tầng Hologram 2.5D và Canvas Heatmap RSSI
+│   │   │   └── TwinCameraRig.tsx         # Điều khiển nội suy mượt camera bay tới AP/Tòa
 │   │   └── ui/                   # Giao diện phẳng Next.js / Tailwind CSS
 │   │       ├── TopSearchBar.tsx          # Thanh tìm kiếm phòng học / tòa nhà
 │   │       ├── FloorSelector.tsx         # Bộ chọn tầng & lọc phòng
@@ -47,10 +70,16 @@
 │   │   └── useCinematicTour.ts   # Custom hook timeline camera, highlight & draw path
 │   ├── lib/
 │   │   └── prisma.ts             # Prisma Client singleton
+│   ├── simulation/               # Động cơ mô phỏng Digital Twin
+│   │   ├── campusGenerator.ts    # Sinh dữ liệu 6 tòa nhà, 75 APs, 5 kịch bản, 24h curve
+│   │   ├── healthMath.ts         # Công thức tính Health Score H & phân loại 5 trạng thái
+│   │   └── prng.ts               # Mulberry32 PRNG cố định Seed 42
 │   ├── store/
-│   │   └── useNavigationStore.ts # Zustand global store quản lý navigation & camera state
+│   │   ├── useNavigationStore.ts # Zustand global store quản lý navigation & camera state
+│   │   └── useTwinStore.ts       # Zustand store quản lý trạng thái Digital Twin NOC
 │   └── types/
-│       └── navigation.ts         # TypeScript interfaces & types
+│       ├── navigation.ts         # TypeScript interfaces & types cho tìm đường
+│       └── wifiTwin.ts           # TypeScript interfaces & types cho Digital Twin NOC
 └── tools/
     └── blender_mcp_addon.py      # Addon Blender MCP kết nối AI trực tiếp với Blender
 ```
