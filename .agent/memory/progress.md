@@ -32,6 +32,18 @@
   - **Tối ưu Bản đồ 2D Tòa K trên màn hình di động (`Building2DNavigator.tsx`):**
     - Thêm nút chuyển đổi nhanh `[Bản đồ / Chỉ dẫn]` trên header mobile để ẩn/hiện bảng danh sách bước đi theo nhu cầu.
     - Hàng phím chọn tầng (Trệt, T1, T2, T3) hỗ trợ vuốt cuộn ngang mượt mà, không bị vỡ layout.
+- [x] **Hệ thống Giao diện Mẫu Dẫn đường 2D Tối Giản Tông Ấm (Warm Minimalist 2D Architectural Wayfinding):**
+  - **Tài liệu Đặc tả Thiết kế Kiến trúc:** Đã xuất bản file master [dac_ta_giao_dien_ban_do_2d_uth.md](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/dac_ta_giao_dien_ban_do_2d_uth.md) và lưu trữ ảnh gốc [public/2d_map_reference.jpg](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/public/2d_map_reference.jpg).
+  - **Lập trình Component Mới [WarmMinimalist2DNavigator.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/navigation2d/WarmMinimalist2DNavigator.tsx):**
+    - Khổ dọc chuẩn di động 3:4 (`viewBox="0 0 480 640"`), triệt tiêu hoàn toàn co giật và méo hình học.
+    - Màu sắc quy chuẩn: Nền kem `#F3EFEA`, viền than `#4A4540`, P.301 `#FAF2E6`, P.302 `#C8BEB3`, Cầu thang `#605B55` với dải sọc `#48443F`, WC `#B5C2C9`, Tuyến đường `#0F4C5C`.
+    - Đục khe cửa ra vào $40\text{px}$, vân bậc tam cấp, icon WC Nam/Nữ ISO.
+    - Tuyến đường di chuyển từ Cầu Thang 2 -> Hành lang -> Phòng 301 với 4 mũi tên chỉ hướng rẽ.
+    - Pin giọt nước có icon người trắng, tính năng "Mô phỏng bước đi" di chuyển thời gian thực.
+    - Thẻ chỉ dẫn đáy có nút thu gọn/mở rộng, hỗ trợ pan/zoom đa điểm trên mobile.
+  - **Tích hợp Kép vào [Building2DNavigator.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/components/navigation2d/Building2DNavigator.tsx):**
+    - Mặc định khởi động chế độ Tối Giản Tông Ấm khi bấm nút `[2D Tòa K]`.
+    - Hỗ trợ chuyển đổi mượt mà qua lại giữa bản vẽ tối giản và bản vẽ kỹ thuật phân tầng.
 - [x] **Hệ thống Giao diện Mẫu Dẫn đường 2D Tòa K (Cơ sở 3 - 4 Tầng):**
   - **Mặt bằng Kiến trúc SVG Chuẩn xác:** Hệ tọa độ thực 1000x400 (60m bề rộng thực tế, scale 0.06m/px) đầy đủ cho cả 4 tầng (Tầng trệt, Tầng 1, Tầng 2, Tầng 3), màu sắc quy chuẩn kiến trúc: Hành lang hồng (`#e59cf5`), Tường bê tông xám (`#c5cdd4`), Bậc thang đen (`#2b2b2b`), Nhà vệ sinh xanh mạ (`#b8f566`), Cầu thang xanh da trời (`#2db2ff`), Phòng học vàng (`#ffdd55`).
   - **Mô hình Đồ thị & Thuật toán Dijkstra Đa Tầng:** 44 nút mạng (Nodes) và 65 cạnh (Edges) bao gồm các liên kết thẳng đứng xuyên tầng qua 3 cụm cầu thang (Đông-Bắc `NE`, Đông-Nam `SE`, Tây-Nam `SW`).
