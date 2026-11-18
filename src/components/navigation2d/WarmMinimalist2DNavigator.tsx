@@ -761,65 +761,6 @@ export function WarmMinimalist2DNavigator({
             </svg>
           </div>
         </div>
-
-        {/* Quick Room Floating Selector (Left side pills for easy room selection) */}
-        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 pointer-events-auto">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A736B] px-1">
-            Chọn nhanh điểm đến:
-          </span>
-          <div className="flex flex-wrap sm:flex-col gap-1 max-w-[220px]">
-            {Object.values(POI_LOCATIONS)
-              .filter((p) => p.type === 'classroom' || p.type === 'restroom')
-              .map((poi) => (
-                <button
-                  key={poi.id}
-                  type="button"
-                  onClick={() => handleRoomSelect(poi.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center justify-between gap-2 shadow-xs cursor-pointer ${
-                    endPoint === poi.id
-                      ? 'bg-[#0F4C5C] text-white shadow-md'
-                      : 'bg-[#FAF7F2]/90 hover:bg-white text-[#4A4540] border border-[#D8CFC4]'
-                  }`}
-                >
-                  <span className="truncate">{poi.name}</span>
-                  <span
-                    className={`text-[9px] px-1.5 py-0.5 rounded font-mono ${
-                      endPoint === poi.id
-                        ? 'bg-white/20 text-white'
-                        : 'bg-[#EAE4DC] text-[#7A736B]'
-                    }`}
-                  >
-                    {poi.code}
-                  </span>
-                </button>
-              ))}
-          </div>
-        </div>
-
-        {/* Floating Simulation Play/Pause Button on Right */}
-        <div className="absolute top-3 right-3 z-10 pointer-events-auto">
-          <button
-            type="button"
-            onClick={togglePlay}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-lg border text-xs font-bold transition active:scale-95 cursor-pointer ${
-              isPlaying
-                ? 'bg-amber-600 border-amber-500 text-white'
-                : 'bg-[#0F4C5C] border-[#0A3642] text-white hover:bg-[#135d70]'
-            }`}
-          >
-            {isPlaying ? (
-              <>
-                <Pause className="w-3.5 h-3.5" strokeWidth={1.5} />
-                <span>Tạm dừng</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-3.5 h-3.5 fill-current" strokeWidth={1.5} />
-                <span>Mô phỏng bước đi</span>
-              </>
-            )}
-          </button>
-        </div>
       </main>
 
       {/* =================================================================== */}
@@ -874,11 +815,35 @@ export function WarmMinimalist2DNavigator({
             </div>
 
             {/* Quick Action Footer */}
-            <div className="flex items-center justify-between text-xs pt-1 border-t border-[#EAE4DC]">
-              <div className="flex items-center gap-1.5 text-[#7A736B]">
-                <Footprints className="w-4 h-4 text-[#0F4C5C]" strokeWidth={1.5} />
-                <span>Tổng quãng đường: ~24 mét (khoảng 35 bước)</span>
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs pt-2 border-t border-[#EAE4DC]">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition active:scale-95 cursor-pointer ${
+                    isPlaying
+                      ? 'bg-amber-600 text-white'
+                      : 'bg-[#0F4C5C] text-white hover:bg-[#135d70]'
+                  }`}
+                >
+                  {isPlaying ? (
+                    <>
+                      <Pause className="w-3.5 h-3.5" strokeWidth={1.5} />
+                      <span>Tạm dừng</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-3.5 h-3.5 fill-current" strokeWidth={1.5} />
+                      <span>Mô phỏng bước đi</span>
+                    </>
+                  )}
+                </button>
+                <div className="flex items-center gap-1 text-[#7A736B] text-[11px] hidden sm:flex">
+                  <Footprints className="w-3.5 h-3.5 text-[#0F4C5C]" strokeWidth={1.5} />
+                  <span>~24m (35 bước)</span>
+                </div>
               </div>
+
               <button
                 type="button"
                 onClick={() => {
@@ -886,10 +851,10 @@ export function WarmMinimalist2DNavigator({
                   setEndPoint('p301');
                   setSimProgress(0.65);
                 }}
-                className="flex items-center gap-1 text-[#0F4C5C] hover:underline font-bold"
+                className="flex items-center gap-1 text-[#0F4C5C] hover:underline font-bold text-xs"
               >
                 <RotateCcw className="w-3 h-3" strokeWidth={1.5} />
-                <span>Đặt lại lộ trình gốc</span>
+                <span>Đặt lại lộ trình</span>
               </button>
             </div>
           </div>
