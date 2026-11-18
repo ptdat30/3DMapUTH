@@ -2,6 +2,47 @@
 
 ## 1. Các tính năng đã hoàn thành (Completed Features)
 
+- [x] **Tối ưu hóa Toàn diện Chức năng WiFi Digital Twin NOC trên Mobile:**
+  - **Triệt tiêu hiện tượng 2 panel 380px đè lấp toàn bộ màn hình 3D:**
+    - Cấu hình cả 2 dock `LeftAnalyticsDock.tsx` và `RightInspectorDock.tsx` mặc định **thu gọn (collapsed)** khi mở trên màn hình di động (< 1024px). Sa bàn 3D (cột sáng cảnh báo, quả cầu AP, heatmap) hiển thị trọn vẹn 100% tầm nhìn.
+    - Bổ sung 2 nút pill mở nhanh nổi bật ở 2 bên mép dưới: `[ 📊 Xếp hạng Tòa ]` và `[ 🛡️ SLA & Cảnh báo (N) ]` với huy hiệu số lượng sự cố đang mở.
+    - Khi người dùng bấm mở, panel hiển thị dưới dạng **Drawer Modal toàn màn hình** (`max-w-md mx-auto`) có lớp phủ nền mờ và nút đóng `[ Đóng ✕ ]` to rõ ràng ở góc trên.
+    - Khi bấm `[Định vị 3D]` hoặc `[Tự động tối ưu]` trong bảng cảnh báo, modal tự động đóng lại trên mobile để người dùng lập tức quan sát camera 3D bay tới AP gặp sự cố.
+  - **Khắc phục lỗi chồng chéo và tràn chữ thanh Timeline đáy (`BottomTimelineBar.tsx` & `TelemetryLineChart.tsx`):**
+    - Sắp xếp lại dòng thông số Băng thông (Mbps) và Độ trễ (ms) trong đồ thị telemetry với cờ `nowrap` và ngắt dòng thông minh, loại bỏ hoàn toàn hiện tượng rớt chữ ("Băng o thông") và gạch nối biến dạng.
+    - Căn chỉnh thanh điều khiển Play/Pause, tua tốc độ và đồng hồ hiển thị linh hoạt theo chiều ngang.
+  - **Tối ưu hóa thanh TopCommandBar trên mobile:**
+    - Co gọn logo thành `TWIN NOC`, giữ nút `TẮT ✕` dứt khoát ở góc trái, thu hẹp dropdown kịch bản và ẩn nút so sánh/nút tắt phụ trên mobile để thanh trên cùng không bị vỡ giao diện.
+- [x] **Tái cấu trúc & Tối ưu hóa Toàn diện Giao diện Mobile (Mobile-First UX):**
+  - **Khắc phục triệt để lỗi nút WIFI DIGITAL TWIN bị cắt cụt mép phải (Action Pills Cutoff):**
+    - Rút gọn nhãn cơ sở từ `Cơ sở 3 (3D Masterplan)` thành `Cơ sở 3` tiêu chuẩn, súc tích.
+    - Tối ưu nút `NocToggleBadge.tsx` thành dạng pill đồng nhất `[ ⚡ WiFi Twin | BẬT/TẮT ]` với chấm xanh nhấp nháy, loại bỏ dòng phụ "Nhấn để Bật Giám sát" chiếm diện tích ngang.
+    - Mở rộng container hàng nút từ `max-w-md` (448px) lên `sm:max-w-lg` (512px) và căn giữa `justify-center`, giúp cả 3 nút (Cơ sở 1/3, 2D Tòa K, WiFi Twin) chỉ chiếm tổng cộng ~340px, hiển thị trọn vẹn 100% không bị che lấp trên mọi kích thước màn hình.
+  - **Triệt tiêu 100% hiện tượng chồng chéo thanh điều khiển (Header Collisions):**
+    - Gom toàn bộ thanh tìm kiếm `TopSearchBar` và các phím chức năng vào một container phân cấp dọc duy nhất (`flex flex-col items-center gap-2`).
+    - Dòng 1: Thanh tìm kiếm nổi bo cong mềm mại tràn viền mobile `max-w-md`.
+    - Dòng 2: Hàng phím tiện ích ngang (`overflow-x-auto scrollbar-none`): Bộ chuyển cơ sở `[CS 1 | CS 3]`, Phím dẫn đường `[🗺️ 2D Tòa K]`, và Phím giám sát `[⚡ NOC Twin | BẬT/TẮT]` tự động co gọn trên mobile, không còn hiện tượng chèn ép, đè lấp lên nhau.
+  - **Tối ưu vị trí & kích thước Bộ chọn Tầng (`FloorSelector.tsx`):**
+    - Tịnh tiến vị trí xuống `top-32 sm:top-28` để không bao giờ va chạm với hàng phím chức năng phía trên.
+    - Tối ưu kích thước trên mobile xuống `w-11` (thay vì 54px) và các nút tròn $36\text{px}$ chuẩn công thái học di động, trả lại không gian thoáng đãng cho sa bàn 3D.
+  - **Nâng cấp Thẻ Dẫn đường Đáy Thông minh (`StepBottomSheet.tsx`):**
+    - **Chế độ Thu gọn / Mở rộng (Collapse / Expand Mode):** Chạm vào thanh drag handle hoặc nút chevron để thu gọn thẻ dẫn đường thành thanh mini-bar mỏng gọn $44\text{px}$ ở mép dưới (`Bước 1/4: Hướng Tòa Nhà B`), giải phóng hơn 90% diện tích màn hình để người dùng quan sát toàn cảnh 3D.
+    - **Sửa triệt để lỗi không thể đóng dẫn đường:** Loại bỏ vòng lặp `useEffect` ép mở lại lộ trình mẫu khi `isNavigating` tắt; cập nhật `resetNavigation()` xóa sạch `activeSteps: []` giúp nút đóng `[X]` hoạt động dứt khoát.
+    - Khi không trong trạng thái dẫn đường, thay thế toàn bộ thẻ to bằng nút pill nhỏ gọn `[ 🧭 Lộ trình mẫu: Cổng chính → P.302 ]` ở đáy màn hình.
+  - **Tối ưu Bản đồ 2D Tòa K trên màn hình di động (`Building2DNavigator.tsx`):**
+    - Thêm nút chuyển đổi nhanh `[Bản đồ / Chỉ dẫn]` trên header mobile để ẩn/hiện bảng danh sách bước đi theo nhu cầu.
+    - Hàng phím chọn tầng (Trệt, T1, T2, T3) hỗ trợ vuốt cuộn ngang mượt mà, không bị vỡ layout.
+- [x] **Hệ thống Giao diện Mẫu Dẫn đường 2D Tòa K (Cơ sở 3 - 4 Tầng):**
+  - **Mặt bằng Kiến trúc SVG Chuẩn xác:** Hệ tọa độ thực 1000x400 (60m bề rộng thực tế, scale 0.06m/px) đầy đủ cho cả 4 tầng (Tầng trệt, Tầng 1, Tầng 2, Tầng 3), màu sắc quy chuẩn kiến trúc: Hành lang hồng (`#e59cf5`), Tường bê tông xám (`#c5cdd4`), Bậc thang đen (`#2b2b2b`), Nhà vệ sinh xanh mạ (`#b8f566`), Cầu thang xanh da trời (`#2db2ff`), Phòng học vàng (`#ffdd55`).
+  - **Mô hình Đồ thị & Thuật toán Dijkstra Đa Tầng:** 44 nút mạng (Nodes) và 65 cạnh (Edges) bao gồm các liên kết thẳng đứng xuyên tầng qua 3 cụm cầu thang (Đông-Bắc `NE`, Đông-Nam `SE`, Tây-Nam `SW`).
+  - **Bộ tính toán Chỉ dẫn Từng bước (Turn-by-turn Guidance):** Tự động sinh chỉ dẫn bằng tiếng Việt tự nhiên ("Đi thẳng 18m", "Rẽ trái vào hành lang", "Lên cầu thang Đông-Bắc lên Tầng 2", "Điểm đến P.301 ở phía bên phải").
+  - **Tương tác Bản đồ Pan & Zoom Đẳng cấp:** Kéo thả chuột di chuyển mặt bằng, lăn chuột phóng to/thu nhỏ, nút bấm zoom in/out và Reset 100%, bật/tắt nhãn phòng và lưới tọa độ.
+  - **Mô phỏng Avatar Người di chuyển Thời gian thực:** Chức năng Play/Pause, thanh tua tiến trình (Scrubber Slider 0-100%), tùy chỉnh tốc độ 1x/2x/3x, tự động chuyển tầng theo bước chân avatar.
+  - **Chọn điểm Tương tác Trực tiếp trên Mặt bằng:** Click vào bất kỳ phòng học hoặc lối đi nào để hiện menu popup chọn làm "Điểm xuất phát" hoặc "Điểm đến".
+  - **Tích hợp Kép Đầy đủ:**
+    - Tuyến đường riêng biệt: `/navigation-2d` ([src/app/navigation-2d/page.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/app/navigation-2d/page.tsx)).
+    - Bản thuần HTML: `/navigation-2d.html` ([public/navigation-2d.html](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/public/navigation-2d.html)).
+    - Nút bấm trực tiếp trên Sa bàn 3D chính `[ 🗺️ Dẫn đường 2D (Tòa K) ]` ([src/app/page.tsx](file:///c:/Users/DAT/OneDrive%20-%20ut.edu.vn/Documents/Desktop/3DMapUTH/src/app/page.tsx)) mở Modal Overlay tương tác toàn màn hình có nút "Quay lại 3D".
 - [x] **3D Campus WiFi Digital Twin & NOC Command Center (Đặc tả Master Spec):**
   - **Chế độ Bật / Tắt (ON/OFF Dual-Mode):**
     - Nút chuyển đổi công nghệ cao `NocToggleBadge.tsx` trên giao diện sa bàn giúp bật chế độ Digital Twin.

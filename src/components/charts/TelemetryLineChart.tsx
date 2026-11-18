@@ -61,22 +61,22 @@ export function TelemetryLineChart() {
 
   return (
     <div className="w-full flex flex-col gap-1 select-none">
-      <div className="flex items-center justify-between text-[11px] px-1 font-mono">
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1 text-cyan-400">
-            <span className="w-2.5 h-1.5 rounded-sm bg-cyan-400/50 border border-cyan-400" />
-            Băng thông: {currentPt.throughputMbps} Mbps
+      <div className="flex flex-wrap items-center justify-between gap-1 text-[10px] sm:text-[11px] px-1 font-mono">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <span className="flex items-center gap-1 text-cyan-400 font-bold whitespace-nowrap">
+            <span className="w-2 h-1.5 rounded-sm bg-cyan-400/50 border border-cyan-400" />
+            {currentPt.throughputMbps} Mbps
           </span>
-          <span className="flex items-center gap-1 text-orange-400">
-            <span className="w-2.5 h-0.5 bg-orange-400" />
-            Độ trễ: {currentPt.latencyMs} ms
+          <span className="flex items-center gap-1 text-orange-400 font-bold whitespace-nowrap">
+            <span className="w-2 h-0.5 bg-orange-400" />
+            {currentPt.latencyMs} ms
           </span>
-          <span className="flex items-center gap-1 text-amber-300">
-            <span className="w-2.5 h-0.5 bg-amber-300 border-dashed border-b" />
+          <span className="flex items-center gap-1 text-amber-300 whitespace-nowrap hidden sm:inline-flex">
+            <span className="w-2 h-0.5 bg-amber-300 border-dashed border-b" />
             Jitter: {currentPt.jitterMs} ms
           </span>
         </div>
-        <span className="text-slate-400 text-[10px]">Click/Kéo để tua mốc thời gian</span>
+        <span className="text-slate-400 text-[9px] sm:text-[10px] whitespace-nowrap">Kéo để tua 24h</span>
       </div>
 
       <div className="relative w-full overflow-hidden rounded-lg bg-slate-950/70 border border-slate-800 cursor-crosshair">

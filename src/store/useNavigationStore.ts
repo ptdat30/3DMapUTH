@@ -221,6 +221,7 @@ export const useNavigationStore = create<NavigationStoreState>((set, get) => ({
     const fallbackTarget: Vector3Tuple = currentQr?.initialCameraTarget ?? [0, 0, 0];
 
     set({
+      activeSteps: [],
       currentStepIndex: 0,
       isNavigating: false,
       targetRoom: null,

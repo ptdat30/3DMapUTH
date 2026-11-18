@@ -102,17 +102,17 @@ export function FloorSelector() {
   };
 
   return (
-    <aside className="absolute right-3.5 top-20 md:top-24 z-20 pointer-events-auto">
+    <aside className="absolute right-2 sm:right-3.5 top-32 sm:top-28 z-20 pointer-events-auto">
       {/* Vertical Pill Selector Exactly as Reference Image */}
-      <div className="bg-white/90 backdrop-blur-md rounded-full p-1.5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 flex flex-col gap-1.5 w-[54px] items-center">
+      <div className="bg-white/95 backdrop-blur-md rounded-full p-1 sm:p-1.5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-200/80 flex flex-col gap-1 sm:gap-1.5 w-11 sm:w-[54px] items-center">
         {/* Button 1: Toàn cảnh */}
         <button
           type="button"
           onClick={handleSelectOverall}
-          className={`w-10 h-10 rounded-full flex items-center justify-center text-center leading-[1.1] transition-all cursor-pointer ${
+          className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-center leading-[1.05] transition-all cursor-pointer ${
             isOverall
-              ? 'bg-[#2563eb] text-white text-[10px] font-bold shadow-md shadow-blue-500/30'
-              : 'text-slate-800 text-[10px] font-semibold hover:bg-slate-100'
+              ? 'bg-[#2563eb] text-white text-[9px] sm:text-[10px] font-bold shadow-md shadow-blue-500/30'
+              : 'text-slate-800 text-[9px] sm:text-[10px] font-semibold hover:bg-slate-100'
           }`}
           title="Toàn cảnh sân trường"
         >
@@ -123,10 +123,10 @@ export function FloorSelector() {
         <button
           type="button"
           onClick={handleSelectBuilding}
-          className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+          className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
             isBuildingActive
-              ? 'bg-[#2563eb] text-white text-xs font-bold shadow-md shadow-blue-500/30'
-              : 'text-slate-800 text-xs font-semibold hover:bg-slate-100'
+              ? 'bg-[#2563eb] text-white text-[11px] sm:text-xs font-bold shadow-md shadow-blue-500/30'
+              : 'text-slate-800 text-[11px] sm:text-xs font-semibold hover:bg-slate-100'
           }`}
           title={currentBuildingLabel}
         >
@@ -141,7 +141,7 @@ export function FloorSelector() {
               key={`pill-lvl-${lvl}`}
               type="button"
               onClick={() => handleSelectFloor(lvl)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-semibold transition-all cursor-pointer ${
+              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-[11px] sm:text-xs font-semibold transition-all cursor-pointer ${
                 isFloorActive
                   ? 'bg-[#2563eb] text-white font-bold shadow-md shadow-blue-500/30'
                   : 'text-slate-700 hover:text-black hover:bg-slate-100'

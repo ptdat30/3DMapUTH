@@ -44,35 +44,34 @@ export function TopCommandBar() {
   const healthColor = getStatusColorToken(kpis.campusHealthScore >= 75 ? 'GOOD' : 'FAIR');
 
   return (
-    <header className="w-full h-16 px-4 bg-slate-950/85 backdrop-blur-md border-b border-slate-800 flex items-center justify-between pointer-events-auto select-none z-30 shadow-lg text-slate-100">
+    <header className="w-full h-14 sm:h-16 px-2.5 sm:px-4 bg-slate-950/85 backdrop-blur-md border-b border-slate-800 flex items-center justify-between pointer-events-auto select-none z-30 shadow-lg text-slate-100">
       {/* Left: Brand + Breadcrumb */}
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 pr-3 border-r border-slate-800">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-md shadow-cyan-950/50">
-            <Activity className="w-4 h-4 text-white animate-pulse" />
+      <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-2 pr-2 sm:pr-3 border-r border-slate-800">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-md shadow-cyan-950/50 shrink-0">
+            <Activity className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white animate-pulse" />
           </div>
           <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-black tracking-wider uppercase bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                UTH DIGITAL TWIN
+            <div className="flex items-center gap-1">
+              <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                <span className="sm:hidden">TWIN NOC</span>
+                <span className="hidden sm:inline">UTH DIGITAL TWIN</span>
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
             </div>
-            <span className="text-[9px] font-mono text-slate-400">NOC COMMAND CENTER</span>
+            <span className="text-[8px] sm:text-[9px] font-mono text-slate-400 hidden sm:inline">NOC COMMAND CENTER</span>
           </div>
 
           {/* Quick prominent toggle button directly at top-left */}
           <button
             type="button"
             onClick={() => toggleTwinMode(false)}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-rose-950/80 hover:bg-rose-600 border border-rose-500/60 text-rose-200 hover:text-white text-[11px] font-extrabold shadow-sm transition-all cursor-pointer ml-1"
+            className="flex items-center gap-1 px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-[10px] sm:text-[11px] font-black shadow-sm transition-all cursor-pointer ml-1 active:scale-95"
             title="Nhấn để TẮT chế độ Digital Twin và quay lại sa bàn"
           >
-            <PowerOff className="w-3 h-3 text-rose-400 group-hover:text-white" />
-            <span>ĐANG BẬT</span>
-            <span className="px-1.5 py-0.2 rounded bg-rose-600 text-white text-[9px] font-black uppercase">
-              TẮT ✕
-            </span>
+            <PowerOff className="w-3 h-3" />
+            <span className="hidden sm:inline">ĐANG BẬT</span>
+            <span>TẮT ✕</span>
           </button>
         </div>
 
@@ -178,12 +177,12 @@ export function TopCommandBar() {
       </div>
 
       {/* Right: Scenario Selector + Compare Mode + Reset View + Exit NOC */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         {/* Scenario Switcher */}
         <select
           value={scenario}
           onChange={(e) => setScenario(e.target.value as ScenarioId)}
-          className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-200 focus:outline-none focus:ring-1 focus:ring-cyan-400 cursor-pointer"
+          className="max-w-[120px] sm:max-w-none px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-[11px] sm:text-xs font-semibold text-slate-200 focus:outline-none focus:ring-1 focus:ring-cyan-400 cursor-pointer truncate"
         >
           {SCENARIOS.map((sc) => (
             <option key={sc.id} value={sc.id}>
@@ -196,7 +195,7 @@ export function TopCommandBar() {
         <button
           type="button"
           onClick={toggleCompareMode}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             isCompareMode
               ? 'bg-cyan-500 text-white shadow-md shadow-cyan-900/40 ring-1 ring-cyan-300'
               : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700'
@@ -204,24 +203,24 @@ export function TopCommandBar() {
           title="So sánh đối chiếu trực tiếp 2 tòa nhà"
         >
           <Split className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">So sánh</span>
+          <span>So sánh</span>
         </button>
 
         {/* Reset View Button */}
         <button
           type="button"
           onClick={resetView}
-          className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition-colors cursor-pointer"
+          className="p-1 sm:p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition-colors cursor-pointer"
           title="Đặt lại góc nhìn toàn cảnh"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>
 
-        {/* Close NOC Mode / Return to Normal Navigation - Prominently visible on all screen sizes */}
+        {/* Close NOC Mode / Return to Normal Navigation - Prominently visible on desktop */}
         <button
           type="button"
           onClick={() => toggleTwinMode(false)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white text-xs font-black transition-all cursor-pointer shadow-lg shadow-rose-950/70 ring-2 ring-rose-400/60 hover:scale-105 ml-1 whitespace-nowrap"
+          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white text-xs font-black transition-all cursor-pointer shadow-lg shadow-rose-950/70 ring-2 ring-rose-400/60 hover:scale-105 ml-1 whitespace-nowrap"
           title="Tắt Digital Twin NOC & quay lại sa bàn tìm đường bình thường"
         >
           <PowerOff className="w-3.5 h-3.5" />

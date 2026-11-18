@@ -1,12 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TrendingUp,
   CheckCircle2,
   CornerUpRight,
   CornerUpLeft,
   X,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { useNavigationStore } from '@/store/useNavigationStore';
 
@@ -25,6 +27,8 @@ function WalkingPersonIcon() {
 }
 
 export function StepBottomSheet() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   const activeSteps = useNavigationStore((state) => state.activeSteps);
   const activeRoute = useNavigationStore((state) => state.activeRoute);
   const currentStepIndex = useNavigationStore((state) => state.currentStepIndex);
@@ -41,117 +45,193 @@ export function StepBottomSheet() {
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === totalSteps - 1;
 
-  const renderStepIcon = () => {
+  const renderStepIcon = (small = false) => {
+    const iconClass = small ? 'w-5 h-5 text-slate-800' : 'w-7 h-7 text-slate-900';
     if (step.directionType === 'STRAIGHT' || step.stepOrder === 1) {
-      return <WalkingPersonIcon />;
+      return small ? (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-slate-900">
+          <circle cx="12" cy="4" r="2" />
+          <path d="M15.89 8.11C15.5 7.72 14.83 7 13.53 7h-2.06c-.85 0-1.63.48-2 1.24L7.5 12.2l1.83.82 1.67-3.4V14l-2.6 3.9 1.66 1.1 2.94-4.41V22h2v-8.5l1.88-2.35 2.12 3.18 1.66-1.1-2.9-4.36-.8-2.66 1.1.26z" />
+        </svg>
+      ) : (
+        <WalkingPersonIcon />
+      );
     }
     if (step.directionType === 'LEFT') {
-      return <CornerUpLeft className="w-7 h-7 text-slate-900" strokeWidth={2} />;
+      return <CornerUpLeft className={iconClass} strokeWidth={2} />;
     }
     if (step.directionType === 'RIGHT' || step.stepOrder === 2) {
-      return <CornerUpRight className="w-7 h-7 text-slate-900" strokeWidth={2} />;
+      return <CornerUpRight className={iconClass} strokeWidth={2} />;
     }
     if (step.directionType === 'STAIRS_UP' || step.stepOrder === 3) {
-      return <TrendingUp className="w-7 h-7 text-slate-900" strokeWidth={2} />;
+      return <TrendingUp className={iconClass} strokeWidth={2} />;
     }
-    return <CheckCircle2 className="w-7 h-7 text-emerald-600" strokeWidth={2} />;
+    return <CheckCircle2 className={`${iconClass} text-emerald-600`} strokeWidth={2} />;
   };
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 max-w-md mx-auto z-30 pointer-events-auto landscape:max-w-sm landscape:bottom-3 landscape:right-4 landscape:left-auto">
-      {/* White Bottom Sheet Card */}
-      <div className="bg-white/95 backdrop-blur-md rounded-t-[30px] landscape:rounded-[24px] px-6 pt-3 pb-7 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] border-t landscape:border border-slate-100">
-        {/* Grey Drag Handle Pill */}
-        <div className="w-10 h-1 bg-slate-300 rounded-full mx-auto mb-2 landscape:hidden" />
-
-        {/* Step Progress Line: "Bước 1 / 3" + Route info + Close */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full">
-              Bước {step.stepOrder} / {totalSteps}
-            </span>
-            {activeRoute && (
-              <span className="text-xs text-sky-600 font-medium">
-                {activeRoute.totalDistance}m (~{activeRoute.estimatedMinutes}p)
-              </span>
-            )}
+    <div className="absolute bottom-0 inset-x-0 max-w-md mx-auto z-30 pointer-events-auto landscape:max-w-sm landscape:bottom-3 landscape:right-4 landscape:left-auto">
+      {/* Collapsed Mini Bottom Bar Mode */}
+      {isCollapsed ? (
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl mx-3 mb-3 px-3.5 py-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.12)] border border-slate-200/90 flex items-center justify-between gap-2.5">
+          <div
+            onClick={() => setIsCollapsed(false)}
+            className="flex-1 min-w-0 flex items-center gap-2.5 cursor-pointer"
+            title="Nhấn để mở rộng chỉ dẫn chi tiết"
+          >
+            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
+              {renderStepIcon(true)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full shrink-0">
+                  {step.stepOrder}/{totalSteps}
+                </span>
+                <p className="text-xs font-bold text-slate-900 truncate">
+                  {step.instruction}
+                </p>
+              </div>
+              {step.subText && (
+                <p className="text-[10px] text-slate-500 truncate mt-0.5">{step.subText}</p>
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {/* Subtle Progress Bar */}
-            <div className="flex items-center gap-1">
-              {Array.from({ length: totalSteps }).map((_, idx) => (
-                <div
-                  key={`prog-bar-${idx}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    idx === currentStepIndex
-                      ? 'w-5 bg-slate-800'
-                      : idx < currentStepIndex
-                      ? 'w-2.5 bg-blue-500'
-                      : 'w-1.5 bg-slate-200'
-                  }`}
-                />
-              ))}
-            </div>
-
+          <div className="flex items-center gap-1 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsCollapsed(false)}
+              className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer"
+              title="Mở rộng"
+            >
+              <ChevronUp className="w-4 h-4" />
+            </button>
             <button
               type="button"
               onClick={resetNavigation}
-              className="text-slate-400 hover:text-slate-700 p-1 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+              className="p-1.5 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 transition cursor-pointer"
               title="Đóng dẫn đường"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
         </div>
-
-        {/* Instruction Row: Circular Icon Avatar + Bold Text */}
-        <div className="flex items-center gap-3.5 mb-4">
-          <div className="w-13 h-13 rounded-full bg-slate-100 flex items-center justify-center shrink-0 shadow-inner">
-            {renderStepIcon()}
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <h2 className="text-[15px] font-bold text-slate-900 leading-snug">
-              {step.instruction}
-            </h2>
-            {step.subText && (
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                {step.subText}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Two Large Rounded-Full Action Buttons */}
-        <div className="grid grid-cols-2 gap-2.5">
+      ) : (
+        /* Expanded Full Bottom Sheet Card */
+        <div className="bg-white/95 backdrop-blur-md rounded-t-[26px] landscape:rounded-[24px] px-5 sm:px-6 pt-2.5 pb-6 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] border-t landscape:border border-slate-100">
+          {/* Grey Drag Handle Pill with Collapse Click */}
           <button
             type="button"
-            onClick={prevStep}
-            disabled={isFirstStep}
-            className={`py-3 rounded-xl font-semibold text-xs transition-all text-center cursor-pointer ${
-              isFirstStep
-                ? 'bg-[#e9edf2]/50 text-slate-400 cursor-not-allowed'
-                : 'bg-[#e9edf2] text-slate-800 hover:bg-[#dfe4eb] active:scale-[0.98]'
-            }`}
+            onClick={() => setIsCollapsed(true)}
+            className="w-full flex flex-col items-center group cursor-pointer mb-2.5 focus:outline-none"
+            title="Nhấn để thu gọn thẻ dẫn đường"
           >
-            Quay lại
+            <div className="w-10 h-1 bg-slate-300 group-hover:bg-slate-400 rounded-full transition-colors mb-0.5" />
+            <span className="text-[9px] text-slate-400 group-hover:text-slate-600 font-medium">
+              Chạm để thu gọn
+            </span>
           </button>
 
-          <button
-            type="button"
-            onClick={nextStep}
-            disabled={isLastStep}
-            className={`py-3 rounded-xl font-semibold text-xs transition-all text-center shadow-md cursor-pointer ${
-              isLastStep
-                ? 'bg-emerald-600 text-white shadow-emerald-600/25'
-                : 'bg-[#1d74f5] text-white hover:bg-[#1565d8] shadow-blue-500/25 active:scale-[0.98]'
-            }`}
-          >
-            {isLastStep ? 'Đã đến nơi' : 'Bước tiếp theo'}
-          </button>
+          {/* Step Progress Line: "Bước 1 / 4" + Route info + Controls */}
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full">
+                Bước {step.stepOrder} / {totalSteps}
+              </span>
+              {activeRoute && (
+                <span className="text-xs text-sky-600 font-medium">
+                  {activeRoute.totalDistance}m (~{activeRoute.estimatedMinutes}p)
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              {/* Subtle Progress Bar */}
+              <div className="flex items-center gap-1 mr-1">
+                {Array.from({ length: totalSteps }).map((_, idx) => (
+                  <div
+                    key={`prog-bar-${idx}`}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      idx === currentStepIndex
+                        ? 'w-5 bg-slate-800'
+                        : idx < currentStepIndex
+                        ? 'w-2.5 bg-blue-500'
+                        : 'w-1.5 bg-slate-200'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Minimize Chevron Button */}
+              <button
+                type="button"
+                onClick={() => setIsCollapsed(true)}
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+                title="Thu gọn"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={resetNavigation}
+                className="text-slate-400 hover:text-rose-600 p-1 rounded-full hover:bg-rose-50 transition-colors cursor-pointer"
+                title="Đóng dẫn đường"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Instruction Row: Circular Icon Avatar + Bold Text */}
+          <div className="flex items-center gap-3.5 mb-3.5">
+            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center shrink-0 shadow-inner">
+              {renderStepIcon()}
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <h2 className="text-sm sm:text-[15px] font-bold text-slate-900 leading-snug">
+                {step.instruction}
+              </h2>
+              {step.subText && (
+                <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-0.5">
+                  {step.subText}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Two Rounded Action Buttons */}
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={prevStep}
+              disabled={isFirstStep}
+              className={`py-2.5 sm:py-3 rounded-xl font-semibold text-xs transition-all text-center cursor-pointer ${
+                isFirstStep
+                  ? 'bg-[#e9edf2]/50 text-slate-400 cursor-not-allowed'
+                  : 'bg-[#e9edf2] text-slate-800 hover:bg-[#dfe4eb] active:scale-[0.98]'
+              }`}
+            >
+              Quay lại
+            </button>
+
+            <button
+              type="button"
+              onClick={nextStep}
+              disabled={isLastStep}
+              className={`py-2.5 sm:py-3 rounded-xl font-semibold text-xs transition-all text-center shadow-md cursor-pointer ${
+                isLastStep
+                  ? 'bg-emerald-600 text-white shadow-emerald-600/25'
+                  : 'bg-[#1d74f5] text-white hover:bg-[#1565d8] shadow-blue-500/25 active:scale-[0.98]'
+              }`}
+            >
+              {isLastStep ? 'Đã đến nơi' : 'Bước tiếp theo'}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

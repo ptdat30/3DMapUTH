@@ -32,43 +32,45 @@ export function BottomTimelineBar() {
   };
 
   return (
-    <footer className="fixed bottom-3 left-4 right-4 z-20 pointer-events-auto select-none">
-      <div className="w-full max-w-6xl mx-auto p-2.5 rounded-2xl bg-slate-950/85 backdrop-blur-md border border-slate-800 shadow-2xl flex flex-col md:flex-row items-center gap-3">
+    <footer className="fixed bottom-2 inset-x-2 sm:bottom-3 sm:left-4 sm:right-4 z-20 pointer-events-auto select-none">
+      <div className="w-full max-w-6xl mx-auto p-2 sm:p-2.5 rounded-2xl bg-slate-950/90 backdrop-blur-md border border-slate-800 shadow-2xl flex flex-col md:flex-row items-center gap-2 sm:gap-3">
         {/* Playback Controls */}
-        <div className="flex items-center gap-2 pr-3 md:border-r border-slate-800 shrink-0">
-          <button
-            type="button"
-            onClick={() => setIsPlaying(!isPlaying)}
-            className={`p-2 rounded-xl transition-all cursor-pointer shadow-md ${
-              isPlaying
-                ? 'bg-amber-500 hover:bg-amber-400 text-slate-950'
-                : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950'
-            }`}
-            title={isPlaying ? 'Tạm dừng mô phỏng' : 'Phát chuỗi thời gian 24h'}
-          >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
-          </button>
+        <div className="flex items-center justify-between w-full md:w-auto gap-2 pr-0 md:pr-3 md:border-r border-slate-800 shrink-0">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsPlaying(!isPlaying)}
+              className={`p-1.5 sm:p-2 rounded-xl transition-all cursor-pointer shadow-md ${
+                isPlaying
+                  ? 'bg-amber-500 hover:bg-amber-400 text-slate-950'
+                  : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950'
+              }`}
+              title={isPlaying ? 'Tạm dừng mô phỏng' : 'Phát chuỗi thời gian 24h'}
+            >
+              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+            </button>
 
-          {/* Speed Toggles */}
-          <div className="flex items-center rounded-lg bg-slate-900 p-0.5 border border-slate-800 text-[10px] font-bold">
-            {([1, 5, 10] as const).map((spd) => (
-              <button
-                key={spd}
-                type="button"
-                onClick={() => setPlaybackSpeed(spd)}
-                className={`px-1.5 py-0.5 rounded cursor-pointer transition-all ${
-                  playbackSpeed === spd
-                    ? 'bg-cyan-500 text-white'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                {spd}x
-              </button>
-            ))}
+            {/* Speed Toggles */}
+            <div className="flex items-center rounded-lg bg-slate-900 p-0.5 border border-slate-800 text-[10px] font-bold">
+              {([1, 5, 10] as const).map((spd) => (
+                <button
+                  key={spd}
+                  type="button"
+                  onClick={() => setPlaybackSpeed(spd)}
+                  className={`px-1.5 py-0.5 rounded cursor-pointer transition-all ${
+                    playbackSpeed === spd
+                      ? 'bg-cyan-500 text-white'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {spd}x
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Time Badge */}
-          <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 font-mono text-xs font-bold text-cyan-400">
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 font-mono text-xs font-bold text-cyan-400 shrink-0">
             <Clock className="w-3.5 h-3.5 text-slate-400" />
             <span>{formatTime(currentHour)}</span>
           </div>

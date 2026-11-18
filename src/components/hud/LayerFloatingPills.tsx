@@ -25,7 +25,7 @@ export function LayerFloatingPills() {
   const toggleTwinMode = useTwinStore((state) => state.toggleTwinMode);
 
   return (
-    <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-1.5 p-1 rounded-2xl bg-slate-950/80 backdrop-blur-md border border-slate-800 shadow-xl select-none">
+    <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-1.5 p-1 rounded-2xl bg-slate-950/80 backdrop-blur-md border border-slate-800 shadow-xl select-none max-w-[96vw] overflow-x-auto scrollbar-none">
       {LAYERS.map((layer) => {
         const Icon = layer.icon;
         const isActive = activeLayers[layer.key];

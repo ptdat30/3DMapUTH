@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ thống Dẫn đường 2D Tòa nhà</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overscroll-behavior: none;
+    }
+
+    /* Animated dashed route line */
+    @keyframes routeDash {
+      to {
+        stroke-dashoffset: -36;
+      }
+    }
+    .route-animated {
+      animation: routeDash 1.1s linear infinite;
+    }
+
+    /* Pulsing ring for transition stairs and active markers */
+    @keyframes pulseRing {
+      0% {
+        transform: scale(0.85);
+        opacity: 0.9;
+      }
+      70% {
+        transform: scale(1.65);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1.65);
+        opacity: 0;
+      }
+    }
+    .pulse-ring {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: pulseRing 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    }
+
+    /* Interactive room hover effect */
+    .map-poi {
+      cursor: pointer;
+      transition: filter 0.18s ease, opacity 0.18s ease;
+    }
+    .map-poi:hover {
+      filter: brightness(0.95) drop-shadow(0 3px 6px rgba(15, 23, 42, 0.16));
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 h-screen flex flex-col lg:flex-row overflow-hidden select-none">
+
+  <!-- ===================================================================== -->
+  <!-- LEFT CONTROL SIDEBAR (Wayfinding Controls, Turn-by-Turn & Legend)     -->
+  <!-- ===================================================================== -->
+  <aside id="sidebar" class="w-full lg:w-[390px] xl:w-[410px] bg-white border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col z-20 shadow-sm shrink-0 max-h-[52vh] lg:max-h-screen transition-all duration-300">
+    <!-- App Header -->
+    <div class="px-4 py-3.5 bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-300 shadow-inner">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-sm sm:text-base font-bold tracking-tight leading-tight">Dẫn đường 2D Tòa nhà</h1>
+          <p class="text-[11px] text-slate-300 font-medium">Bản đồ định vị đa tầng • Tầng trệt – Tầng 3</p>
+        </div>
+      </div>
+
+      <!-- Mobile collapse toggle -->
+      <button id="btnToggleSidebar" onclick="toggleMobileSidebar()" class="lg:hidden px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium flex items-center gap-1 transition">
+        <span id="sidebarToggleLabel">Thu gọn</span>
+        <svg id="sidebarToggleIcon" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Scrollable Sidebar Content -->
+    <div id="sidebarBody" class="flex-1 overflow-y-auto p-4 space-y-4">
+      <!-- Origin & Destination Card -->
+      <div class="bg-slate-50 border border-slate-200/90 rounded-2xl p-3.5 shadow-sm space-y-3 relative">
+        <!-- Start Input -->
+        <div class="flex items-center gap-2.5">
+          <div class="w-6 flex flex-col items-center shrink-0">
+            <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <label for="selectStart" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Điểm xuất phát</label>
+            <select id="selectStart" onchange="handleSelectChange()" class="w-full bg-white border border-slate-300 hover:border-indigo-400 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/20 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-slate-800 outline-none transition">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Connector line + Swap Button -->
+        <div class="flex items-center justify-between pl-2.5 pr-1 -my-1">
+          <div class="w-0.5 h-5 bg-slate-300 ml-0.5 rounded-full"></div>
+          <button onclick="swapLocations()" title="Đảo chiều điểm đi và điểm đến" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 border border-slate-200 shadow-xs text-xs font-medium transition active:scale-95">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+            <span>Đảo chiều</span>
+          </button>
+        </div>
+
+        <!-- Destination Input -->
+        <div class="flex items-center gap-2.5">
+          <div class="w-6 flex flex-col items-center shrink-0">
+            <svg class="w-5 h-5 text-rose-500 drop-shadow-xs" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <label for="selectEnd" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Điểm đến</label>
+            <select id="selectEnd" onchange="handleSelectChange()" class="w-full bg-white border border-slate-300 hover:border-indigo-400 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/20 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-slate-800 outline-none transition">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick Action Pills -->
+        <div class="pt-1 border-t border-slate-200/80">
+          <div class="text-[11px] font-semibold text-slate-400 mb-1.5">Tiện ích nhanh & Tuyến mẫu:</div>
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="routeToNearest('restroom')" class="px-2.5 py-1.5 rounded-xl bg-lime-100 hover:bg-lime-200 text-lime-900 border border-lime-300 text-xs font-semibold flex items-center gap-1 transition active:scale-95">
+              <span>🚻</span>
+              <span>WC gần nhất</span>
+            </button>
+            <button onclick="routeToNearest('entrance')" class="px-2.5 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 border border-slate-300 text-xs font-semibold flex items-center gap-1 transition active:scale-95">
+              <span>🚪</span>
+              <span>Lối ra gần nhất</span>
+            </button>
+            <button onclick="applyPreset('g_ent_south', 'f3_p301')" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-medium transition active:scale-95">
+              Cổng Nam → Phòng 301
+            </button>
+            <button onclick="applyPreset('g_p002', 'f1_p101')" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-medium transition active:scale-95">
+              Phòng 002 → Phòng 101
+            </button>
+            <button onclick="applyPreset('f2_p201', 'f2_wc')" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-medium transition active:scale-95">
+              Phòng 201 → WC Tầng 2
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Route Summary & Simulation Controls -->
+      <div id="routeSummaryCard" class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-sm space-y-3">
+        <!-- Metrics Row -->
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div class="bg-slate-50 rounded-xl p-2 border border-slate-100">
+            <div class="text-[11px] text-slate-500 font-medium">Khoảng cách</div>
+            <div id="metricDistance" class="text-sm sm:text-base font-bold text-indigo-600 mt-0.5">-- m</div>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-2 border border-slate-100">
+            <div class="text-[11px] text-slate-500 font-medium">Thời gian đi</div>
+            <div id="metricTime" class="text-sm sm:text-base font-bold text-slate-800 mt-0.5">-- phút</div>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-2 border border-slate-100">
+            <div class="text-[11px] text-slate-500 font-medium">Chuyển tầng</div>
+            <div id="metricFloors" class="text-sm sm:text-base font-bold text-sky-600 mt-0.5">0 tầng</div>
+          </div>
+        </div>
+
+        <!-- Simulation Action Bar -->
+        <div class="flex items-center gap-2">
+          <button id="btnSimulate" onclick="toggleSimulation()" class="flex-1 py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-sm shadow-indigo-600/20 flex items-center justify-center gap-2 transition active:scale-[0.99]">
+            <svg id="simIconPlay" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg id="simIconPause" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+            <span id="simBtnText">Mô phỏng di chuyển</span>
+          </button>
+
+          <button onclick="resetSimulation()" title="Đặt lại mô phỏng" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
+
+          <button id="btnSimSpeed" onclick="cycleSimSpeed()" title="Tốc độ mô phỏng" class="px-2.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition">
+            1x
+          </button>
+        </div>
+
+        <!-- Simulation Progress Bar (Visible when active or paused mid-route) -->
+        <div id="simProgressContainer" class="hidden space-y-1.5 pt-1">
+          <div class="flex items-center justify-between text-[11px] font-medium">
+            <span id="simStatusText" class="text-indigo-700 font-semibold truncate">Đang di chuyển...</span>
+            <span id="simPercentText" class="text-slate-500">0%</span>
+          </div>
+          <input id="simScrubber" type="range" min="0" max="1000" value="0" oninput="scrubSimulation(this.value)" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+        </div>
+      </div>
+
+      <!-- Turn-by-Turn Directions -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-sm">
+        <div class="flex items-center justify-between mb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+            Chỉ dẫn chi tiết từng bước
+          </h2>
+          <span id="stepCountBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">0 bước</span>
+        </div>
+
+        <ol id="directionsList" class="space-y-2">
+          <!-- Populated dynamically -->
+        </ol>
+      </div>
+
+      <!-- Color Legend Card (Chú thích bản đồ) -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-sm">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2.5">Chú thích màu sắc bản đồ</h3>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="flex items-center gap-2 p-1.5 rounded-lg bg-slate-50 border border-slate-100">
+            <span class="w-4 h-4 rounded shrink-0 border border-slate-300" style="background-color: #e59cf5;"></span>
+            <span class="font-medium text-slate-700">Hành lang</span>
+          </div>
+          <div class="flex items-center gap-2 p-1.5 rounded-lg bg-slate-50 border border-slate-100">
+            <span class="w-4 h-4 rounded shrink-0 border border-slate-400" style="background-color: #c5cdd4;"></span>
+            <span class="font-medium text-slate-700">Tường bê tông</span>
+          </div>
+          <div class="flex items-center gap-2 p-1.5 rounded-lg bg-slate-50 border border-slate-100">
+            <span class="w-4 h-4 rounded shrink-0 border border-slate-600" style="background-color: #2b2b2b;"></span>
+            <span class="font-medium text-slate-700">Bậc thang</span>
+          </div>
+          <div class="flex items-center gap-2 p-1.5 rounded-lg bg-slate-50 border border-slate-100">
+            <span class="w-4 h-4 rounded shrink-0 border border-dashed border-slate-800" style="background-color: #b8f566;"></span>
+            <span class="font-medium text-slate-700">Nhà vệ sinh</span>
+          </div>
+          <div class="flex items-center gap-2 p-1.5 rounded-lg bg-slate-50 border border-slate-100">
+            <span class="w-4 h-4 rounded shrink-0 border border-sky-600" style="background-color: #2db2ff;"></span>
+            <span class="font-medium text-slate-700">Cầu thang bộ</span>
+          </div>
+          <div class="flex items-center gap-2 p-1.5 rounded-lg bg-slate-50 border border-slate-100">
+            <span class="w-4 h-4 rounded shrink-0 border border-dashed border-slate-800" style="background-color: #ffdd55;"></span>
+            <span class="font-medium text-slate-700">Phòng học</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT INTERACTIVE 2D FLOOR PLAN VIEWPORT                              -->
+  <!-- ===================================================================== -->
+  <main class="flex-1 flex flex-col relative bg-slate-200/70 overflow-hidden">
+    <!-- Top Floating Floor Switcher & Map Display Controls -->
+    <div class="p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2 z-10 pointer-events-none">
+      <!-- Floor Switcher Tabs -->
+      <div class="pointer-events-auto bg-white/95 backdrop-blur-md p-1.5 rounded-2xl shadow-md border border-slate-200/90 flex items-center gap-1">
+        <button onclick="switchFloor(0)" id="floorTab-0" class="floor-tab relative px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>Tầng trệt</span>
+          <span id="floorBadge-0" class="hidden w-2 h-2 rounded-full bg-indigo-600"></span>
+        </button>
+        <button onclick="switchFloor(1)" id="floorTab-1" class="floor-tab relative px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>Tầng 1</span>
+          <span id="floorBadge-1" class="hidden w-2 h-2 rounded-full bg-indigo-600"></span>
+        </button>
+        <button onclick="switchFloor(2)" id="floorTab-2" class="floor-tab relative px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>Tầng 2</span>
+          <span id="floorBadge-2" class="hidden w-2 h-2 rounded-full bg-indigo-600"></span>
+        </button>
+        <button onclick="switchFloor(3)" id="floorTab-3" class="floor-tab relative px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>Tầng 3</span>
+          <span id="floorBadge-3" class="hidden w-2 h-2 rounded-full bg-indigo-600"></span>
+        </button>
+      </div>
+
+      <!-- Display Options Pills -->
+      <div class="pointer-events-auto bg-white/95 backdrop-blur-md p-1.5 rounded-2xl shadow-md border border-slate-200/90 flex items-center gap-1.5">
+        <button id="btnToggleLabels" onclick="toggleLabels()" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+          </svg>
+          <span>Nhãn phòng</span>
+        </button>
+        <button id="btnToggleGrid" onclick="toggleGrid()" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 border border-transparent transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span class="hidden sm:inline">Lưới</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive Pan & Zoom Map Canvas Container -->
+    <div id="mapViewport" class="flex-1 relative overflow-hidden cursor-grab active:cursor-grabbing touch-none flex items-center justify-center">
+      <!-- Subtle architectural dot-grid background -->
+      <div class="absolute inset-0 opacity-40 pointer-events-none" style="background-image: radial-gradient(#94a3b8 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+      <!-- Transformed Map Layer -->
+      <div id="mapTransformLayer" class="origin-center transition-transform duration-150 ease-out will-change-transform">
+        <div class="bg-white p-3 sm:p-5 rounded-3xl shadow-2xl border border-slate-300/80">
+          <!-- Floor Title Banner inside Map Card -->
+          <div class="flex items-center justify-between mb-2.5 px-1">
+            <div class="flex items-center gap-2">
+              <span id="mapCardFloorPill" class="px-2.5 py-0.5 rounded-lg bg-slate-900 text-white text-xs font-bold">Tầng trệt</span>
+              <span id="mapCardSubtitle" class="text-xs font-medium text-slate-500">Mặt bằng tổng thể • Tỷ lệ chuẩn 1000×400</span>
+            </div>
+            <span class="text-[11px] text-slate-400 hidden sm:inline">Nhấp trực tiếp vào phòng hoặc cầu thang để chọn điểm</span>
+          </div>
+
+          <!-- MAIN 2D ARCHITECTURAL SVG (1000 x 400 exact geometry) -->
+          <svg id="buildingSvg" viewBox="0 0 1000 400" class="w-[88vw] max-w-[980px] h-auto rounded-xl overflow-hidden shadow-inner border border-slate-300 bg-[#c5cdd4]">
+            <defs>
+              <!-- Grid Pattern -->
+              <pattern id="archGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(15, 23, 42, 0.08)" stroke-width="0.75" />
+              </pattern>
+
+              <!-- Directional Arrow Marker for Route -->
+              <marker id="routeArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 1 1.5 L 8.5 5 L 1 8.5 z" fill="#1d4ed8" />
+              </marker>
+
+              <!-- Glow filter for active route -->
+              <filter id="routeGlow" x="-15%" y="-15%" width="130%" height="130%">
+                <feGaussianBlur stdDeviation="3.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+
+              <!-- Drop shadow for pins -->
+              <filter id="pinShadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0f172a" flood-opacity="0.35" />
+              </filter>
+            </defs>
+
+            <!-- Layer 1: Floor Architecture (Walls, Corridors, Rooms, WC, Stairs, Steps) -->
+            <g id="layerArchitecture"></g>
+
+            <!-- Layer 2: Optional Architectural Grid -->
+            <g id="layerGrid" class="hidden pointer-events-none">
+              <rect x="0" y="0" width="1000" height="400" fill="url(#archGrid)" />
+            </g>
+
+            <!-- Layer 3: Room Labels & Icons -->
+            <g id="layerLabels" class="pointer-events-none"></g>
+
+            <!-- Layer 4: Calculated Route Polyline & Highlights -->
+            <g id="layerRoute" class="pointer-events-none"></g>
+
+            <!-- Layer 5: Start, Destination, Stair Transition & Simulation Avatar Markers -->
+            <g id="layerMarkers"></g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Floating Staircase Transition Banner (Appears when current floor has a stair transfer) -->
+      <div id="stairTransitionBanner" class="hidden absolute top-3 left-1/2 -translate-x-1/2 z-20">
+        <button id="btnJumpStairFloor" onclick="jumpToNextRouteFloor()" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 rounded-2xl shadow-xl border border-sky-400/50 flex items-center gap-2.5 text-xs sm:text-sm font-bold transition transform hover:scale-105 active:scale-95">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-300 animate-ping"></span>
+          <span id="stairTransitionText">Lên Tầng 3 qua Cầu thang Đông-Bắc</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Floating POI Selection Popover (When user clicks a room/stair/entrance on map) -->
+      <div id="poiPopover" class="hidden absolute z-30 w-64 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200 p-3.5 transition-all">
+        <div class="flex items-start justify-between gap-2 mb-2">
+          <div>
+            <span id="popoverCategory" class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 mb-1">Phòng học</span>
+            <h4 id="popoverTitle" class="text-sm font-bold text-slate-900 leading-snug">Phòng học 001</h4>
+            <p id="popoverSubtitle" class="text-xs text-slate-500">Tầng trệt</p>
+          </div>
+          <button onclick="closePopover()" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button onclick="setPopoverAsStart()" class="py-2 px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-1 transition active:scale-95">
+            <span>●</span>
+            <span>Điểm đi</span>
+          </button>
+          <button onclick="setPopoverAsEnd()" class="py-2 px-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold flex items-center justify-center gap-1 transition active:scale-95">
+            <span>📍</span>
+            <span>Điểm đến</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom-Right Zoom Controls -->
+      <div class="absolute bottom-4 right-4 z-20 flex flex-col bg-white/95 backdrop-blur-md rounded-2xl shadow-lg border border-slate-200/90 overflow-hidden">
+        <button onclick="zoomMap(0.2)" title="Phóng to" class="p-2.5 hover:bg-slate-100 text-slate-700 border-b border-slate-200 transition active:bg-slate-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </button>
+        <button onclick="resetMapView()" title="Vừa màn hình" class="px-2 py-2 hover:bg-slate-100 text-[11px] font-bold text-slate-700 border-b border-slate-200 transition active:bg-slate-200">
+          100%
+        </button>
+        <button onclick="zoomMap(-0.2)" title="Thu nhỏ" class="p-2.5 hover:bg-slate-100 text-slate-700 transition active:bg-slate-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Toast Notification Message Box (Replaces alert()) -->
+      <div id="toastBanner" class="hidden absolute bottom-4 left-4 z-30 bg-slate-900/95 text-white px-4 py-2.5 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2 border border-slate-700">
+        <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+        <span id="toastText">Thông báo</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT: EXACT FLOOR PLANS, GRAPH PATHFINDING & INTERACTIVITY      -->
+  <!-- ===================================================================== -->
+  <script>
+    /**
+     * 1. COLOR PALETTE & ARCHITECTURAL CONSTANTS
+     * Exact colors matching the user's specification and blueprints.
+     */
+    const COLORS = {
+      corridor: '#e59cf5',  // Màu hồng: Hành lang
+      wall: '#c5cdd4',      // Màu xám: Tường bê tông
+      steps: '#2b2b2b',     // Màu đen: Bậc thang
+      restroom: '#b8f566',  // Xanh lá cây: Nhà vệ sinh
+      stairs: '#2db2ff',    // Xanh nước biển: Cầu thang bộ
+      classroom: '#ffdd55', // Màu vàng: Phòng học
+      borderDash: '#1e293b' // Viền nét đứt phòng học & nhà vệ sinh
+    };
+
+    const FLOOR_META = {
+      0: { name: 'Tầng trệt', short: 'Trệt', subtitle: 'Cổng vào chính • 6 Phòng học • Nhà vệ sinh • 3 Cầu thang bộ' },
+      1: { name: 'Tầng 1', short: 'Tầng 1', subtitle: 'Phòng học lớn 101 (Hội trường) • Hành lang Đông • 2 Cầu thang bộ' },
+      2: { name: 'Tầng 2', short: 'Tầng 2', subtitle: 'Phòng học trung tâm 201 • Hành lang vòng • Nhà vệ sinh • 3 Cầu thang bộ' },
+      3: { name: 'Tầng 3', short: 'Tầng 3', subtitle: 'Phòng học chữ L 301 • Hành lang vòng • 2 Cầu thang bộ' }
+    };
+
+    const CATEGORY_LABELS = {
+      entrance: { label: 'Bậc thang lối vào', badgeClass: 'bg-slate-800 text-white' },
+      classroom: { label: 'Phòng học', badgeClass: 'bg-amber-100 text-amber-900' },
+      restroom: { label: 'Nhà vệ sinh', badgeClass: 'bg-lime-100 text-lime-900' },
+      stairs: { label: 'Cầu thang bộ', badgeClass: 'bg-sky-100 text-sky-900' }
+    };
+
+    /**
+     * 2. EXACT GEOMETRY FOR ALL 4 FLOORS (1000 x 400 coordinate system)
+     * Faithfully reproduces every wall, corridor, classroom, restroom, staircase, and step.
+     */
+    const FLOOR_GEOMETRY = {
+      0: {
+        // Pink walkable interior corridor covering inside of perimeter wall
+        corridors: [
+          { x: 16, y: 18, w: 966, h: 364 }
+        ],
+        // Black entrance steps interrupting the outer grey concrete wall
+        steps: [
+          { id: 'g_ent_south', x: 455, y: 382, w: 445, h: 18, orientation: 'horizontal', label: 'Bậc thang cổng Nam', labelX: 678, labelY: 394 },
+          { id: 'g_ent_east', x: 982, y: 84, w: 18, h: 220, orientation: 'vertical', label: 'Bậc thang cổng Đông', labelX: 991, labelY: 194 }
+        ],
+        // Green Restroom (dashed border)
+        restrooms: [
+          { id: 'g_wc', x: 16, y: 18, w: 44, h: 150, label: 'WC', sublabel: 'Trệt', door: { x: 60, y: 80, w: 4, h: 26 } }
+        ],
+        // Blue Staircases
+        stairs: [
+          { id: 'g_stair_sw', x: 16, y: 300, w: 44, h: 68, label: 'Cầu thang Tây-Nam', shortLabel: 'CT Tây-Nam', dir: 'right' },
+          { id: 'g_stair_ne', x: 902, y: 18, w: 78, h: 66, label: 'Cầu thang Đông-Bắc', shortLabel: 'CT Đông-Bắc', dir: 'left' },
+          { id: 'g_stair_se', x: 902, y: 300, w: 78, h: 68, label: 'Cầu thang Đông-Nam', shortLabel: 'CT Đông-Nam', dir: 'left' }
+        ],
+        // 6 Yellow Classrooms (dashed border)
+        classrooms: [
+          { id: 'g_p001', shape: 'rect', x: 88, y: 18, w: 182, h: 150, label: 'Phòng 001', sublabel: 'Lớp học', door: { x: 164, y: 166, w: 30, h: 5 } },
+          { id: 'g_p002', shape: 'rect', x: 272, y: 18, w: 181, h: 150, label: 'Phòng 002', sublabel: 'Lớp học', door: { x: 347, y: 166, w: 30, h: 5 } },
+          { id: 'g_p003', shape: 'rect', x: 455, y: 18, w: 182, h: 150, label: 'Phòng 003', sublabel: 'Lớp học', door: { x: 531, y: 166, w: 30, h: 5 } },
+          { id: 'g_p004', shape: 'rect', x: 639, y: 18, w: 181, h: 150, label: 'Phòng 004', sublabel: 'Lớp học', door: { x: 715, y: 166, w: 30, h: 5 } },
+          { id: 'g_p005', shape: 'rect', x: 88, y: 210, w: 182, h: 158, label: 'Phòng 005', sublabel: 'Lớp học', door: { x: 164, y: 208, w: 30, h: 5 } },
+          { id: 'g_p006', shape: 'rect', x: 272, y: 210, w: 181, h: 158, label: 'Phòng 006', sublabel: 'Lớp học', door: { x: 347, y: 208, w: 30, h: 5 } }
+        ]
+      },
+      1: {
+        // Wider concrete wall on the far left (x: 0..68), corridor on right (x: 68..982)
+        corridors: [
+          { x: 68, y: 18, w: 914, h: 364 }
+        ],
+        steps: [],
+        restrooms: [],
+        stairs: [
+          { id: 'f1_stair_ne', x: 906, y: 18, w: 76, h: 68, label: 'Cầu thang Đông-Bắc', shortLabel: 'CT Đông-Bắc', dir: 'left' },
+          { id: 'f1_stair_se', x: 906, y: 314, w: 76, h: 68, label: 'Cầu thang Đông-Nam', shortLabel: 'CT Đông-Nam', dir: 'left' }
+        ],
+        classrooms: [
+          {
+            id: 'f1_p101',
+            shape: 'rect',
+            x: 68,
+            y: 18,
+            w: 758,
+            h: 364,
+            label: 'Phòng học 101',
+            sublabel: 'Giảng đường / Hội trường Tầng 1',
+            door: { x: 824, y: 182, w: 5, h: 36 }
+          }
+        ]
+      },
+      2: {
+        // 16px concrete perimeter wall, pink ring corridor wrapping completely around central classroom
+        corridors: [
+          { x: 26, y: 18, w: 950, h: 358 }
+        ],
+        steps: [],
+        restrooms: [
+          { id: 'f2_wc', x: 26, y: 18, w: 44, h: 154, label: 'WC', sublabel: 'Tầng 2', door: { x: 68, y: 82, w: 5, h: 26 } }
+        ],
+        stairs: [
+          { id: 'f2_stair_sw', x: 26, y: 306, w: 44, h: 70, label: 'Cầu thang Tây-Nam', shortLabel: 'CT Tây-Nam', dir: 'right' },
+          { id: 'f2_stair_ne', x: 900, y: 18, w: 76, h: 70, label: 'Cầu thang Đông-Bắc', shortLabel: 'CT Đông-Bắc', dir: 'left' },
+          { id: 'f2_stair_se', x: 900, y: 306, w: 76, h: 70, label: 'Cầu thang Đông-Nam', shortLabel: 'CT Đông-Nam', dir: 'left' }
+        ],
+        classrooms: [
+          {
+            id: 'f2_p201',
+            shape: 'rect',
+            x: 98,
+            y: 46,
+            w: 722,
+            h: 302,
+            label: 'Phòng học 201',
+            sublabel: 'Phòng học trung tâm Tầng 2',
+            doors: [
+              { x: 442, y: 44, w: 34, h: 5 },   // Cửa Bắc
+              { x: 442, y: 346, w: 34, h: 5 },  // Cửa Nam
+              { x: 818, y: 180, w: 5, h: 34 }   // Cửa Đông
+            ]
+          }
+        ]
+      },
+      3: {
+        // 16px concrete perimeter wall, L-shaped classroom with bottom-left corridor cutout
+        corridors: [
+          { x: 26, y: 24, w: 950, h: 360 }
+        ],
+        steps: [],
+        restrooms: [],
+        stairs: [
+          { id: 'f3_stair_ne', x: 900, y: 24, w: 76, h: 70, label: 'Cầu thang Đông-Bắc', shortLabel: 'CT Đông-Bắc', dir: 'left' },
+          { id: 'f3_stair_se', x: 900, y: 318, w: 76, h: 66, label: 'Cầu thang Đông-Nam', shortLabel: 'CT Đông-Nam', dir: 'left' }
+        ],
+        classrooms: [
+          {
+            id: 'f3_p301',
+            shape: 'polygon',
+            points: '26,52 822,52 822,360 98,360 98,182 26,182',
+            centerX: 460,
+            centerY: 206,
+            label: 'Phòng học 301',
+            sublabel: 'Phòng học chuyên đề chữ L • Tầng 3',
+            doors: [
+              { x: 442, y: 50, w: 34, h: 5 },   // Cửa Bắc
+              { x: 820, y: 189, w: 5, h: 34 },  // Cửa Đông
+              { x: 96, y: 263, w: 5, h: 34 }    // Cửa sảnh Tây-Nam
+            ]
+          }
+        ]
+      }
+    };
+
+    /**
+     * 3. MULTI-FLOOR NAVIGATION GRAPH (NODES & EDGES)
+     * Every corridor node follows the exact centerline of pink corridors so paths never clip walls or classrooms.
+     */
+    const GRAPH_NODES = {
+      // ==================== TẦNG TRỆT (Floor 0) ====================
+      // Destinations / POIs
+      g_ent_south:   { id: 'g_ent_south',   floor: 0, x: 678, y: 391, poi: true, category: 'entrance',  name: 'Bậc thang cổng Nam (Lối vào chính)' },
+      g_ent_east:    { id: 'g_ent_east',    floor: 0, x: 991, y: 194, poi: true, category: 'entrance',  name: 'Bậc thang cổng Đông (Lối vào phụ)' },
+      g_wc:          { id: 'g_wc',          floor: 0, x: 38,  y: 93,  poi: true, category: 'restroom',  name: 'Nhà vệ sinh Tầng trệt' },
+      g_stair_sw:    { id: 'g_stair_sw',    floor: 0, x: 38,  y: 334, poi: true, category: 'stairs',    name: 'Cầu thang Tây-Nam (Trệt)', stairGroup: 'SW' },
+      g_stair_ne:    { id: 'g_stair_ne',    floor: 0, x: 941, y: 51,  poi: true, category: 'stairs',    name: 'Cầu thang Đông-Bắc (Trệt)', stairGroup: 'NE' },
+      g_stair_se:    { id: 'g_stair_se',    floor: 0, x: 941, y: 334, poi: true, category: 'stairs',    name: 'Cầu thang Đông-Nam (Trệt)', stairGroup: 'SE' },
+      g_p001:        { id: 'g_p001',        floor: 0, x: 179, y: 93,  poi: true, category: 'classroom', name: 'Phòng học 001' },
+      g_p002:        { id: 'g_p002',        floor: 0, x: 362, y: 93,  poi: true, category: 'classroom', name: 'Phòng học 002' },
+      g_p003:        { id: 'g_p003',        floor: 0, x: 546, y: 93,  poi: true, category: 'classroom', name: 'Phòng học 003' },
+      g_p004:        { id: 'g_p004',        floor: 0, x: 730, y: 93,  poi: true, category: 'classroom', name: 'Phòng học 004' },
+      g_p005:        { id: 'g_p005',        floor: 0, x: 179, y: 289, poi: true, category: 'classroom', name: 'Phòng học 005' },
+      g_p006:        { id: 'g_p006',        floor: 0, x: 362, y: 289, poi: true, category: 'classroom', name: 'Phòng học 006' },
+
+      // Corridor Waypoints (Floor 0)
+      g_c_nw:           { id: 'g_c_nw',           floor: 0, x: 74,  y: 93 },
+      g_c_w_mid:        { id: 'g_c_w_mid',        floor: 0, x: 74,  y: 189 },
+      g_c_sw:           { id: 'g_c_sw',           floor: 0, x: 74,  y: 334 },
+      g_c_p001:         { id: 'g_c_p001',         floor: 0, x: 179, y: 189 },
+      g_c_p002:         { id: 'g_c_p002',         floor: 0, x: 362, y: 189 },
+      g_c_p003:         { id: 'g_c_p003',         floor: 0, x: 546, y: 189 },
+      g_c_p004:         { id: 'g_c_p004',         floor: 0, x: 730, y: 189 },
+      g_c_e_mid:        { id: 'g_c_e_mid',        floor: 0, x: 861, y: 189 },
+      g_c_ne:           { id: 'g_c_ne',           floor: 0, x: 861, y: 51 },
+      g_c_se:           { id: 'g_c_se',           floor: 0, x: 861, y: 334 },
+      g_c_east_landing: { id: 'g_c_east_landing', floor: 0, x: 941, y: 194 },
+      g_c_lobby_nw:     { id: 'g_c_lobby_nw',     floor: 0, x: 546, y: 280 },
+      g_c_lobby_center: { id: 'g_c_lobby_center', floor: 0, x: 678, y: 280 },
+      g_c_lobby_ne:     { id: 'g_c_lobby_ne',     floor: 0, x: 730, y: 280 },
+      g_c_lobby_se:     { id: 'g_c_lobby_se',     floor: 0, x: 861, y: 280 },
+      g_c_south_lobby:  { id: 'g_c_south_lobby',  floor: 0, x: 678, y: 350 },
+
+      // ==================== TẦNG 1 (Floor 1) ====================
+      f1_p101:     { id: 'f1_p101',     floor: 1, x: 447, y: 200, poi: true, category: 'classroom', name: 'Phòng học 101 (Hội trường)' },
+      f1_stair_ne: { id: 'f1_stair_ne', floor: 1, x: 944, y: 52,  poi: true, category: 'stairs',    name: 'Cầu thang Đông-Bắc (Tầng 1)', stairGroup: 'NE' },
+      f1_stair_se: { id: 'f1_stair_se', floor: 1, x: 944, y: 348, poi: true, category: 'stairs',    name: 'Cầu thang Đông-Nam (Tầng 1)', stairGroup: 'SE' },
+
+      f1_c_ne:     { id: 'f1_c_ne',     floor: 1, x: 866, y: 52 },
+      f1_c_mid:    { id: 'f1_c_mid',    floor: 1, x: 866, y: 200 },
+      f1_c_se:     { id: 'f1_c_se',     floor: 1, x: 866, y: 348 },
+
+      // ==================== TẦNG 2 (Floor 2) ====================
+      f2_wc:       { id: 'f2_wc',       floor: 2, x: 48,  y: 95,  poi: true, category: 'restroom',  name: 'Nhà vệ sinh Tầng 2' },
+      f2_stair_sw: { id: 'f2_stair_sw', floor: 2, x: 48,  y: 341, poi: true, category: 'stairs',    name: 'Cầu thang Tây-Nam (Tầng 2)', stairGroup: 'SW' },
+      f2_stair_ne: { id: 'f2_stair_ne', floor: 2, x: 938, y: 53,  poi: true, category: 'stairs',    name: 'Cầu thang Đông-Bắc (Tầng 2)', stairGroup: 'NE' },
+      f2_stair_se: { id: 'f2_stair_se', floor: 2, x: 938, y: 341, poi: true, category: 'stairs',    name: 'Cầu thang Đông-Nam (Tầng 2)', stairGroup: 'SE' },
+      f2_p201:     { id: 'f2_p201',     floor: 2, x: 459, y: 197, poi: true, category: 'classroom', name: 'Phòng học 201' },
+
+      f2_c_nw:       { id: 'f2_c_nw',       floor: 2, x: 84,  y: 32 },
+      f2_c_wc:       { id: 'f2_c_wc',       floor: 2, x: 84,  y: 95 },
+      f2_c_w_mid:    { id: 'f2_c_w_mid',    floor: 2, x: 84,  y: 197 },
+      f2_c_sw_stair: { id: 'f2_c_sw_stair', floor: 2, x: 84,  y: 341 },
+      f2_c_sw:       { id: 'f2_c_sw',       floor: 2, x: 84,  y: 362 },
+      f2_c_top_mid:  { id: 'f2_c_top_mid',  floor: 2, x: 459, y: 32 },
+      f2_c_bot_mid:  { id: 'f2_c_bot_mid',  floor: 2, x: 459, y: 362 },
+      f2_c_ne:       { id: 'f2_c_ne',       floor: 2, x: 860, y: 32 },
+      f2_c_ne_stair: { id: 'f2_c_ne_stair', floor: 2, x: 860, y: 53 },
+      f2_c_e_mid:    { id: 'f2_c_e_mid',    floor: 2, x: 860, y: 197 },
+      f2_c_se_stair: { id: 'f2_c_se_stair', floor: 2, x: 860, y: 341 },
+      f2_c_se:       { id: 'f2_c_se',       floor: 2, x: 860, y: 362 },
+
+      // ==================== TẦNG 3 (Floor 3) ====================
+      f3_stair_ne: { id: 'f3_stair_ne', floor: 3, x: 938, y: 59,  poi: true, category: 'stairs',    name: 'Cầu thang Đông-Bắc (Tầng 3)', stairGroup: 'NE' },
+      f3_stair_se: { id: 'f3_stair_se', floor: 3, x: 938, y: 351, poi: true, category: 'stairs',    name: 'Cầu thang Đông-Nam (Tầng 3)', stairGroup: 'SE' },
+      f3_p301:     { id: 'f3_p301',     floor: 3, x: 460, y: 206, poi: true, category: 'classroom', name: 'Phòng học 301 (Chữ L)' },
+
+      f3_c_nw:       { id: 'f3_c_nw',       floor: 3, x: 62,  y: 38 },
+      f3_c_top_mid:  { id: 'f3_c_top_mid',  floor: 3, x: 460, y: 38 },
+      f3_c_ne:       { id: 'f3_c_ne',       floor: 3, x: 861, y: 38 },
+      f3_c_ne_stair: { id: 'f3_c_ne_stair', floor: 3, x: 861, y: 59 },
+      f3_c_e_mid:    { id: 'f3_c_e_mid',    floor: 3, x: 861, y: 206 },
+      f3_c_se_stair: { id: 'f3_c_se_stair', floor: 3, x: 861, y: 351 },
+      f3_c_se:       { id: 'f3_c_se',       floor: 3, x: 861, y: 372 },
+      f3_c_bot_mid:  { id: 'f3_c_bot_mid',  floor: 3, x: 460, y: 372 },
+      f3_c_sw:       { id: 'f3_c_sw',       floor: 3, x: 62,  y: 372 },
+      f3_c_sw_lobby: { id: 'f3_c_sw_lobby', floor: 3, x: 62,  y: 280 },
+      f3_p301_in_sw: { id: 'f3_p301_in_sw', floor: 3, x: 180, y: 280 }
+    };
+
+    /**
+     * Undirected edges connecting walkable corridors, room doors, and multi-floor staircases.
+     */
+    const GRAPH_EDGES = [
+      // Floor 0 connections
+      ['g_wc', 'g_c_nw'],
+      ['g_c_nw', 'g_c_w_mid'],
+      ['g_c_w_mid', 'g_c_sw'],
+      ['g_c_sw', 'g_stair_sw'],
+      ['g_c_w_mid', 'g_c_p001'],
+      ['g_c_p001', 'g_c_p002'],
+      ['g_c_p002', 'g_c_p003'],
+      ['g_c_p003', 'g_c_p004'],
+      ['g_c_p004', 'g_c_e_mid'],
+      ['g_p001', 'g_c_p001'],
+      ['g_p002', 'g_c_p002'],
+      ['g_p003', 'g_c_p003'],
+      ['g_p004', 'g_c_p004'],
+      ['g_p005', 'g_c_p001'],
+      ['g_p006', 'g_c_p002'],
+      ['g_c_p003', 'g_c_lobby_nw'],
+      ['g_c_p004', 'g_c_lobby_ne'],
+      ['g_c_lobby_nw', 'g_c_lobby_center'],
+      ['g_c_lobby_center', 'g_c_lobby_ne'],
+      ['g_c_lobby_ne', 'g_c_lobby_se'],
+      ['g_c_lobby_center', 'g_c_south_lobby'],
+      ['g_c_south_lobby', 'g_ent_south'],
+      ['g_c_ne', 'g_c_e_mid'],
+      ['g_c_e_mid', 'g_c_lobby_se'],
+      ['g_c_lobby_se', 'g_c_se'],
+      ['g_c_ne', 'g_stair_ne'],
+      ['g_c_se', 'g_stair_se'],
+      ['g_c_e_mid', 'g_c_east_landing'],
+      ['g_c_east_landing', 'g_ent_east'],
+
+      // Floor 1 connections
+      ['f1_stair_ne', 'f1_c_ne'],
+      ['f1_c_ne', 'f1_c_mid'],
+      ['f1_c_mid', 'f1_c_se'],
+      ['f1_c_se', 'f1_stair_se'],
+      ['f1_c_mid', 'f1_p101'],
+
+      // Floor 2 connections
+      ['f2_wc', 'f2_c_wc'],
+      ['f2_c_nw', 'f2_c_wc'],
+      ['f2_c_wc', 'f2_c_w_mid'],
+      ['f2_c_w_mid', 'f2_c_sw_stair'],
+      ['f2_c_sw_stair', 'f2_stair_sw'],
+      ['f2_c_sw_stair', 'f2_c_sw'],
+      ['f2_c_nw', 'f2_c_top_mid'],
+      ['f2_c_top_mid', 'f2_c_ne'],
+      ['f2_c_sw', 'f2_c_bot_mid'],
+      ['f2_c_bot_mid', 'f2_c_se'],
+      ['f2_c_ne', 'f2_c_ne_stair'],
+      ['f2_c_ne_stair', 'f2_stair_ne'],
+      ['f2_c_ne_stair', 'f2_c_e_mid'],
+      ['f2_c_e_mid', 'f2_c_se_stair'],
+      ['f2_c_se_stair', 'f2_stair_se'],
+      ['f2_c_se_stair', 'f2_c_se'],
+      ['f2_c_top_mid', 'f2_p201'],
+      ['f2_c_bot_mid', 'f2_p201'],
+      ['f2_c_e_mid', 'f2_p201'],
+
+      // Floor 3 connections
+      ['f3_c_nw', 'f3_c_top_mid'],
+      ['f3_c_top_mid', 'f3_c_ne'],
+      ['f3_c_ne', 'f3_c_ne_stair'],
+      ['f3_c_ne_stair', 'f3_stair_ne'],
+      ['f3_c_ne_stair', 'f3_c_e_mid'],
+      ['f3_c_e_mid', 'f3_c_se_stair'],
+      ['f3_c_se_stair', 'f3_stair_se'],
+      ['f3_c_se_stair', 'f3_c_se'],
+      ['f3_c_se', 'f3_c_bot_mid'],
+      ['f3_c_bot_mid', 'f3_c_sw'],
+      ['f3_c_sw', 'f3_c_sw_lobby'],
+      ['f3_c_top_mid', 'f3_p301'],
+      ['f3_c_e_mid', 'f3_p301'],
+      ['f3_c_sw_lobby', 'f3_p301_in_sw'],
+      ['f3_p301_in_sw', 'f3_p301'],
+
+      // Vertical Multi-Floor Staircase Transitions
+      // East-North Staircase (connects all 4 floors: 0 <-> 1 <-> 2 <-> 3)
+      ['g_stair_ne', 'f1_stair_ne', 220],
+      ['f1_stair_ne', 'f2_stair_ne', 220],
+      ['f2_stair_ne', 'f3_stair_ne', 220],
+
+      // East-South Staircase (connects all 4 floors: 0 <-> 1 <-> 2 <-> 3)
+      ['g_stair_se', 'f1_stair_se', 220],
+      ['f1_stair_se', 'f2_stair_se', 220],
+      ['f2_stair_se', 'f3_stair_se', 220],
+
+      // South-West Staircase (connects Ground Floor <-> Floor 2 directly per blueprint)
+      ['g_stair_sw', 'f2_stair_sw', 420]
+    ];
+
+    /**
+     * 4. APPLICATION STATE
+     */
+    const state = {
+      currentFloor: 0,
+      startId: 'g_ent_south',
+      endId: 'f3_p301',
+      route: null,           // { nodeIds, totalMeters, walkMinutes, floorChanges, steps, segmentsByFloor }
+      highlightedStepIdx: -1,
+      showLabels: true,
+      showGrid: false,
+      popoverPoiId: null,
+      // Pan & Zoom state
+      zoom: 1,
+      panX: 0,
+      panY: 0,
+      isDragging: false,
+      dragStartX: 0,
+      dragStartY: 0,
+      // Simulation state
+      simPlaying: false,
+      simProgress: 0,        // 0 to 1 along total route
+      simSpeed: 1,
+      simAnimFrame: null,
+      simLastTime: 0
+    };
+
+    // Build adjacency list once
+    const adjacency = {};
+    Object.keys(GRAPH_NODES).forEach(id => { adjacency[id] = []; });
+    GRAPH_EDGES.forEach(edge => {
+      const [u, v, customWeight] = edge;
+      const nu = GRAPH_NODES[u];
+      const nv = GRAPH_NODES[v];
+      if (!nu || !nv) return;
+      const dist = customWeight !== undefined ? customWeight : Math.hypot(nv.x - nu.x, nv.y - nu.y);
+      adjacency[u].push({ to: v, weight: dist });
+      adjacency[v].push({ to: u, weight: dist });
+    });
+
+    /**
+     * 5. INITIALIZATION
+     */
+    window.addEventListener('DOMContentLoaded', () => {
+      populateDropdowns();
+      initPanZoomHandlers();
+      recalculateRoute();
+      switchFloor(0);
+    });
+
+    /**
+     * Populate Start and Destination `<select>` dropdowns grouped by Floor
+     */
+    function populateDropdowns() {
+      const startSel = document.getElementById('selectStart');
+      const endSel = document.getElementById('selectEnd');
+      startSel.innerHTML = '';
+      endSel.innerHTML = '';
+
+      [0, 1, 2, 3].forEach(floorNum => {
+        const groupStart = document.createElement('optgroup');
+        groupStart.label = `━━ ${FLOOR_META[floorNum].name} ━━`;
+        const groupEnd = document.createElement('optgroup');
+        groupEnd.label = `━━ ${FLOOR_META[floorNum].name} ━━`;
+
+        const floorPois = Object.values(GRAPH_NODES).filter(n => n.poi && n.floor === floorNum);
+        floorPois.forEach(poi => {
+          const icon = poi.category === 'entrance' ? '🚪' : poi.category === 'classroom' ? '🏫' : poi.category === 'restroom' ? '🚻' : '🪜';
+          const opt1 = new Option(`${icon} ${poi.name}`, poi.id);
+          const opt2 = new Option(`${icon} ${poi.name}`, poi.id);
+          groupStart.appendChild(opt1);
+          groupEnd.appendChild(opt2);
+        });
+
+        startSel.appendChild(groupStart);
+        endSel.appendChild(groupEnd);
+      });
+
+      startSel.value = state.startId;
+      endSel.value = state.endId;
+    }
+
+    /**
+     * 6. DIJKSTRA MULTI-FLOOR PATHFINDING & TURN-BY-TURN GENERATION
+     */
+    function findShortestPath(startId, endId) {
+      if (!GRAPH_NODES[startId] || !GRAPH_NODES[endId]) return null;
+      if (startId === endId) return [startId];
+
+      const dist = {};
+      const prev = {};
+      const visited = new Set();
+
+      Object.keys(GRAPH_NODES).forEach(id => {
+        dist[id] = Infinity;
+        prev[id] = null;
+      });
+      dist[startId] = 0;
+
+      while (true) {
+        let u = null;
+        let minDist = Infinity;
+        for (const id of Object.keys(GRAPH_NODES)) {
+          if (!visited.has(id) && dist[id] < minDist) {
+            minDist = dist[id];
+            u = id;
+          }
+        }
+        if (u === null || u === endId) break;
+        visited.add(u);
+
+        for (const edge of adjacency[u]) {
+          if (visited.has(edge.to)) continue;
+          const alt = dist[u] + edge.weight;
+          if (alt < dist[edge.to]) {
+            dist[edge.to] = alt;
+            prev[edge.to] = u;
+          }
+        }
+      }
+
+      if (dist[endId] === Infinity) return null;
+
+      const path = [];
+      let curr = endId;
+      while (curr) {
+        path.unshift(curr);
+        curr = prev[curr];
+      }
+      return path;
+    }
+
+    /**
+     * Recalculate route whenever Start or Destination changes
+     */
+    function recalculateRoute() {
+      stopSimulation();
+      state.simProgress = 0;
+      state.highlightedStepIdx = -1;
+      updateSimProgressUI();
+
+      const nodeIds = findShortestPath(state.startId, state.endId);
+      if (!nodeIds) {
+        showToast('Không tìm thấy đường đi phù hợp.');
+        return;
+      }
+
+      // Build polyline segments grouped by floor & compute real-world metrics
+      const segmentsByFloor = { 0: [], 1: [], 2: [], 3: [] };
+      let currentSeg = [];
+      let totalMeters = 0;
+      let floorChanges = 0;
+
+      // Also build continuous 2D+floor timeline for smooth simulation animation
+      const simTimeline = [];
+      let accumDist = 0;
+
+      for (let i = 0; i < nodeIds.length; i++) {
+        const curr = GRAPH_NODES[nodeIds[i]];
+        if (i === 0) {
+          currentSeg = [curr];
+        } else {
+          const prev = GRAPH_NODES[nodeIds[i - 1]];
+          if (prev.floor === curr.floor) {
+            const pxDist = Math.hypot(curr.x - prev.x, curr.y - prev.y);
+            const meters = pxDist * 0.06; // 1000px = 60m building width
+            totalMeters += meters;
+            currentSeg.push(curr);
+
+            simTimeline.push({
+              type: 'walk',
+              floor: curr.floor,
+              from: prev,
+              to: curr,
+              startDist: accumDist,
+              endDist: accumDist + meters,
+              label: `Đang đi bộ tại ${FLOOR_META[curr.floor].name}`
+            });
+            accumDist += meters;
+          } else {
+            // Save completed floor segment
+            if (currentSeg.length > 0) {
+              segmentsByFloor[prev.floor].push(currentSeg);
+            }
+            currentSeg = [curr];
+
+            const floorsDiff = Math.abs(curr.floor - prev.floor);
+            const stairMeters = floorsDiff * 14; // ~14m walking per flight of stairs
+            totalMeters += stairMeters;
+            floorChanges += floorsDiff;
+
+            const dirText = curr.floor > prev.floor ? 'Lên' : 'Xuống';
+            simTimeline.push({
+              type: 'stairs',
+              floor: prev.floor,
+              nextFloor: curr.floor,
+              from: prev,
+              to: curr,
+              startDist: accumDist,
+              endDist: accumDist + stairMeters,
+              label: `${dirText} ${FLOOR_META[curr.floor].name} qua ${prev.name.split(' (')[0]}`
+            });
+            accumDist += stairMeters;
+          }
+        }
+      }
+      if (currentSeg.length > 0) {
+        segmentsByFloor[currentSeg[0].floor].push(currentSeg);
+      }
+
+      // Generate human-readable Vietnamese turn-by-turn steps
+      const steps = generateTurnByTurnSteps(nodeIds);
+
+      const walkMinutes = Math.max(1, Math.ceil(totalMeters / 65)); // ~65m/min indoor walking speed
+
+      state.route = {
+        nodeIds,
+        totalMeters: Math.round(totalMeters),
+        walkMinutes,
+        floorChanges,
+        steps,
+        segmentsByFloor,
+        simTimeline,
+        totalTimelineDist: Math.max(accumDist, 1)
+      };
+
+      // Update UI Metrics
+      document.getElementById('metricDistance').textContent = `${state.route.totalMeters} m`;
+      document.getElementById('metricTime').textContent = `~${state.route.walkMinutes} phút`;
+      document.getElementById('metricFloors').textContent = `${state.route.floorChanges} tầng`;
+
+      // Update Floor Tab Route Indicators
+      [0, 1, 2, 3].forEach(f => {
+        const badge = document.getElementById(`floorBadge-${f}`);
+        const hasRoute = segmentsByFloor[f].length > 0;
+        badge.classList.toggle('hidden', !hasRoute);
+      });
+
+      renderDirectionsList();
+      renderMap();
+    }
+
+    /**
+     * Generate natural Vietnamese turn-by-turn navigation instructions
+     */
+    function generateTurnByTurnSteps(nodeIds) {
+      const startNode = GRAPH_NODES[nodeIds[0]];
+      const endNode = GRAPH_NODES[nodeIds[nodeIds.length - 1]];
+
+      if (nodeIds.length === 1) {
+        return [{
+          floor: startNode.floor,
+          icon: 'flag',
+          title: `Bạn đang ở ngay tại ${startNode.name}`,
+          detail: `${FLOOR_META[startNode.floor].name} • Khoảng cách 0m`,
+          nodeId: startNode.id
+        }];
+      }
+
+      const steps = [];
+      steps.push({
+        floor: startNode.floor,
+        icon: 'start',
+        title: `Xuất phát từ ${startNode.name}`,
+        detail: `${FLOOR_META[startNode.floor].name} • Đi ra hành lang`,
+        nodeId: startNode.id
+      });
+
+      let legMeters = 0;
+      for (let i = 1; i < nodeIds.length; i++) {
+        const prev = GRAPH_NODES[nodeIds[i - 1]];
+        const curr = GRAPH_NODES[nodeIds[i]];
+
+        // Staircase floor change
+        if (prev.floor !== curr.floor) {
+          if (legMeters >= 2) {
+            steps.push({
+              floor: prev.floor,
+              icon: 'walk',
+              title: `Đi theo hành lang tới ${prev.name.split(' (')[0]}`,
+              detail: `${FLOOR_META[prev.floor].name} • Khoảng ${Math.round(legMeters)}m`,
+              nodeId: prev.id
+            });
+            legMeters = 0;
+          }
+          const isUp = curr.floor > prev.floor;
+          const stairCleanName = prev.name.split(' (')[0];
+          steps.push({
+            floor: prev.floor,
+            targetFloor: curr.floor,
+            icon: isUp ? 'stairs-up' : 'stairs-down',
+            title: `${isUp ? 'Đi lên' : 'Đi xuống'} ${FLOOR_META[curr.floor].name} bằng ${stairCleanName}`,
+            detail: `Chuyển từ ${FLOOR_META[prev.floor].name} sang ${FLOOR_META[curr.floor].name}`,
+            nodeId: curr.id
+          });
+          continue;
+        }
+
+        const segM = Math.hypot(curr.x - prev.x, curr.y - prev.y) * 0.06;
+        legMeters += segM;
+
+        // Check for significant directional turn on the same floor
+        if (i < nodeIds.length - 1) {
+          const next = GRAPH_NODES[nodeIds[i + 1]];
+          if (next.floor === curr.floor) {
+            const v1x = curr.x - prev.x;
+            const v1y = curr.y - prev.y;
+            const v2x = next.x - curr.x;
+            const v2y = next.y - curr.y;
+            const len1 = Math.hypot(v1x, v1y);
+            const len2 = Math.hypot(v2x, v2y);
+
+            if (len1 > 10 && len2 > 10) {
+              const cross = (v1x * v2y - v1y * v2x) / (len1 * len2);
+              const dot = (v1x * v2x + v1y * v2y) / (len1 * len2);
+
+              // Turn angle > ~50 degrees
+              if (dot < 0.65 && legMeters >= 3) {
+                const turnDir = cross > 0 ? 'Rẽ phải' : 'Rẽ trái';
+                const landmark = next.poi
+                  ? `vào ${next.name}`
+                  : (next.y < curr.y - 20 ? 'về phía hành lang Bắc' : next.y > curr.y + 20 ? 'về phía hành lang Nam' : next.x > curr.x + 20 ? 'dọc hành lang hướng Đông' : 'dọc hành lang hướng Tây');
+
+                steps.push({
+                  floor: curr.floor,
+                  icon: cross > 0 ? 'turn-right' : 'turn-left',
+                  title: `Đi thẳng ${Math.round(legMeters)}m, sau đó ${turnDir.toLowerCase()} ${landmark}`,
+                  detail: `${FLOOR_META[curr.floor].name}`,
+                  nodeId: curr.id
+                });
+                legMeters = 0;
+              }
+            }
+          }
+        }
+      }
+
+      // Final arrival step
+      const arrivalDistText = legMeters >= 1 ? `Đi tiếp ${Math.round(legMeters)}m • ` : '';
+      steps.push({
+        floor: endNode.floor,
+        icon: 'end',
+        title: `Đến nơi: ${endNode.name}`,
+        detail: `${arrivalDistText}${FLOOR_META[endNode.floor].name}`,
+        nodeId: endNode.id
+      });
+
+      return steps;
+    }
+
+    /**
+     * Render Turn-by-Turn list in the left sidebar
+     */
+    function renderDirectionsList() {
+      const list = document.getElementById('directionsList');
+      const badge = document.getElementById('stepCountBadge');
+      if (!state.route) return;
+
+      const steps = state.route.steps;
+      badge.textContent = `${steps.length} bước`;
+      list.innerHTML = '';
+
+      steps.forEach((step, idx) => {
+        const isActive = state.highlightedStepIdx === idx;
+        const li = document.createElement('li');
+        li.className = `p-2.5 rounded-xl border transition cursor-pointer flex items-start gap-2.5 ${
+          isActive
+            ? 'bg-indigo-50 border-indigo-400 shadow-xs'
+            : 'bg-slate-50/80 hover:bg-slate-100 border-slate-200/80'
+        }`;
+
+        li.onclick = () => {
+          state.highlightedStepIdx = idx;
+          switchFloor(step.targetFloor !== undefined ? step.targetFloor : step.floor);
+          renderDirectionsList();
+        };
+
+        // Icon badge
+        let iconBg = 'bg-slate-200 text-slate-700';
+        let iconSvg = `<span class="text-xs font-bold">${idx + 1}</span>`;
+
+        if (step.icon === 'start') {
+          iconBg = 'bg-emerald-500 text-white';
+          iconSvg = `<span class="text-xs font-bold">A</span>`;
+        } else if (step.icon === 'end') {
+          iconBg = 'bg-rose-500 text-white';
+          iconSvg = `<span class="text-xs font-bold">B</span>`;
+        } else if (step.icon === 'stairs-up' || step.icon === 'stairs-down') {
+          iconBg = 'bg-sky-500 text-white';
+          iconSvg = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>`;
+        } else if (step.icon === 'turn-left') {
+          iconBg = 'bg-indigo-100 text-indigo-700';
+          iconSvg = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14l-4-4m0 0l4-4m-4 4h11a4 4 0 014 4v1"/></svg>`;
+        } else if (step.icon === 'turn-right') {
+          iconBg = 'bg-indigo-100 text-indigo-700';
+          iconSvg = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 14l4-4m0 0l-4-4m4 4H8a4 4 0 00-4 4v1"/></svg>`;
+        }
+
+        li.innerHTML = `
+          <div class="w-6 h-6 rounded-lg ${iconBg} flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+            ${iconSvg}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-xs font-semibold text-slate-800 leading-snug">${step.title}</div>
+            <div class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1.5">
+              <span>${step.detail}</span>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 shrink-0">
+            ${FLOOR_META[step.floor].short}
+          </span>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    /**
+     * 7. RENDER 2D ARCHITECTURAL FLOOR PLAN SVG
+     */
+    function renderMap() {
+      const f = state.currentFloor;
+      const geo = FLOOR_GEOMETRY[f];
+      const layerArch = document.getElementById('layerArchitecture');
+      const layerLabels = document.getElementById('layerLabels');
+      const layerRoute = document.getElementById('layerRoute');
+      const layerMarkers = document.getElementById('layerMarkers');
+
+      layerArch.innerHTML = '';
+      layerLabels.innerHTML = '';
+      layerRoute.innerHTML = '';
+      layerMarkers.innerHTML = '';
+
+      // 1. Concrete outer background (Tường bê tông #c5cdd4)
+      layerArch.appendChild(createSvgEl('rect', {
+        x: 0, y: 0, width: 1000, height: 400, fill: COLORS.wall
+      }));
+
+      // 2. Pink Corridors (Hành lang #e59cf5)
+      geo.corridors.forEach(c => {
+        layerArch.appendChild(createSvgEl('rect', {
+          x: c.x, y: c.y, width: c.w, height: c.h, fill: COLORS.corridor
+        }));
+      });
+
+      // 3. Black Entrance Steps (Bậc thang #2b2b2b)
+      geo.steps.forEach(st => {
+        const g = createSvgEl('g', { class: 'map-poi' });
+        g.onclick = (e) => openPoiPopover(st.id, e);
+
+        g.appendChild(createSvgEl('rect', {
+          x: st.x, y: st.y, width: st.w, height: st.h, fill: COLORS.steps
+        }));
+
+        // Subtle architectural step tread lines
+        if (st.orientation === 'horizontal') {
+          for (let ly = st.y + 5; ly < st.y + st.h; ly += 5) {
+            g.appendChild(createSvgEl('line', {
+              x1: st.x + 4, y1: ly, x2: st.x + st.w - 4, y2: ly,
+              stroke: 'rgba(255,255,255,0.22)', 'stroke-width': 1
+            }));
+          }
+        } else {
+          for (let lx = st.x + 5; lx < st.x + st.w; lx += 5) {
+            g.appendChild(createSvgEl('line', {
+              x1: lx, y1: st.y + 4, x2: lx, y2: st.y + st.h - 4,
+              stroke: 'rgba(255,255,255,0.22)', 'stroke-width': 1
+            }));
+          }
+        }
+        layerArch.appendChild(g);
+
+        // Label for Entrance Steps
+        if (state.showLabels) {
+          const isVert = st.orientation === 'vertical';
+          const txt = createSvgEl('text', {
+            x: st.labelX,
+            y: st.labelY,
+            fill: '#ffffff',
+            'font-size': isVert ? '10' : '11',
+            'font-weight': '700',
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            transform: isVert ? `rotate(-90 ${st.labelX} ${st.labelY})` : ''
+          });
+          txt.textContent = st.label;
+          layerLabels.appendChild(txt);
+        }
+      });
+
+      // 4. Green Restrooms (Nhà vệ sinh #b8f566 with dashed border)
+      geo.restrooms.forEach(wc => {
+        const g = createSvgEl('g', { class: 'map-poi' });
+        g.onclick = (e) => openPoiPopover(wc.id, e);
+
+        g.appendChild(createSvgEl('rect', {
+          x: wc.x, y: wc.y, width: wc.w, height: wc.h,
+          fill: COLORS.restroom,
+          stroke: COLORS.borderDash,
+          'stroke-width': 2,
+          'stroke-dasharray': '6,4'
+        }));
+
+        // Door opening indicator
+        if (wc.door) {
+          g.appendChild(createSvgEl('rect', {
+            x: wc.door.x, y: wc.door.y, width: wc.door.w, height: wc.door.h,
+            fill: COLORS.corridor
+          }));
+        }
+        layerArch.appendChild(g);
+
+        if (state.showLabels) {
+          const cx = wc.x + wc.w / 2;
+          const cy = wc.y + wc.h / 2;
+          const t1 = createSvgEl('text', {
+            x: cx, y: cy - 6, fill: '#1a2e05', 'font-size': '12', 'font-weight': '800', 'text-anchor': 'middle'
+          });
+          t1.textContent = wc.label;
+          const t2 = createSvgEl('text', {
+            x: cx, y: cy + 10, fill: '#365314', 'font-size': '10', 'font-weight': '600', 'text-anchor': 'middle'
+          });
+          t2.textContent = wc.sublabel;
+          layerLabels.appendChild(t1);
+          layerLabels.appendChild(t2);
+        }
+      });
+
+      // 5. Blue Staircases (Cầu thang bộ #2db2ff with stair tread icon)
+      geo.stairs.forEach(st => {
+        const g = createSvgEl('g', { class: 'map-poi' });
+        g.onclick = (e) => openPoiPopover(st.id, e);
+
+        g.appendChild(createSvgEl('rect', {
+          x: st.x, y: st.y, width: st.w, height: st.h,
+          fill: COLORS.stairs
+        }));
+
+        // Draw crisp stair steps graphic inside the blue box
+        const stepCount = 6;
+        const padX = 8;
+        const padY = 10;
+        const innerW = st.w - padX * 2;
+        const innerH = st.h - padY * 2;
+        for (let s = 1; s < stepCount; s++) {
+          const sy = st.y + padY + (innerH / stepCount) * s;
+          g.appendChild(createSvgEl('line', {
+            x1: st.x + padX,
+            y1: sy,
+            x2: st.x + st.w - padX,
+            y2: sy,
+            stroke: 'rgba(255, 255, 255, 0.55)',
+            'stroke-width': 1.5
+          }));
+        }
+        layerArch.appendChild(g);
+
+        if (state.showLabels) {
+          const cx = st.x + st.w / 2;
+          const cy = st.y + st.h / 2;
+          const badgeW = Math.min(st.w - 4, 68);
+          layerLabels.appendChild(createSvgEl('rect', {
+            x: cx - badgeW / 2, y: cy - 9, width: badgeW, height: 18, rx: 4,
+            fill: 'rgba(12, 74, 110, 0.82)'
+          }));
+          const txt = createSvgEl('text', {
+            x: cx, y: cy + 3.5, fill: '#ffffff', 'font-size': st.w < 55 ? '8' : '9.5', 'font-weight': '700', 'text-anchor': 'middle'
+          });
+          txt.textContent = st.shortLabel;
+          layerLabels.appendChild(txt);
+        }
+      });
+
+      // 6. Yellow Classrooms (Phòng học #ffdd55 with dashed border)
+      geo.classrooms.forEach(rm => {
+        const g = createSvgEl('g', { class: 'map-poi' });
+        g.onclick = (e) => openPoiPopover(rm.id, e);
+
+        if (rm.shape === 'polygon') {
+          g.appendChild(createSvgEl('polygon', {
+            points: rm.points,
+            fill: COLORS.classroom,
+            stroke: COLORS.borderDash,
+            'stroke-width': 2.2,
+            'stroke-dasharray': '7,4',
+            'stroke-linejoin': 'round'
+          }));
+        } else {
+          g.appendChild(createSvgEl('rect', {
+            x: rm.x, y: rm.y, width: rm.w, height: rm.h,
+            fill: COLORS.classroom,
+            stroke: COLORS.borderDash,
+            'stroke-width': 2.2,
+            'stroke-dasharray': '7,4'
+          }));
+        }
+
+        // Architectural door gap(s) connecting classroom to pink corridor
+        const doorList = rm.doors || (rm.door ? [rm.door] : []);
+        doorList.forEach(d => {
+          g.appendChild(createSvgEl('rect', {
+            x: d.x, y: d.y, width: d.w, height: d.h,
+            fill: COLORS.corridor
+          }));
+        });
+
+        layerArch.appendChild(g);
+
+        if (state.showLabels) {
+          const cx = rm.centerX !== undefined ? rm.centerX : rm.x + rm.w / 2;
+          const cy = rm.centerY !== undefined ? rm.centerY : rm.y + rm.h / 2;
+
+          const title = createSvgEl('text', {
+            x: cx, y: cy - 3, fill: '#1e293b',
+            'font-size': rm.w > 400 || rm.shape === 'polygon' ? '20' : '15',
+            'font-weight': '800', 'text-anchor': 'middle'
+          });
+          title.textContent = rm.label;
+          layerLabels.appendChild(title);
+
+          if (rm.sublabel) {
+            const sub = createSvgEl('text', {
+              x: cx, y: cy + 16, fill: '#475569',
+              'font-size': rm.w > 400 || rm.shape === 'polygon' ? '12' : '11',
+              'font-weight': '600', 'text-anchor': 'middle'
+            });
+            sub.textContent = rm.sublabel;
+            layerLabels.appendChild(sub);
+          }
+        }
+      });
+
+      // 7. Render Active Route on Current Floor
+      renderRouteOverlay();
+    }
+
+    /**
+     * Render Route Polyline, Start/Destination Pins, Stair Transition Badge & Simulation Avatar
+     */
+    function renderRouteOverlay() {
+      const layerRoute = document.getElementById('layerRoute');
+      const layerMarkers = document.getElementById('layerMarkers');
+      const banner = document.getElementById('stairTransitionBanner');
+
+      layerRoute.innerHTML = '';
+      layerMarkers.innerHTML = '';
+      banner.classList.add('hidden');
+
+      if (!state.route) return;
+
+      const f = state.currentFloor;
+      const segments = state.route.segmentsByFloor[f] || [];
+
+      // Draw each contiguous corridor path on this floor
+      segments.forEach(seg => {
+        if (seg.length < 2) return;
+        const pointsStr = seg.map(n => `${n.x},${n.y}`).join(' ');
+
+        // Outer soft halo
+        layerRoute.appendChild(createSvgEl('polyline', {
+          points: pointsStr,
+          fill: 'none',
+          stroke: 'rgba(37, 99, 235, 0.25)',
+          'stroke-width': 12,
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round'
+        }));
+
+        // Solid base route line
+        layerRoute.appendChild(createSvgEl('polyline', {
+          points: pointsStr,
+          fill: 'none',
+          stroke: '#1d4ed8',
+          'stroke-width': 5.5,
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round'
+        }));
+
+        // Animated flowing white-blue dashes indicating direction
+        layerRoute.appendChild(createSvgEl('polyline', {
+          points: pointsStr,
+          fill: 'none',
+          stroke: '#93c5fd',
+          'stroke-width': 3,
+          'stroke-dasharray': '10,8',
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round',
+          class: 'route-animated'
+        }));
+
+        // Waypoint junction dots
+        seg.forEach((pt, i) => {
+          if (i > 0 && i < seg.length - 1) {
+            layerRoute.appendChild(createSvgEl('circle', {
+              cx: pt.x, cy: pt.y, r: 3.5, fill: '#ffffff', stroke: '#1d4ed8', 'stroke-width': 2
+            }));
+          }
+        });
+      });
+
+      // Check for Staircase Transitions on this floor
+      const nodeIds = state.route.nodeIds;
+      for (let i = 0; i < nodeIds.length - 1; i++) {
+        const curr = GRAPH_NODES[nodeIds[i]];
+        const next = GRAPH_NODES[nodeIds[i + 1]];
+        if (curr.floor === f && next.floor !== f) {
+          const isUp = next.floor > curr.floor;
+          const label = `${isUp ? 'Lên' : 'Xuống'} ${FLOOR_META[next.floor].name}`;
+
+          // Show floating jump banner at top of viewport
+          banner.classList.remove('hidden');
+          document.getElementById('stairTransitionText').textContent = `${label} qua ${curr.name.split(' (')[0]}`;
+          banner.dataset.targetFloor = next.floor;
+
+          // Draw pulsing transition badge right over the staircase on the SVG
+          const g = createSvgEl('g', { class: 'cursor-pointer' });
+          g.onclick = () => switchFloor(next.floor);
+
+          g.appendChild(createSvgEl('circle', {
+            cx: curr.x, cy: curr.y, r: 18, fill: '#0284c7', opacity: 0.45, class: 'pulse-ring'
+          }));
+          g.appendChild(createSvgEl('circle', {
+            cx: curr.x, cy: curr.y, r: 14, fill: '#0369a1', stroke: '#ffffff', 'stroke-width': 2.5, filter: 'url(#pinShadow)'
+          }));
+
+          // Up/Down arrow icon inside badge
+          const arrowPath = isUp
+            ? `M ${curr.x} ${curr.y - 6} L ${curr.x - 5} ${curr.y} L ${curr.x - 2} ${curr.y} L ${curr.x - 2} ${curr.y + 6} L ${curr.x + 2} ${curr.y + 6} L ${curr.x + 2} ${curr.y} L ${curr.x + 5} ${curr.y} Z`
+            : `M ${curr.x} ${curr.y + 6} L ${curr.x - 5} ${curr.y} L ${curr.x - 2} ${curr.y} L ${curr.x - 2} ${curr.y - 6} L ${curr.x + 2} ${curr.y - 6} L ${curr.x + 2} ${curr.y} L ${curr.x + 5} ${curr.y} Z`;
+          g.appendChild(createSvgEl('path', { d: arrowPath, fill: '#fde047' }));
+
+          // Pill callout above/below stair
+          const pillY = curr.y > 200 ? curr.y - 28 : curr.y + 24;
+          g.appendChild(createSvgEl('rect', {
+            x: curr.x - 42, y: pillY - 10, width: 84, height: 19, rx: 9.5,
+            fill: '#0f172a', stroke: '#38bdf8', 'stroke-width': 1.5
+          }));
+          const pillTxt = createSvgEl('text', {
+            x: curr.x, y: pillY + 3, fill: '#ffffff', 'font-size': '9.5', 'font-weight': '700', 'text-anchor': 'middle'
+          });
+          pillTxt.textContent = `${label} →`;
+          g.appendChild(pillTxt);
+
+          layerMarkers.appendChild(g);
+        }
+      }
+
+      // Draw Start Marker if on current floor
+      const startNode = GRAPH_NODES[state.startId];
+      if (startNode && startNode.floor === f) {
+        drawPinMarker(layerMarkers, startNode.x, startNode.y, '#10b981', 'XUẤT PHÁT');
+      }
+
+      // Draw Destination Marker if on current floor
+      const endNode = GRAPH_NODES[state.endId];
+      if (endNode && endNode.floor === f) {
+        drawPinMarker(layerMarkers, endNode.x, endNode.y, '#ef4444', 'ĐÍCH ĐẾN');
+      }
+
+      // Draw Highlighted Step Node if user clicked a turn-by-turn step
+      if (state.highlightedStepIdx >= 0 && state.route.steps[state.highlightedStepIdx]) {
+        const st = state.route.steps[state.highlightedStepIdx];
+        const hNode = GRAPH_NODES[st.nodeId];
+        if (hNode && hNode.floor === f) {
+          layerMarkers.appendChild(createSvgEl('circle', {
+            cx: hNode.x, cy: hNode.y, r: 16, fill: 'none', stroke: '#f59e0b', 'stroke-width': 3.5, class: 'pulse-ring'
+          }));
+        }
+      }
+
+      // Draw Simulation User Avatar if simulation has started
+      if (state.simProgress > 0 || state.simPlaying) {
+        renderSimulationAvatar(layerMarkers);
+      }
+    }
+
+    /**
+     * Draw sleek Start / Destination Marker Pin on SVG
+     */
+    function drawPinMarker(container, x, y, color, label) {
+      const g = createSvgEl('g', { filter: 'url(#pinShadow)' });
+
+      // Pulse ring
+      g.appendChild(createSvgEl('circle', {
+        cx: x, cy: y, r: 15, fill: color, opacity: 0.35, class: 'pulse-ring'
+      }));
+
+      // Outer white ring + colored core
+      g.appendChild(createSvgEl('circle', {
+        cx: x, cy: y, r: 10, fill: color, stroke: '#ffffff', 'stroke-width': 3
+      }));
+      g.appendChild(createSvgEl('circle', {
+        cx: x, cy: y, r: 3.5, fill: '#ffffff'
+      }));
+
+      // Floating label pill
+      const pillY = y < 48 ? y + 23 : y - 20;
+      const w = label.length * 6.5 + 14;
+      g.appendChild(createSvgEl('rect', {
+        x: x - w / 2, y: pillY - 9, width: w, height: 18, rx: 9,
+        fill: '#0f172a', stroke: color, 'stroke-width': 1.5
+      }));
+      const txt = createSvgEl('text', {
+        x: x, y: pillY + 3, fill: '#ffffff', 'font-size': '9', 'font-weight': '800', 'text-anchor': 'middle'
+      });
+      txt.textContent = label;
+      g.appendChild(txt);
+
+      container.appendChild(g);
+    }
+
+    /**
+     * 8. INTERACTIVE FLOOR SWITCHING & CONTROLS
+     */
+    function switchFloor(floorNum) {
+      state.currentFloor = floorNum;
+      closePopover();
+
+      // Update Tab Styling
+      [0, 1, 2, 3].forEach(f => {
+        const tab = document.getElementById(`floorTab-${f}`);
+        if (f === floorNum) {
+          tab.className = 'floor-tab relative px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 bg-slate-900 text-white shadow-sm';
+        } else {
+          tab.className = 'floor-tab relative px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 text-slate-600 hover:bg-slate-100';
+        }
+      });
+
+      // Update Map Card Header
+      document.getElementById('mapCardFloorPill').textContent = FLOOR_META[floorNum].name;
+      document.getElementById('mapCardSubtitle').textContent = FLOOR_META[floorNum].subtitle;
+
+      renderMap();
+    }
+
+    function jumpToNextRouteFloor() {
+      const banner = document.getElementById('stairTransitionBanner');
+      const target = parseInt(banner.dataset.targetFloor, 10);
+      if (!isNaN(target)) {
+        switchFloor(target);
+      }
+    }
+
+    function handleSelectChange() {
+      state.startId = document.getElementById('selectStart').value;
+      state.endId = document.getElementById('selectEnd').value;
+      recalculateRoute();
+      const startNode = GRAPH_NODES[state.startId];
+      if (startNode) switchFloor(startNode.floor);
+    }
+
+    function swapLocations() {
+      const temp = state.startId;
+      state.startId = state.endId;
+      state.endId = temp;
+      document.getElementById('selectStart').value = state.startId;
+      document.getElementById('selectEnd').value = state.endId;
+      recalculateRoute();
+      const startNode = GRAPH_NODES[state.startId];
+      if (startNode) switchFloor(startNode.floor);
+      showToast('Đã đảo chiều điểm xuất phát và điểm đến');
+    }
+
+    function applyPreset(startId, endId) {
+      state.startId = startId;
+      state.endId = endId;
+      document.getElementById('selectStart').value = startId;
+      document.getElementById('selectEnd').value = endId;
+      recalculateRoute();
+      switchFloor(GRAPH_NODES[startId].floor);
+    }
+
+    /**
+     * Find nearest Restroom ('restroom') or Exit Steps ('entrance') from current Start point
+     */
+    function routeToNearest(targetCategory) {
+      const candidates = Object.values(GRAPH_NODES).filter(n => n.poi && n.category === targetCategory);
+      let bestId = null;
+      let bestCost = Infinity;
+
+      candidates.forEach(cand => {
+        const path = findShortestPath(state.startId, cand.id);
+        if (path) {
+          let cost = 0;
+          for (let i = 1; i < path.length; i++) {
+            const a = GRAPH_NODES[path[i - 1]];
+            const b = GRAPH_NODES[path[i]];
+            cost += a.floor === b.floor ? Math.hypot(b.x - a.x, b.y - a.y) : 250;
+          }
+          if (cost < bestCost) {
+            bestCost = cost;
+            bestId = cand.id;
+          }
+        }
+      });
+
+      if (bestId) {
+        state.endId = bestId;
+        document.getElementById('selectEnd').value = bestId;
+        recalculateRoute();
+        switchFloor(GRAPH_NODES[state.startId].floor);
+        showToast(`Đã tìm thấy ${GRAPH_NODES[bestId].name} gần nhất!`);
+      }
+    }
+
+    /**
+     * 9. DIRECT MAP CLICK POPOVER
+     */
+    function openPoiPopover(poiId, event) {
+      event.stopPropagation();
+      const node = GRAPH_NODES[poiId];
+      if (!node) return;
+
+      state.popoverPoiId = poiId;
+      const popover = document.getElementById('poiPopover');
+      const catMeta = CATEGORY_LABELS[node.category] || { label: 'Địa điểm', badgeClass: 'bg-slate-100 text-slate-800' };
+
+      const catBadge = document.getElementById('popoverCategory');
+      catBadge.textContent = catMeta.label;
+      catBadge.className = `inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md mb-1 ${catMeta.badgeClass}`;
+
+      document.getElementById('popoverTitle').textContent = node.name;
+      document.getElementById('popoverSubtitle').textContent = `${FLOOR_META[node.floor].name} • Nhấp chọn bên dưới`;
+
+      // Position popover inside mapViewport safely
+      const viewportRect = document.getElementById('mapViewport').getBoundingClientRect();
+      let left = event.clientX - viewportRect.left + 12;
+      let top = event.clientY - viewportRect.top - 20;
+
+      if (left + 265 > viewportRect.width) left = viewportRect.width - 272;
+      if (left < 12) left = 12;
+      if (top + 145 > viewportRect.height) top = viewportRect.height - 152;
+      if (top < 12) top = 12;
+
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+      popover.classList.remove('hidden');
+    }
+
+    function closePopover() {
+      state.popoverPoiId = null;
+      document.getElementById('poiPopover').classList.add('hidden');
+    }
+
+    function setPopoverAsStart() {
+      if (!state.popoverPoiId) return;
+      state.startId = state.popoverPoiId;
+      document.getElementById('selectStart').value = state.startId;
+      closePopover();
+      recalculateRoute();
+      showToast(`Điểm xuất phát: ${GRAPH_NODES[state.startId].name}`);
+    }
+
+    function setPopoverAsEnd() {
+      if (!state.popoverPoiId) return;
+      state.endId = state.popoverPoiId;
+      document.getElementById('selectEnd').value = state.endId;
+      closePopover();
+      recalculateRoute();
+      showToast(`Điểm đến: ${GRAPH_NODES[state.endId].name}`);
+    }
+
+    /**
+     * 10. STEP-BY-STEP NAVIGATION SIMULATION
+     */
+    function toggleSimulation() {
+      if (!state.route || state.route.simTimeline.length === 0) {
+        showToast('Điểm xuất phát và điểm đến trùng nhau!');
+        return;
+      }
+
+      if (state.simPlaying) {
+        stopSimulation();
+      } else {
+        if (state.simProgress >= 1) {
+          state.simProgress = 0;
+        }
+        state.simPlaying = true;
+        state.simLastTime = performance.now();
+        updateSimButtonUI();
+        document.getElementById('simProgressContainer').classList.remove('hidden');
+        state.simAnimFrame = requestAnimationFrame(stepSimulation);
+      }
+    }
+
+    function stopSimulation() {
+      state.simPlaying = false;
+      if (state.simAnimFrame) {
+        cancelAnimationFrame(state.simAnimFrame);
+        state.simAnimFrame = null;
+      }
+      updateSimButtonUI();
+    }
+
+    function resetSimulation() {
+      stopSimulation();
+      state.simProgress = 0;
+      document.getElementById('simProgressContainer').classList.add('hidden');
+      if (state.route && state.route.nodeIds.length > 0) {
+        switchFloor(GRAPH_NODES[state.route.nodeIds[0]].floor);
+      }
+      renderRouteOverlay();
+    }
+
+    function cycleSimSpeed() {
+      state.simSpeed = state.simSpeed === 1 ? 2 : state.simSpeed === 2 ? 3 : 1;
+      document.getElementById('btnSimSpeed').textContent = `${state.simSpeed}x`;
+    }
+
+    function scrubSimulation(val) {
+      stopSimulation();
+      state.simProgress = Math.max(0, Math.min(1, parseInt(val, 10) / 1000));
+      document.getElementById('simProgressContainer').classList.remove('hidden');
+      syncFloorToSimProgress();
+      updateSimProgressUI();
+      renderRouteOverlay();
+    }
+
+    function stepSimulation(now) {
+      if (!state.simPlaying || !state.route) return;
+
+      const dt = (now - state.simLastTime) / 1000;
+      state.simLastTime = now;
+
+      // Speed: ~14 meters per second at 1x
+      const metersPerSec = 14 * state.simSpeed;
+      const deltaProgress = (metersPerSec * dt) / state.route.totalTimelineDist;
+      state.simProgress = Math.min(1, state.simProgress + deltaProgress);
+
+      syncFloorToSimProgress();
+      updateSimProgressUI();
+      renderRouteOverlay();
+
+      if (state.simProgress >= 1) {
+        stopSimulation();
+        document.getElementById('simStatusText').textContent = `Đã đến ${GRAPH_NODES[state.endId].name}!`;
+        showToast(`Bạn đã đến ${GRAPH_NODES[state.endId].name}`);
+      } else {
+        state.simAnimFrame = requestAnimationFrame(stepSimulation);
+      }
+    }
+
+    function getActiveSimSegment() {
+      if (!state.route || state.route.simTimeline.length === 0) return null;
+      const targetDist = state.simProgress * state.route.totalTimelineDist;
+      for (const seg of state.route.simTimeline) {
+        if (targetDist >= seg.startDist && targetDist <= seg.endDist) {
+          const span = Math.max(seg.endDist - seg.startDist, 0.001);
+          const localT = (targetDist - seg.startDist) / span;
+          return { seg, localT };
+        }
+      }
+      const last = state.route.simTimeline[state.route.simTimeline.length - 1];
+      return { seg: last, localT: 1 };
+    }
+
+    function syncFloorToSimProgress() {
+      const active = getActiveSimSegment();
+      if (!active) return;
+      const desiredFloor = active.seg.type === 'stairs' && active.localT > 0.5
+        ? active.seg.nextFloor
+        : active.seg.floor;
+
+      if (state.currentFloor !== desiredFloor) {
+        switchFloor(desiredFloor);
+      }
+    }
+
+    function updateSimProgressUI() {
+      const pct = Math.round(state.simProgress * 100);
+      document.getElementById('simScrubber').value = Math.round(state.simProgress * 1000);
+      document.getElementById('simPercentText').textContent = `${pct}%`;
+
+      const active = getActiveSimSegment();
+      if (active) {
+        document.getElementById('simStatusText').textContent = active.seg.label;
+      }
+    }
+
+    function updateSimButtonUI() {
+      const playIcon = document.getElementById('simIconPlay');
+      const pauseIcon = document.getElementById('simIconPause');
+      const label = document.getElementById('simBtnText');
+      if (state.simPlaying) {
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        label.textContent = 'Tạm dừng mô phỏng';
+      } else {
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        label.textContent = state.simProgress > 0 && state.simProgress < 1 ? 'Tiếp tục di chuyển' : 'Mô phỏng di chuyển';
+      }
+    }
+
+    function renderSimulationAvatar(container) {
+      const active = getActiveSimSegment();
+      if (!active) return;
+      const { seg, localT } = active;
+
+      let x = seg.from.x + (seg.to.x - seg.from.x) * localT;
+      let y = seg.from.y + (seg.to.y - seg.from.y) * localT;
+
+      if (seg.type === 'stairs') {
+        const stairNode = localT <= 0.5 ? seg.from : seg.to;
+        if (stairNode.floor !== state.currentFloor) return;
+        x = stairNode.x;
+        y = stairNode.y;
+      } else if (seg.floor !== state.currentFloor) {
+        return;
+      }
+
+      const g = createSvgEl('g', { filter: 'url(#pinShadow)' });
+      g.appendChild(createSvgEl('circle', {
+        cx: x, cy: y, r: 16, fill: '#f59e0b', opacity: 0.45, class: 'pulse-ring'
+      }));
+      g.appendChild(createSvgEl('circle', {
+        cx: x, cy: y, r: 9.5, fill: '#f59e0b', stroke: '#ffffff', 'stroke-width': 3
+      }));
+      g.appendChild(createSvgEl('circle', {
+        cx: x, cy: y, r: 3, fill: '#0f172a'
+      }));
+      container.appendChild(g);
+    }
+
+    /**
+     * 11. PAN, ZOOM & VIEWPORT TOOLBAR CONTROLS
+     */
+    function initPanZoomHandlers() {
+      const viewport = document.getElementById('mapViewport');
+      const layer = document.getElementById('mapTransformLayer');
+
+      viewport.addEventListener('mousedown', (e) => {
+        if (e.target.closest('.map-poi') || e.target.closest('button') || e.target.closest('#poiPopover')) return;
+        closePopover();
+        state.isDragging = true;
+        state.dragStartX = e.clientX - state.panX;
+        state.dragStartY = e.clientY - state.panY;
+        layer.style.transition = 'none';
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!state.isDragging) return;
+        state.panX = e.clientX - state.dragStartX;
+        state.panY = e.clientY - state.dragStartY;
+        applyTransform();
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (state.isDragging) {
+          state.isDragging = false;
+          layer.style.transition = 'transform 150ms ease-out';
+        }
+      });
+
+      // Mouse wheel zoom
+      viewport.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.14 : -0.14;
+        zoomMap(delta);
+      }, { passive: false });
+
+      // Touch pan support
+      let lastTouchX = 0;
+      let lastTouchY = 0;
+      viewport.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1 && !e.target.closest('button') && !e.target.closest('#poiPopover')) {
+          lastTouchX = e.touches[0].clientX - state.panX;
+          lastTouchY = e.touches[0].clientY - state.panY;
+          layer.style.transition = 'none';
+        }
+      }, { passive: true });
+
+      viewport.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) {
+          state.panX = e.touches[0].clientX - lastTouchX;
+          state.panY = e.touches[0].clientY - lastTouchY;
+          applyTransform();
+        }
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', () => {
+        layer.style.transition = 'transform 150ms ease-out';
+      });
+    }
+
+    function zoomMap(delta) {
+      state.zoom = Math.max(0.65, Math.min(2.6, +(state.zoom + delta).toFixed(2)));
+      applyTransform();
+    }
+
+    function resetMapView() {
+      state.zoom = 1;
+      state.panX = 0;
+      state.panY = 0;
+      applyTransform();
+    }
+
+    function applyTransform() {
+      const layer = document.getElementById('mapTransformLayer');
+      layer.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.zoom})`;
+    }
+
+    function toggleLabels() {
+      state.showLabels = !state.showLabels;
+      const btn = document.getElementById('btnToggleLabels');
+      btn.className = state.showLabels
+        ? 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 transition flex items-center gap-1.5'
+        : 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 border border-transparent transition flex items-center gap-1.5';
+      renderMap();
+    }
+
+    function toggleGrid() {
+      state.showGrid = !state.showGrid;
+      document.getElementById('layerGrid').classList.toggle('hidden', !state.showGrid);
+      const btn = document.getElementById('btnToggleGrid');
+      btn.className = state.showGrid
+        ? 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 transition flex items-center gap-1.5'
+        : 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 border border-transparent transition flex items-center gap-1.5';
+    }
+
+    function toggleMobileSidebar() {
+      const body = document.getElementById('sidebarBody');
+      const label = document.getElementById('sidebarToggleLabel');
+      const icon = document.getElementById('sidebarToggleIcon');
+      const isHidden = body.classList.toggle('hidden');
+      label.textContent = isHidden ? 'Mở rộng' : 'Thu gọn';
+      icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    /**
+     * 12. HELPER UTILITIES
+     */
+    function createSvgEl(tag, attrs = {}) {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        el.setAttribute(k, v);
+      }
+      return el;
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toastBanner');
+      document.getElementById('toastText').textContent = msg;
+      toast.classList.remove('hidden');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2800);
+    }
+  </script>
+</body>
+</html>

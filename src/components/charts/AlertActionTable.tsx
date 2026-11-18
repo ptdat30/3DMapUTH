@@ -4,7 +4,11 @@ import React from 'react';
 import { useTwinStore } from '@/store/useTwinStore';
 import { Eye, Wrench, CheckCircle2, AlertTriangle, AlertCircle } from 'lucide-react';
 
-export function AlertActionTable() {
+interface AlertActionTableProps {
+  onActionSuccess?: () => void;
+}
+
+export function AlertActionTable({ onActionSuccess }: AlertActionTableProps = {}) {
   const simulationData = useTwinStore((state) => state.simulationData);
   const resolvedAlertIds = useTwinStore((state) => state.resolvedAlertIds);
   const selectAp = useTwinStore((state) => state.selectAp);
@@ -22,6 +26,12 @@ export function AlertActionTable() {
       const bldg = simulationData.buildings.find((b) => b.id === alert.buildingId);
       if (bldg) flyTo(bldg.center3D);
     }
+    onActionSuccess?.();
+  };
+
+  const handleAutoFix = (alertId: string) => {
+    autoFixAlert(alertId);
+    onActionSuccess?.();
   };
 
   return (
@@ -97,7 +107,7 @@ export function AlertActionTable() {
                 {!isResolved && (
                   <button
                     type="button"
-                    onClick={() => autoFixAlert(alert.id)}
+                    onClick={() => handleAutoFix(alert.id)}
                     className="flex items-center gap-1 px-2.5 py-1 rounded bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[10px] font-bold shadow-sm transition-all cursor-pointer"
                     title="Tự động tối ưu kênh, cân bằng tải & khôi phục kết nối"
                   >

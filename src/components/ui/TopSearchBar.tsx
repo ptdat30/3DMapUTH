@@ -91,7 +91,7 @@ export function TopSearchBar() {
   return (
     <>
       {/* Floating White Top Search Bar */}
-      <div className="absolute top-4 left-4 right-4 max-w-md mx-auto z-30 pointer-events-auto">
+      <div className="w-full max-w-md pointer-events-auto">
         <div
           onClick={() => setIsSearchOpen(true)}
           className="bg-white/95 backdrop-blur-md rounded-2xl px-4 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-slate-100 flex items-center gap-2.5 cursor-pointer hover:bg-white transition-all active:scale-[0.99]"
