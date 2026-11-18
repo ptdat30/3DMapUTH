@@ -30,7 +30,9 @@ import {
   Compass,
   X,
   Footprints,
+  Sparkles,
 } from 'lucide-react';
+import { WarmMinimalist2DNavigator } from './WarmMinimalist2DNavigator';
 
 interface Building2DNavigatorProps {
   onClose?: () => void;
@@ -43,6 +45,7 @@ export function Building2DNavigator({
   initialStartId = 'g_ent_south',
   initialEndId = 'f3_p301',
 }: Building2DNavigatorProps) {
+  const [viewStyle, setViewStyle] = useState<'minimalist' | 'technical'>('minimalist');
   const [currentFloor, setCurrentFloor] = useState<number>(0);
   const [startId, setStartId] = useState<string>(initialStartId);
   const [endId, setEndId] = useState<string>(initialEndId);
@@ -222,6 +225,15 @@ export function Building2DNavigator({
     }
     return null;
   }, [route, currentFloor]);
+
+  if (viewStyle === 'minimalist') {
+    return (
+      <WarmMinimalist2DNavigator
+        onClose={onClose}
+        onSwitchToTechnical={() => setViewStyle('technical')}
+      />
+    );
+  }
 
   return (
     <div className="w-full h-full flex flex-col lg:flex-row bg-slate-100 text-slate-800 relative overflow-hidden select-none">
@@ -589,6 +601,16 @@ export function Building2DNavigator({
 
           {/* Map Display Toggles */}
           <div className="pointer-events-auto bg-white/95 backdrop-blur-md p-1 rounded-2xl shadow-md border border-slate-200 flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => setViewStyle('minimalist')}
+              className="px-2.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 bg-[#0F4C5C] hover:bg-[#135d70] text-white shadow-xs cursor-pointer"
+              title="Chuyển sang bản vẽ kiến trúc tối giản tông ấm (Chuẩn theo ảnh tham chiếu)"
+            >
+              <Sparkles className="w-3.5 h-3.5" strokeWidth={1.5} />
+              <span className="hidden sm:inline">Bản vẽ Tối giản (Ấm)</span>
+              <span className="sm:hidden">Bản vẽ ấm</span>
+            </button>
             <button
               type="button"
               onClick={() => setShowLabels(!showLabels)}
