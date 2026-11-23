@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bản Đồ Dẫn Đường 2D Tòa B - Trường ĐH Giao Thông Vận Tải TP.HCM</title>
+  <title>Bản Đồ Dẫn Đường 2D Tòa B - ĐH Giao Thông Vận Tải TP.HCM (UTH)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     }
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      background-color: #E8E2D9;
+      background-color: #EDE8DF;
       color: #1A1817;
       height: 100vh;
       display: flex;
@@ -60,289 +60,333 @@
       color: #2C2926;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
     .sub-title {
       font-size: 11px;
       color: #7A736B;
     }
 
-    /* FLOOR & VIEW SWITCHERS */
-    .switchers-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .pill-container {
-      display: flex;
-      background: #EAE4DC;
-      border: 1px solid #D8CFC4;
-      border-radius: 14px;
-      padding: 3px;
-      gap: 3px;
-    }
-    .pill-btn {
-      border: none;
-      background: transparent;
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 800;
-      color: #4A4540;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .pill-btn.active {
-      background: #0E434F;
-      color: #fff;
-      box-shadow: 0 2px 6px rgba(14, 67, 79, 0.25);
-    }
-
-    /* CONTROLS RIGHT */
-    .controls-right {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .icon-btn {
-      background: #fff;
-      border: 1px solid #D8CFC4;
-      border-radius: 10px;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 14px;
-      color: #4A4540;
-      transition: all 0.2s;
-    }
-    .icon-btn:hover {
-      background: #F3EFEA;
-    }
-
-    /* SUB-BAR */
-    .sub-bar {
-      background: rgba(250, 247, 242, 0.9);
-      border-bottom: 1px solid #D8CFC4;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      z-index: 20;
-      flex-shrink: 0;
-    }
+    /* SEARCH BAR */
     .search-box {
       position: relative;
-      width: 100%;
-      max-width: 280px;
+      flex: 1;
+      max-width: 380px;
     }
-    .search-box input {
+    .search-input {
       width: 100%;
-      padding: 6px 12px 6px 30px;
-      border-radius: 10px;
+      padding: 6px 12px 6px 32px;
+      border-radius: 8px;
       border: 1px solid #D8CFC4;
       background: #fff;
       font-size: 12px;
+      color: #1A1817;
       outline: none;
-      font-family: inherit;
     }
-    .search-box input:focus {
+    .search-input:focus {
       border-color: #0E434F;
-      box-shadow: 0 0 0 2px rgba(14, 67, 79, 0.15);
+      box-shadow: 0 0 0 2px rgba(14,67,79,0.15);
     }
     .search-icon {
       position: absolute;
       left: 10px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 12px;
+      font-size: 13px;
       color: #7A736B;
     }
-
-    /* WORKSPACE */
-    .workspace {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-    }
-
-    /* SIDEBAR */
-    aside {
-      width: 250px;
-      background: rgba(250, 247, 242, 0.95);
-      backdrop-filter: blur(8px);
-      border-right: 1px solid #D8CFC4;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      z-index: 20;
-      flex-shrink: 0;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.03);
-    }
-    .quick-title {
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: #7C7267;
-      padding-left: 4px;
-    }
-    .quick-list {
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #D8CFC4;
+      border-radius: 8px;
+      margin-top: 4px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      max-height: 250px;
       overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding-right: 2px;
+      z-index: 50;
+      display: none;
     }
-    .quick-btn {
-      width: 100%;
+    .search-item {
+      padding: 8px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
-      border-radius: 14px;
-      border: 1px solid #E8E2D9;
-      background: #FFFFFF;
-      color: #2D2823;
+      cursor: pointer;
       font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      border-bottom: 1px solid #F0ECE1;
     }
-    .quick-btn:hover {
-      background: #FAF7F2;
-    }
-    .quick-btn.active {
-      background: #0E434F;
-      color: #FFFFFF;
-      border-color: #0E434F;
-      box-shadow: 0 4px 12px rgba(14, 67, 79, 0.25);
-    }
-    .quick-badge {
-      font-family: monospace;
-      font-size: 10px;
-      font-weight: 900;
-      padding: 2px 7px;
-      border-radius: 8px;
-      background: #EAE5DD;
-      color: #7A736B;
-    }
-    .quick-btn.active .quick-badge {
-      background: #185866;
-      color: #FFFFFF;
+    .search-item:hover {
+      background: #F3EFEA;
     }
 
-    /* MAIN MAP VIEWPORT */
-    main {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: grab;
-      padding: 10px;
-    }
-    main:active {
-      cursor: grabbing;
-    }
-    .map-stage {
-      transition: transform 0.05s ease-out;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      will-change: transform;
-    }
-    .map-card {
-      background: #282522;
-      padding: 8px;
-      border-radius: 16px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.22);
-    }
-    svg {
-      background-color: #EDE8DF;
-      display: block;
-      border-radius: 10px;
-    }
-    .room-interactive {
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    .room-interactive:hover {
-      opacity: 0.9;
-    }
-
-    /* FOOTER */
-    footer {
+    /* CONTROLS BAR */
+    .controls-bar {
       background: #FAF7F2;
-      border-top: 1px solid #D8CFC4;
-      padding: 10px 16px;
-      z-index: 30;
-      flex-shrink: 0;
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.04);
-    }
-    .footer-inner {
-      max-width: 680px;
-      margin: 0 auto;
+      border-bottom: 1px solid #D8CFC4;
+      padding: 8px 16px;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      font-size: 12px;
+      z-index: 20;
     }
-    .room-badge {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 13px;
-      color: #1A1817;
-      flex-shrink: 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-    }
-    .room-text h3 {
-      font-size: 13px;
-      font-weight: 800;
-      color: #1A1817;
-    }
-    .room-text p {
-      font-size: 11px;
-      color: #7A736B;
-    }
-    .sim-btn {
-      background: #0E434F;
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
+    .nav-group {
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: background 0.2s;
     }
-    .sim-btn:hover {
-      background: #135d70;
+    .group-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #7A736B;
+      margin-right: 4px;
+    }
+    .pill-btn {
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid #D8CFC4;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #5A544E;
+      transition: all 0.15s;
+    }
+    .pill-btn:hover {
+      background: #F3EFEA;
+    }
+    .pill-btn.active {
+      background: #0E434F;
+      color: #fff;
+      border-color: #0E434F;
+      font-weight: 800;
+      box-shadow: 0 1px 3px rgba(14,67,79,0.3);
+    }
+    .pill-btn.master-btn.active {
+      background: #D97706;
+      border-color: #D97706;
     }
 
-    @media (max-width: 768px) {
-      .sub-title { display: none; }
-      aside { display: none; }
-      .pill-btn { padding: 5px 8px; font-size: 10px; }
-      h1 { font-size: 12px; }
+    /* MAIN WORKSPACE */
+    .main-workspace {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* SIDEBAR: CHỌN NHANH ĐIỂM ĐẾN (Matching Image 2) */
+    .sidebar {
+      width: 280px;
+      background: #FAF7F2;
+      border-right: 1px solid #D8CFC4;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+    .sidebar-header {
+      padding: 12px 14px;
+      border-bottom: 1px solid #D8CFC4;
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #5A544E;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .category-filter {
+      display: flex;
+      gap: 4px;
+      margin-top: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .filter-chip {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #D8CFC4;
+      background: #fff;
+      font-size: 10px;
+      cursor: pointer;
+      color: #7A736B;
+      white-space: nowrap;
+    }
+    .filter-chip.active {
+      background: #0E434F;
+      color: #fff;
+      border-color: #0E434F;
+      font-weight: bold;
+    }
+
+    .rooms-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* ROOM BUTTON PILLS (Exact style from Reference Image 2) */
+    .room-pill {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid #E5E0D8;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: left;
+    }
+    .room-pill:hover {
+      background: #F3EFEA;
+    }
+    .room-pill.selected {
+      background: #0E434F;
+      color: #fff;
+      border-color: #0E434F;
+      transform: translateX(3px);
+      box-shadow: 0 2px 6px rgba(14,67,79,0.25);
+    }
+    .room-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2C2926;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 170px;
+    }
+    .room-pill.selected .room-name {
+      color: #fff;
+    }
+    .room-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: #F0ECE1;
+      color: #7A736B;
+      border: 1px solid #DDD5C7;
+      font-family: monospace;
+    }
+    .room-pill.selected .room-badge {
+      background: #185360;
+      color: #D1FAE5;
+      border-color: #236877;
+    }
+
+    /* MAP CANVAS */
+    .map-canvas {
+      flex: 1;
+      background: #4A4540;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+    }
+    .map-canvas:active {
+      cursor: grabbing;
+    }
+    .map-inner {
+      padding: 20px;
+      transition: transform 0.15s ease-out;
+      transform-origin: center center;
+    }
+
+    /* FLOATING TOOLS */
+    .floating-tools {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(250,247,242,0.95);
+      border: 1px solid #D8CFC4;
+      border-radius: 10px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 15;
+    }
+    .tool-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid #E5E0D8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      color: #2C2926;
+    }
+    .tool-btn:hover {
+      background: #F3EFEA;
+    }
+
+    /* FOOTER DRAWER */
+    footer {
+      background: #FAF7F2;
+      border-top: 1px solid #D8CFC4;
+      z-index: 25;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.06);
+    }
+    .drawer-toggle {
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      border-bottom: 1px solid #E8E2D9;
+    }
+    .drawer-toggle:hover {
+      background: #F3EFEA;
+    }
+    .drawer-content {
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 16px;
+      background: #FAF7F2;
+    }
+    .step-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 6px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .step-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #0E434F;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
   </style>
 </head>
@@ -351,451 +395,495 @@
   <!-- 1. HEADER -->
   <header>
     <div class="header-left">
+      <span class="logo-badge">UTH 2D Map</span>
       <div>
-        <h1>TÒA B • BẢN ĐỒ DẪN ĐƯỜNG 2D <span class="logo-badge" id="floorBadge">TẦNG TRỆT</span></h1>
-        <div class="sub-title">Kiến trúc tối giản tông ấm • Chuẩn nhận diện Tòa K • Tỷ lệ chính xác theo bản vẽ gốc</div>
+        <h1>Bản Đồ Dẫn Đường 2D Tòa B</h1>
+        <div class="sub-title">Đại Học Giao Thông Vận Tải TP.HCM</div>
       </div>
     </div>
 
-    <div class="switchers-group">
-      <!-- Floor Switcher -->
-      <div class="pill-container">
-        <button class="pill-btn active" id="fl-ground" onclick="switchFloor('ground')">Tầng Trệt</button>
-        <button class="pill-btn" id="fl-floor1" onclick="switchFloor('floor1')">Tầng 1</button>
-        <button class="pill-btn" id="fl-floor2" onclick="switchFloor('floor2')">Tầng 2</button>
-        <button class="pill-btn" id="fl-floor3" onclick="switchFloor('floor3')">Tầng 3</button>
-      </div>
+    <!-- Global Search -->
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Tìm phòng (VD: 301, B.105, B.2, Thư viện, WC...)"
+        autocomplete="off"
+      />
+      <div id="searchResults" class="search-results"></div>
+    </div>
 
-      <!-- Zoom -->
-      <div class="controls-right">
-        <button class="icon-btn" onclick="zoomIn()" title="Phóng to">+</button>
-        <button class="icon-btn" onclick="zoomOut()" title="Thu nhỏ">−</button>
-        <button class="icon-btn" onclick="resetZoom()" title="Đặt lại góc nhìn">⛶</button>
-      </div>
+    <div>
+      <button id="modeToggleBtn" class="pill-btn" onclick="toggleViewMode()">
+        Chuyển Sang Bản Vẽ Gốc
+      </button>
     </div>
   </header>
 
-  <!-- 2. SUB-BAR -->
-  <div class="sub-bar">
-    <div class="search-box">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="Tìm nhanh phòng theo số hoặc tên..." oninput="handleSearch(this.value)">
+  <!-- 2. CONTROLS BAR -->
+  <div class="controls-bar">
+    <!-- Floors -->
+    <div class="nav-group">
+      <span class="group-label">TẦNG:</span>
+      <button class="pill-btn" onclick="setFloor('ground')">Tầng Trệt</button>
+      <button class="pill-btn" onclick="setFloor('floor1')">Tầng 1</button>
+      <button class="pill-btn" onclick="setFloor('floor2')">Tầng 2</button>
+      <button class="pill-btn active" onclick="setFloor('floor3')">Tầng 3</button>
     </div>
-    <div style="font-size: 11px; font-weight: 700; color: #7A736B;">
-      Lộ trình: Cầu Thang 2 ➔ Phòng đích (Chuẩn Tòa K)
+
+    <!-- Architectural Parts -->
+    <div class="nav-group">
+      <span class="group-label">KHỐI TÒA NHÀ:</span>
+      <button class="pill-btn active" onclick="setPart('part1')">Phần 1 (Khối Nam)</button>
+      <button class="pill-btn" onclick="setPart('part2')">Phần 2 (Khối Bắc)</button>
+      <button class="pill-btn" onclick="setPart('part3')">Phần 3 (Cánh Đông)</button>
+      <button class="pill-btn master-btn" onclick="setPart('master')">Toàn Cảnh 3 Phần</button>
     </div>
   </div>
 
-  <!-- 3. WORKSPACE: SIDEBAR + VIEWPORT -->
-  <div class="workspace">
-    <!-- SIDEBAR -->
-    <aside>
-      <div class="quick-title">CHỌN NHANH ĐIỂM ĐẾN:</div>
-      <div class="quick-list" id="quickListContainer">
-        <!-- Rendered by JS -->
+  <!-- 3. MAIN WORKSPACE -->
+  <div class="main-workspace">
+    <!-- SIDEBAR: CHỌN NHANH ĐIỂM ĐẾN -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">
+          <span>CHỌN NHANH ĐIỂM ĐẾN:</span>
+          <span id="roomCountBadge" class="room-badge">0</span>
+        </div>
+        <div class="category-filter">
+          <button class="filter-chip active" onclick="filterCategory('all')">Tất cả</button>
+          <button class="filter-chip" onclick="filterCategory('classroom')">Phòng học</button>
+          <button class="filter-chip" onclick="filterCategory('office')">Văn phòng</button>
+          <button class="filter-chip" onclick="filterCategory('stairs')">Cầu thang</button>
+          <button class="filter-chip" onclick="filterCategory('restroom')">WC</button>
+        </div>
+      </div>
+
+      <div id="roomsList" class="rooms-list">
+        <!-- Rendered via JS matching Image 2 -->
       </div>
     </aside>
 
-    <!-- MAIN MAP VIEWPORT -->
-    <main id="mainViewport">
-      <div class="map-stage" id="mapStage">
-        <div class="map-card">
-          <svg viewBox="0 0 1240 820" width="940" height="620" id="unifiedSvg">
-            <!-- Nền canvas giấy kiến trúc -->
-            <rect x="0" y="0" width="1240" height="820" fill="#EDE8DF" />
+    <!-- MAP CANVAS -->
+    <main id="mapCanvas" class="map-canvas">
+      <!-- Floating Toolbar -->
+      <div class="floating-tools">
+        <button class="tool-btn" onclick="adjustZoom(0.2)" title="Phóng to">+</button>
+        <button class="tool-btn" onclick="adjustZoom(-0.2)" title="Thu nhỏ">-</button>
+        <button class="tool-btn" onclick="resetZoom()" title="Đặt lại">↺</button>
+      </div>
 
-            <!-- ================= CÁNH TÂY (PHẦN 1) ================= -->
-            <!-- Hành lang Cánh Tây -->
-            <rect x="250" y="215" width="415" height="35" fill="#F9F6F0" stroke="#2C2926" stroke-width="3.5" />
-
-            <!-- B.2 / B.101A / B.201A / B.301A -->
-            <g class="room-interactive" onclick="selectRoomById('head_room')">
-              <rect x="30" y="90" width="220" height="160" fill="#DFC99F" stroke="#2C2926" stroke-width="3.5" />
-              <text x="140" y="160" text-anchor="middle" fill="#1A1817" font-size="20" font-weight="900" id="txt-head-code">B.2</text>
-              <text x="140" y="185" text-anchor="middle" fill="#1A1817" font-size="11" font-weight="800" id="txt-head-name">TẠP CHÍ KHCN GTVT</text>
-              <rect x="247" y="222" width="6" height="24" fill="#FFFFFF" />
-            </g>
-
-            <!-- Cầu Thang 1 -->
-            <g class="room-interactive" onclick="selectRoomById('ct1')">
-              <rect x="250" y="90" width="60" height="125" fill="#1A1817" stroke="#2C2926" stroke-width="3.5" />
-              <path d="M 260 100 L 268 100 L 268 108 L 276 108 L 276 116 L 284 116 L 284 124" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-              <text x="280" y="195" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="800">CT1</text>
-              <rect x="268" y="212" width="24" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 1 -->
-            <g class="room-interactive" onclick="selectRoomById('p1')">
-              <rect x="310" y="90" width="85" height="125" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="352" y="160" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p1">B.001</text>
-              <rect x="320" y="212" width="24" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 2 -->
-            <g class="room-interactive" onclick="selectRoomById('p2')">
-              <rect x="395" y="90" width="85" height="125" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="437" y="160" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p2">B.002</text>
-              <rect x="405" y="212" width="24" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 3 -->
-            <g class="room-interactive" onclick="selectRoomById('p3')">
-              <rect x="480" y="90" width="85" height="125" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="522" y="160" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p3">B.003</text>
-              <rect x="490" y="212" width="24" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng Đệm Kỹ thuật dưới WC -->
-            <g class="room-interactive" onclick="selectRoomById('wc')">
-              <rect x="565" y="90" width="80" height="125" fill="#DDD5C8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="605" y="160" text-anchor="middle" fill="#524D47" font-size="11" font-weight="700">KỸ THUẬT</text>
-              <rect x="575" y="212" width="24" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- ================= CỤM TRUNG TÂM ================= -->
-            <!-- WC -->
-            <g class="room-interactive" onclick="selectRoomById('wc')">
-              <rect x="565" y="45" width="80" height="45" fill="#B5C2C9" stroke="#2C2926" stroke-width="3.5" />
-              <text x="605" y="72" text-anchor="middle" fill="#1A1817" font-size="14" font-weight="900">WC</text>
-            </g>
-
-            <!-- Cầu Thang 2 -->
-            <g class="room-interactive" onclick="selectRoomById('ct2')">
-              <rect x="645" y="45" width="55" height="100" fill="#1A1817" stroke="#2C2926" stroke-width="3.5" />
-              <path d="M 655 55 L 663 55 L 663 63 L 671 63 L 671 71 L 679 71 L 679 79" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-              <text x="672" y="135" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="800">CT2</text>
-            </g>
-            <rect x="645" y="145" width="55" height="65" fill="#F9F6F0" stroke="#2C2926" stroke-width="3.5" />
-
-            <!-- ================= CÁNH BẮC (PHẦN 2) ================= -->
-            <!-- Hành lang Cánh Bắc -->
-            <rect x="695" y="180" width="345" height="30" fill="#F9F6F0" stroke="#2C2926" stroke-width="3.5" />
-
-            <!-- Phòng 4 -->
-            <g class="room-interactive" onclick="selectRoomById('p4')">
-              <rect x="700" y="45" width="80" height="135" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="740" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p4">B.004</text>
-              <rect x="710" y="177" width="22" height="6" fill="#FFFFFF" />
-              <rect x="750" y="177" width="22" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 5 -->
-            <g class="room-interactive" onclick="selectRoomById('p5')">
-              <rect x="780" y="45" width="80" height="135" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="820" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p5">B.005</text>
-              <rect x="790" y="177" width="22" height="6" fill="#FFFFFF" />
-              <rect x="830" y="177" width="22" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 6 -->
-            <g class="room-interactive" onclick="selectRoomById('p6')">
-              <rect x="860" y="45" width="80" height="135" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="900" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p6">B.006</text>
-              <rect x="870" y="177" width="22" height="6" fill="#FFFFFF" />
-              <rect x="910" y="177" width="22" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 7 -->
-            <g class="room-interactive" onclick="selectRoomById('p7')">
-              <rect x="940" y="45" width="80" height="135" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="980" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p7">B.007</text>
-              <rect x="950" y="177" width="22" height="6" fill="#FFFFFF" />
-              <rect x="990" y="177" width="22" height="6" fill="#FFFFFF" />
-            </g>
-
-            <!-- ================= GÓC ĐÔNG BẮC ================= -->
-            <g class="room-interactive" onclick="selectRoomById('corner')">
-              <rect x="1020" y="45" width="130" height="95" fill="#DFC99F" stroke="#2C2926" stroke-width="3.5" />
-              <text x="1085" y="100" text-anchor="middle" fill="#1A1817" font-size="15" font-weight="900">B.GÓC</text>
-            </g>
-            <g class="room-interactive" onclick="selectRoomById('ct3')">
-              <rect x="1055" y="140" width="95" height="55" fill="#1A1817" stroke="#2C2926" stroke-width="3.5" />
-              <path d="M 1065 150 L 1073 150 L 1073 158 L 1081 158 L 1081 166 L 1089 166 L 1089 174" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-              <text x="1105" y="175" text-anchor="middle" fill="#FFFFFF" fontSize="10" font-weight="800">CT3</text>
-            </g>
-
-            <!-- ================= CÁNH ĐÔNG (PHẦN 3) ================= -->
-            <rect x="1020" y="180" width="35" height="545" fill="#F9F6F0" stroke="#2C2926" stroke-width="3.5" />
-
-            <!-- Phòng 8 -->
-            <g class="room-interactive" onclick="selectRoomById('p8')">
-              <rect x="1055" y="195" width="95" height="130" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="1102" y="265" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p8">B.008</text>
-              <rect x="1052" y="210" width="6" height="22" fill="#FFFFFF" />
-              <rect x="1052" y="280" width="6" height="22" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 9 -->
-            <g class="room-interactive" onclick="selectRoomById('p9')">
-              <rect x="1055" y="325" width="95" height="130" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="1102" y="395" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p9">B.009</text>
-              <rect x="1052" y="340" width="6" height="22" fill="#FFFFFF" />
-              <rect x="1052" y="410" width="6" height="22" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 10 -->
-            <g class="room-interactive" onclick="selectRoomById('p10')">
-              <rect x="1055" y="455" width="95" height="130" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="1102" y="525" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p10">B.010</text>
-              <rect x="1052" y="475" width="6" height="22" fill="#FFFFFF" />
-            </g>
-
-            <!-- Phòng 11 -->
-            <g class="room-interactive" onclick="selectRoomById('p11')">
-              <rect x="1055" y="585" width="95" height="130" fill="#BEB5A8" stroke="#2C2926" stroke-width="3.5" />
-              <text x="1102" y="655" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="800" id="txt-p11">B.011</text>
-              <rect x="1052" y="605" width="6" height="22" fill="#FFFFFF" />
-            </g>
-
-            <!-- Cầu Thang 4 -->
-            <g class="room-interactive" onclick="selectRoomById('ct4')">
-              <rect x="1020" y="725" width="45" height="55" fill="#1A1817" stroke="#2C2926" stroke-width="3.5" />
-              <path d="M 1028 735 L 1036 735 L 1036 743 L 1044 743 L 1044 751 L 1052 751" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-              <text x="1042" y="770" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="800">CT4</text>
-            </g>
-
-            <!-- ================= DẪN LỐI DEEP TEAL ================= -->
-            <path id="dynamicPath" d="M 685 195 L 340 195 L 340 215" fill="none" stroke="#0E434F" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
-
-            <g id="routeArrowsGroup">
-              <polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(510, 195) rotate(180)" />
-              <polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(340, 212) rotate(90)" />
-            </g>
-
-            <g id="avatarPin" transform="translate(340, 215)">
-              <circle cx="0" cy="-14" r="16" fill="#0E434F" opacity="0.2" />
-              <path d="M 0 0 C -9 -8, -12 -13, -12 -18 C -12 -25, -6.6 -30, 0 -30 C 6.6 -30, 12 -25, 12 -18 C 12 -13, 9 -8, 0 0 Z" fill="#0E434F" stroke="#FFFFFF" stroke-width="2" />
-              <circle cx="0" cy="-20" r="3.2" fill="#FFFFFF" />
-              <path d="M -5 -12.5 C -5 -15.5, 5 -15.5, 5 -12.5 L 4.2 -9 L -4.2 -9 Z" fill="#FFFFFF" />
-            </g>
-          </svg>
-        </div>
+      <div id="mapInner" class="map-inner">
+        <!-- SVG Map Container or Image Container -->
+        <div id="mapContainer"></div>
       </div>
     </main>
   </div>
 
-  <!-- 4. FOOTER -->
+  <!-- 4. BOTTOM GUIDANCE DRAWER -->
   <footer>
-    <div class="footer-inner">
-      <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
-        <div class="room-badge" id="fBadge" style="background: #BEB5A8;">B.001</div>
-        <div class="room-text" style="min-width: 0;">
-          <h3 id="fName">Phòng Học B.001</h3>
-          <p id="fDesc">Phần 1 • Cánh Tây Tòa B</p>
+    <div class="drawer-toggle" onclick="toggleDrawer()">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:16px;">📍</span>
+        <div>
+          <span style="font-size:12px; font-weight:800; color:#0E434F;">ĐIỂM ĐẾN: </span>
+          <span id="targetRoomTitle" style="font-size:12px; font-weight:800; color:#1A1817; background:#FEF3C7; padding:2px 8px; border-radius:4px; border:1px solid #FCD34D;">
+            B.301 • Phòng Học B.301
+          </span>
+          <span id="targetLocationSubtitle" style="font-size:11px; color:#7A736B; margin-left:8px;">
+            Tầng 3 • Phần 1 (Khối Nam)
+          </span>
         </div>
       </div>
-      <div>
-        <button class="sim-btn" id="simBtn" onclick="toggleSim()">▶ Mô phỏng bước đi</button>
+
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button id="simPlayBtn" class="pill-btn active" style="padding:4px 10px;" onclick="toggleSimulation(event)">
+          ▶ Mô phỏng bước đi
+        </button>
+        <span id="drawerArrow">▼</span>
+      </div>
+    </div>
+
+    <div id="drawerContent" class="drawer-content">
+      <div style="background:#fff; padding:10px; border-radius:8px; border:1px solid #D8CFC4;">
+        <div style="font-size:10px; font-weight:800; color:#7A736B; text-transform:uppercase;">XUẤT PHÁT TỪ:</div>
+        <div style="margin-top:6px; display:flex; gap:6px;">
+          <button id="startFromStairsBtn" class="pill-btn active" style="flex:1; padding:4px;" onclick="setStartOrigin('stairs')">Cầu thang gần nhất</button>
+          <button id="startFromGateBtn" class="pill-btn" style="flex:1; padding:4px;" onclick="setStartOrigin('gate')">Cổng Tầng Trệt</button>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:#7A736B;">
+          Khoảng cách: <strong id="distText" style="color:#0E434F;">~25m</strong> (30s đi bộ)
+        </div>
+      </div>
+
+      <div style="background:#fff; padding:10px; border-radius:8px; border:1px solid #D8CFC4;">
+        <div style="font-size:10px; font-weight:800; color:#7A736B; text-transform:uppercase; margin-bottom:6px;">
+          HƯỚNG DẪN DI CHUYỂN DỄ HIỂU NHẤT:
+        </div>
+        <div id="stepsList">
+          <!-- Step items rendered by JS -->
+        </div>
       </div>
     </div>
   </footer>
 
+  <!-- SCRIPT LOGIC -->
   <script>
-    const FLOORS_DATA = {
-      ground: {
-        label: 'TẦNG TRỆT',
-        headCode: 'B.2',
-        headName: 'TẠP CHÍ KHCN GTVT',
-        p1: 'B.001', p2: 'B.002', p3: 'B.003',
-        p4: 'B.004', p5: 'B.005', p6: 'B.006', p7: 'B.007',
-        p8: 'B.008', p9: 'B.009', p10: 'B.010', p11: 'B.011',
+    // ROOM DATA DICTIONARY
+    const ROOMS = [
+      // Floor 3 - Part 1
+      { id:'b_301a', code:'B.301A', name:'TT Thông Tin - Thư Viện', badge:'B.301A', floor:'floor3', part:'part1', category:'office', nearestStairs:'CT1', dist:18, time:22,
+        partCoords:{x:30,y:30,width:330,height:190,door:{x:330,y:220}},
+        stepsStairs:['Từ Cầu Thang 1 Tầng 3, bước ra hành lang rẽ phải.', 'Cửa phòng B.301A nằm ngay bên cạnh cầu thang.'],
+        stepsGate:['Từ Tầng Trệt lên Cầu Thang 1 tới Tầng 3.', 'Ra hành lang rẽ phải vào phòng B.301A.']
       },
-      floor1: {
-        label: 'TẦNG 1',
-        headCode: 'B.101A',
-        headName: 'TT ĐTTX - VIỆN ĐTSĐH',
-        p1: 'B.101', p2: 'B.102', p3: 'B.103',
-        p4: 'B.104', p5: 'B.105', p6: 'B.106', p7: 'B.107',
-        p8: 'B.108', p9: 'B.109', p10: 'B.110', p11: 'B.111',
+      { id:'b_3_ct1', code:'CT1', name:'Cầu Thang Bộ 1', badge:'CT1', floor:'floor3', part:'part1', category:'stairs', nearestStairs:'CT1', dist:5, time:6,
+        partCoords:{x:380,y:30,width:110,height:190,door:{x:435,y:220}},
+        stepsStairs:['Bạn đang đứng tại Cầu Thang 1 Tầng 3.'],
+        stepsGate:['Từ Tầng Trệt đi thang bộ CT1 lên Tầng 3.']
       },
-      floor2: {
-        label: 'TẦNG 2',
-        headCode: 'B.201A',
-        headName: 'PHÒNG CHUYÊN ĐỀ',
-        p1: 'B.201', p2: 'B.202', p3: 'B.203',
-        p4: 'B.204', p5: 'B.205', p6: 'B.206', p7: 'B.207',
-        p8: 'B.208', p9: 'B.209', p10: 'B.210', p11: 'B.211',
+      { id:'b_301', code:'B.301', name:'Phòng Học 301', badge:'P.301', floor:'floor3', part:'part1', category:'classroom', nearestStairs:'CT1', dist:12, time:15,
+        partCoords:{x:510,y:30,width:150,height:190,door:{x:535,y:220}},
+        stepsStairs:['Từ Cầu Thang 1 Tầng 3, bước ra hành lang và rẽ trái.', 'Cửa phòng B.301 nằm ngay trước mặt bên tay trái.'],
+        stepsGate:['Lên Cầu Thang 1 tới Tầng 3.', 'Rẽ trái đi vào hành lang 5m là tới phòng B.301.']
       },
-      floor3: {
-        label: 'TẦNG 3',
-        headCode: 'B.301A',
-        headName: 'TT THÔNG TIN - THƯ VIỆN',
-        p1: 'B.301', p2: 'B.302', p3: 'B.303',
-        p4: 'B.304', p5: 'B.305', p6: 'B.306', p7: 'B.307',
-        p8: 'B.308', p9: 'B.309', p10: 'B.310', p11: 'B.311',
+      { id:'b_302', code:'B.302', name:'Phòng Học 302', badge:'P.302', floor:'floor3', part:'part1', category:'classroom', nearestStairs:'CT1', dist:18, time:22,
+        partCoords:{x:680,y:30,width:150,height:190,door:{x:705,y:220}},
+        stepsStairs:['Từ Cầu Thang 1, đi dọc hành lang 8m qua phòng B.301.', 'Phòng B.302 nằm ở phòng thứ hai bên tay trái.'],
+        stepsGate:['Lên Cầu Thang 1 tới Tầng 3.', 'Đi tiếp hành lang qua phòng B.301 là phòng B.302.']
+      },
+      { id:'b_303', code:'B.303', name:'Phòng Học 303', badge:'P.303', floor:'floor3', part:'part1', category:'classroom', nearestStairs:'CT1', dist:24, time:28,
+        partCoords:{x:850,y:30,width:150,height:190,door:{x:875,y:220}},
+        stepsStairs:['Từ Cầu Thang 1, đi dọc hành lang 15m.', 'Phòng B.303 nằm ở cuối hành lang Phần 1 bên tay trái.'],
+        stepsGate:['Lên Cầu Thang 1 tới Tầng 3.', 'Đi dọc hết hành lang Phần 1 để vào phòng B.303.']
+      },
+
+      // Floor 3 - Part 2
+      { id:'b_3_wc', code:'WC', name:'WC Nam / Nữ', badge:'WC', floor:'floor3', part:'part2', category:'restroom', nearestStairs:'CT2', dist:8, time:10,
+        partCoords:{x:30,y:20,width:130,height:95,door:{x:140,y:115}},
+        stepsStairs:['Từ Cầu Thang 2 Tầng 3, bước ra rẽ phải 3m là tới WC.'],
+        stepsGate:['Lên Cầu Thang 2 tới Tầng 3, rẽ phải vào khu WC.']
+      },
+      { id:'b_3_ct2', code:'CT2', name:'Cầu Thang Bộ 2', badge:'CT2', floor:'floor3', part:'part2', category:'stairs', nearestStairs:'CT2', dist:5, time:6,
+        partCoords:{x:30,y:125,width:130,height:105,door:{x:140,y:230}},
+        stepsStairs:['Bạn đang đứng tại Cầu Thang 2 Tầng 3.'],
+        stepsGate:['Từ Tầng Trệt đi Cầu Thang 2 lên Tầng 3.']
+      },
+      { id:'b_304', code:'B.304', name:'Phòng Học 304', badge:'P.304', floor:'floor3', part:'part2', category:'classroom', nearestStairs:'CT2', dist:10, time:12,
+        partCoords:{x:180,y:20,width:200,height:210,door:{x:210,y:230}},
+        stepsStairs:['Từ Cầu Thang 2 Tầng 3, bước ra rẽ phải.', 'Phòng B.304 là phòng đầu tiên.'],
+        stepsGate:['Lên Cầu Thang 2 tới Tầng 3, rẽ phải vào phòng B.304.']
+      },
+      { id:'b_305', code:'B.305', name:'Phòng Học 305', badge:'P.305', floor:'floor3', part:'part2', category:'classroom', nearestStairs:'CT2', dist:18, time:22,
+        partCoords:{x:400,y:20,width:200,height:210,door:{x:430,y:230}},
+        stepsStairs:['Từ Cầu Thang 2, đi dọc hành lang 10m qua phòng B.304.'],
+        stepsGate:['Lên Cầu Thang 2 tới Tầng 3, đi dọc hành lang tới phòng B.305.']
+      },
+      { id:'b_306', code:'B.306', name:'Phòng Học 306', badge:'P.306', floor:'floor3', part:'part2', category:'classroom', nearestStairs:'CT2', dist:26, time:30,
+        partCoords:{x:620,y:20,width:200,height:210,door:{x:650,y:230}},
+        stepsStairs:['Từ Cầu Thang 2, đi thẳng 18m qua phòng B.305.'],
+        stepsGate:['Lên Cầu Thang 2 tới Tầng 3, đi dọc hành lang tới phòng B.306.']
+      },
+      { id:'b_307', code:'B.307', name:'Phòng Học 307', badge:'P.307', floor:'floor3', part:'part2', category:'classroom', nearestStairs:'CT2', dist:34, time:40,
+        partCoords:{x:840,y:20,width:200,height:210,door:{x:870,y:230}},
+        stepsStairs:['Từ Cầu Thang 2, đi hết hành lang Phần 2 khoảng 25m.'],
+        stepsGate:['Lên Cầu Thang 2 tới Tầng 3, đi hết dãy phòng Phần 2.']
+      },
+
+      // Floor 3 - Part 3
+      { id:'b_3_ct3', code:'CT3', name:'Cầu Thang Bộ 3', badge:'CT3', floor:'floor3', part:'part3', category:'stairs', nearestStairs:'CT3', dist:5, time:6,
+        partCoords:{x:30,y:125,width:100,height:105,door:{x:110,y:230}},
+        stepsStairs:['Bạn đang đứng tại Cầu Thang 3 Tầng 3.'],
+        stepsGate:['Lên Cầu Thang 3 từ Tầng trệt lên Tầng 3.']
+      },
+      { id:'b_308', code:'B.308', name:'Phòng Học 308', badge:'P.308', floor:'floor3', part:'part3', category:'classroom', nearestStairs:'CT3', dist:10, time:12,
+        partCoords:{x:150,y:20,width:190,height:210,door:{x:175,y:230}},
+        stepsStairs:['Từ Cầu Thang 3 Tầng 3, bước ra hành lang rẽ phải.'],
+        stepsGate:['Lên Cầu Thang 3 tới Tầng 3, phòng B.308 là phòng đầu tiên.']
+      },
+      { id:'b_309', code:'B.309', name:'Phòng Học 309', badge:'P.309', floor:'floor3', part:'part3', category:'classroom', nearestStairs:'CT3', dist:18, time:20,
+        partCoords:{x:360,y:20,width:190,height:210,door:{x:385,y:230}},
+        stepsStairs:['Từ Cầu Thang 3, đi dọc hành lang Cánh Đông 10m.'],
+        stepsGate:['Lên Cầu Thang 3 tới Tầng 3, đi qua phòng B.308.']
+      },
+      { id:'b_310', code:'B.310', name:'Phòng Học 310', badge:'P.310', floor:'floor3', part:'part3', category:'classroom', nearestStairs:'CT4', dist:16, time:18,
+        partCoords:{x:570,y:20,width:190,height:210,door:{x:595,y:230}},
+        stepsStairs:['Từ Cầu Thang 4 Tầng 3, đi ngược lên hành lang 10m.'],
+        stepsGate:['Lên Cầu Thang 4 tới Tầng 3, rẽ vào hành lang Cánh Đông.']
+      },
+      { id:'b_311', code:'B.311', name:'Phòng Học 311', badge:'P.311', floor:'floor3', part:'part3', category:'classroom', nearestStairs:'CT4', dist:8, time:10,
+        partCoords:{x:780,y:20,width:190,height:210,door:{x:805,y:230}},
+        stepsStairs:['Từ Cầu Thang 4 Tầng 3, bước ra rẽ phải là phòng B.311.'],
+        stepsGate:['Lên Cầu Thang 4 tới Tầng 3, phòng B.311 nằm ngay cạnh cầu thang.']
+      },
+      { id:'b_3_ct4', code:'CT4', name:'Cầu Thang Bộ 4', badge:'CT4', floor:'floor3', part:'part3', category:'stairs', nearestStairs:'CT4', dist:5, time:6,
+        partCoords:{x:990,y:125,width:100,height:105,door:{x:990,y:230}},
+        stepsStairs:['Bạn đang đứng tại Cầu Thang 4 Tầng 3.'],
+        stepsGate:['Lên Cầu Thang 4 từ Tầng trệt lên Tầng 3.']
       }
+    ];
+
+    // Images from TOAB_2D
+    const IMAGE_MAP = {
+      ground: { part1: '/toab/2d/Tret_1.jpg', part2: '/toab/2d/Tret_2.jpg', part3: '/toab/2d/Tret_3.jpg' },
+      floor1: { part1: '/toab/2d/Tang1_1.jpg', part2: '/toab/2d/Tang1_2.jpg', part3: '/toab/2d/Tang1_3.jpg' },
+      floor2: { part1: '/toab/2d/Tang2_1.jpg', part2: '/toab/2d/Tang2_2.jpg', part3: '/toab/2d/Tang2_3.jpg' },
+      floor3: { part1: '/toab/2d/Tang3_1.jpg', part2: '/toab/2d/Tang3_2.jpg', part3: '/toab/2d/Tang3_3.jpg' },
+      master: '/toab/2d/toab_tong_the.jpg'
     };
 
-    let currentFloor = 'ground';
-    let currentTargetX = 340, currentTargetY = 215;
-    let zoom = 1, panX = 0, panY = 0;
-    let isDragging = false, startX = 0, startY = 0;
-    let isSimulating = false, simTimer = null;
+    // State
+    let currentFloor = 'floor3';
+    let currentPart = 'part1';
+    let currentCategory = 'all';
+    let selectedRoomId = 'b_301';
+    let viewMode = 'vector';
+    let startOrigin = 'stairs';
+    let zoomLevel = 1;
+    let isDrawerOpen = true;
 
-    const stage = document.getElementById('mapStage');
-    const viewport = document.getElementById('mainViewport');
-    const dynamicPath = document.getElementById('dynamicPath');
-    const avatarPin = document.getElementById('avatarPin');
-    const routeArrowsGroup = document.getElementById('routeArrowsGroup');
+    // Simulation
+    let isSimulating = false;
+    let simProgress = 1;
+    let animId = null;
 
-    function renderFloor(fl) {
+    function init() {
+      renderControls();
+      renderSidebar();
+      renderMap();
+      renderGuidance();
+      setupSearch();
+    }
+
+    function setFloor(fl) {
       currentFloor = fl;
-      const d = FLOORS_DATA[fl];
-      document.getElementById('floorBadge').textContent = d.label;
-      document.getElementById('txt-head-code').textContent = d.headCode;
-      document.getElementById('txt-head-name').textContent = d.headName;
-      for (let i = 1; i <= 11; i++) {
-        document.getElementById(`txt-p${i}`).textContent = d[`p${i}`];
+      renderControls();
+      renderSidebar();
+      renderMap();
+    }
+
+    function setPart(pt) {
+      currentPart = pt;
+      renderControls();
+      renderSidebar();
+      renderMap();
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+      renderSidebar();
+    }
+
+    function selectRoom(roomId) {
+      selectedRoomId = roomId;
+      const room = ROOMS.find(r => r.id === roomId);
+      if (room) {
+        currentFloor = room.floor;
+        currentPart = room.part;
       }
-      renderQuickList();
+      renderControls();
+      renderSidebar();
+      renderMap();
+      renderGuidance();
     }
 
-    function switchFloor(fl) {
-      document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(`fl-${fl}`).classList.add('active');
-      renderFloor(fl);
-      selectRoomById('p1');
+    function toggleViewMode() {
+      viewMode = viewMode === 'vector' ? 'image' : 'vector';
+      document.getElementById('modeToggleBtn').innerText =
+        viewMode === 'vector' ? 'Chuyển Sang Bản Vẽ Gốc' : 'Chuyển Sang Vector Chuẩn';
+      renderMap();
     }
 
-    function renderQuickList() {
-      const d = FLOORS_DATA[currentFloor];
-      const items = [
-        { id: 'head_room', code: d.headCode, name: d.headName, x: 250, y: 220, color: '#DFC99F' },
-        { id: 'ct1', code: 'CT1', name: 'Cầu Thang Bộ 1', x: 275, y: 215, color: '#1A1817' },
-        { id: 'p1', code: d.p1, name: `Phòng Học ${d.p1}`, x: 340, y: 215, color: '#BEB5A8' },
-        { id: 'p2', code: d.p2, name: `Phòng Học ${d.p2}`, x: 430, y: 215, color: '#BEB5A8' },
-        { id: 'p3', code: d.p3, name: `Phòng Học ${d.p3}`, x: 520, y: 215, color: '#BEB5A8' },
-        { id: 'wc', code: 'WC', name: 'Khu Vệ Sinh (WC)', x: 600, y: 195, color: '#B5C2C9' },
-        { id: 'ct2', code: 'CT2', name: 'Cầu Thang Bộ 2', x: 670, y: 190, color: '#1A1817' },
-        { id: 'p4', code: d.p4, name: `Phòng Học ${d.p4}`, x: 740, y: 190, color: '#BEB5A8' },
-        { id: 'p5', code: d.p5, name: `Phòng Học ${d.p5}`, x: 820, y: 190, color: '#BEB5A8' },
-        { id: 'p6', code: d.p6, name: `Phòng Học ${d.p6}`, x: 900, y: 190, color: '#BEB5A8' },
-        { id: 'p7', code: d.p7, name: `Phòng Học ${d.p7}`, x: 980, y: 190, color: '#BEB5A8' },
-        { id: 'corner', code: 'B.GÓC', name: 'Khối Phòng Góc Đông Bắc', x: 1035, y: 190, color: '#DFC99F' },
-        { id: 'ct3', code: 'CT3', name: 'Cầu Thang Bộ 3', x: 1035, y: 190, color: '#1A1817' },
-        { id: 'p8', code: d.p8, name: `Phòng Học ${d.p8}`, x: 1052, y: 260, color: '#BEB5A8' },
-        { id: 'p9', code: d.p9, name: `Phòng Học ${d.p9}`, x: 1052, y: 390, color: '#BEB5A8' },
-        { id: 'p10', code: d.p10, name: `Phòng Học ${d.p10}`, x: 1052, y: 520, color: '#BEB5A8' },
-        { id: 'p11', code: d.p11, name: `Phòng Học ${d.p11}`, x: 1052, y: 650, color: '#BEB5A8' },
-        { id: 'ct4', code: 'CT4', name: 'Cầu Thang Bộ 4', x: 1035, y: 720, color: '#1A1817' },
-      ];
+    function renderControls() {
+      // Update Floor buttons
+      const flBtns = document.querySelectorAll('.controls-bar .nav-group:first-child .pill-btn');
+      const fls = ['ground', 'floor1', 'floor2', 'floor3'];
+      flBtns.forEach((btn, idx) => {
+        btn.classList.toggle('active', fls[idx] === currentFloor);
+      });
 
-      const c = document.getElementById('quickListContainer');
-      c.innerHTML = items.map(item => `
-        <button class="quick-btn" id="qbtn-${item.id}" onclick="selectRoom('${item.id}', '${item.code}', '${item.name}', '${item.color}', ${item.x}, ${item.y})">
-          <span style="truncate">${item.name}</span>
-          <span class="quick-badge">${item.code}</span>
-        </button>
+      // Update Part buttons
+      const ptBtns = document.querySelectorAll('.controls-bar .nav-group:last-child .pill-btn');
+      const pts = ['part1', 'part2', 'part3', 'master'];
+      ptBtns.forEach((btn, idx) => {
+        btn.classList.toggle('active', pts[idx] === currentPart);
+      });
+    }
+
+    function renderSidebar() {
+      const container = document.getElementById('roomsList');
+      const filtered = ROOMS.filter(r => {
+        const matchPart = currentPart === 'master' ? true : r.part === currentPart;
+        const matchCat = currentCategory === 'all' ? true : r.category === currentCategory;
+        return matchPart && matchCat;
+      });
+
+      document.getElementById('roomCountBadge').innerText = filtered.length;
+
+      container.innerHTML = filtered.map(room => {
+        const isSel = room.id === selectedRoomId;
+        return `
+          <button class="room-pill ${isSel ? 'selected' : ''}" onclick="selectRoom('${room.id}')">
+            <span class="room-name">${room.name}</span>
+            <span class="room-badge">${room.badge}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderMap() {
+      const container = document.getElementById('mapContainer');
+      const room = ROOMS.find(r => r.id === selectedRoomId) || ROOMS[0];
+
+      if (viewMode === 'image') {
+        const imgSrc = currentPart === 'master' ? IMAGE_MAP.master : IMAGE_MAP[currentFloor][currentPart];
+        container.innerHTML = `
+          <div style="border:3px solid #2C2926; border-radius:12px; overflow:hidden; background:#000;">
+            <img src="${imgSrc}" style="max-height:75vh; display:block;" alt="Bản vẽ ${currentPart}" />
+          </div>
+        `;
+        return;
+      }
+
+      // Vector Map ViewBox
+      const viewBox = currentPart === 'part1' ? '0 0 1020 320' : currentPart === 'part2' ? '0 0 1060 330' : '0 0 1110 330';
+      const partRooms = ROOMS.filter(r => r.part === currentPart);
+
+      // Route Waypoints
+      const door = room.partCoords.door;
+      const startX = currentPart === 'part1' ? 435 : currentPart === 'part2' ? 140 : 110;
+      const pathD = `M ${startX} 220 L ${startX} 270 L ${door.x} 270 L ${door.x} ${door.y}`;
+
+      container.innerHTML = `
+        <svg viewBox="${viewBox}" style="max-height:75vh; width:900px; max-width:100%; border:2px solid #4A4540; border-radius:14px; background:#FAF7F2; box-shadow:0 12px 28px rgba(0,0,0,0.35);">
+          <!-- Striped Stair Pattern -->
+          <defs>
+            <pattern id="stairPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+              <rect width="10" height="10" fill="#605B55" />
+              <line x1="0" y1="0" x2="0" y2="10" stroke="#48443F" stroke-width="3" />
+            </pattern>
+          </defs>
+
+          <!-- Corridor -->
+          <rect x="20" y="230" width="1050" height="80" fill="#F3EFEA" stroke="#4A4540" stroke-width="2" rx="4" />
+          <text x="500" y="275" fill="#A39C93" font-size="12" font-weight="bold" letter-spacing="4" text-anchor="middle">
+            HÀNH LANG TÒA B
+          </text>
+
+          <!-- Rooms -->
+          ${partRooms.map(r => {
+            const isSel = r.id === selectedRoomId;
+            const c = r.partCoords;
+            const fill = r.category === 'stairs' ? 'url(#stairPattern)' : r.category === 'restroom' ? '#B5C2C9' : r.category === 'office' ? '#DFC99F' : isSel ? '#FFF7ED' : '#FAF2E6';
+            const stroke = isSel ? '#D97706' : '#4A4540';
+            const strokeW = isSel ? 4 : 2;
+
+            return `
+              <g onclick="selectRoom('${r.id}')" style="cursor:pointer;">
+                <rect x="${c.x}" y="${c.y}" width="${c.width}" height="${c.height}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="6" />
+                <line x1="${c.door.x - 18}" y1="${c.door.y}" x2="${c.door.x + 18}" y2="${c.door.y}" stroke="#FFFFFF" stroke-width="6" />
+                <text x="${c.x + c.width/2}" y="${c.y + c.height/2}" fill="${r.category === 'stairs' ? '#fff' : '#1A1817'}" font-size="14" font-weight="800" text-anchor="middle">
+                  ${r.name}
+                </text>
+              </g>
+            `;
+          }).join('')}
+
+          <!-- Wayfinding Route -->
+          <path d="${pathD}" fill="none" stroke="#0E434F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+
+          <!-- Target Door Marker -->
+          <circle cx="${door.x}" cy="${door.y}" r="6" fill="#D97706" stroke="#fff" stroke-width="2" />
+
+          <!-- Person Avatar Pin -->
+          <g transform="translate(${door.x}, 270)">
+            <circle r="12" fill="#0E434F" stroke="#fff" stroke-width="2" />
+            <circle cx="0" cy="-3" r="3" fill="#fff" />
+            <path d="M -4 5 C -4 2, 4 2, 4 5 Z" fill="#fff" />
+          </g>
+        </svg>
+      `;
+    }
+
+    function renderGuidance() {
+      const room = ROOMS.find(r => r.id === selectedRoomId) || ROOMS[0];
+      document.getElementById('targetRoomTitle').innerText = `${room.code} • ${room.name}`;
+      document.getElementById('targetLocationSubtitle').innerText = `${room.floor.toUpperCase()} • ${room.part.toUpperCase()}`;
+      document.getElementById('distText').innerText = `~${room.dist}m (${room.time}s đi bộ)`;
+
+      const steps = startOrigin === 'gate' ? room.stepsGate : room.stepsStairs;
+      document.getElementById('stepsList').innerHTML = steps.map((s, idx) => `
+        <div class="step-item">
+          <span class="step-num">${idx + 1}</span>
+          <span>${s}</span>
+        </div>
       `).join('');
     }
 
-    function selectRoomById(id) {
-      const btn = document.getElementById(`qbtn-${id}`);
-      if (btn) btn.click();
+    function setStartOrigin(origin) {
+      startOrigin = origin;
+      document.getElementById('startFromStairsBtn').classList.toggle('active', origin === 'stairs');
+      document.getElementById('startFromGateBtn').classList.toggle('active', origin === 'gate');
+      renderGuidance();
     }
 
-    function selectRoom(id, code, name, color, x, y) {
-      document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById(`qbtn-${id}`);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      document.getElementById('fBadge').textContent = code;
-      document.getElementById('fBadge').style.backgroundColor = color;
-      document.getElementById('fName').textContent = name;
-      document.getElementById('fDesc').textContent = `${FLOORS_DATA[currentFloor].label} • Tòa B (CS1)`;
-
-      currentTargetX = x;
-      currentTargetY = y;
-      updateRoute(x, y);
+    function toggleDrawer() {
+      isDrawerOpen = !isDrawerOpen;
+      document.getElementById('drawerContent').style.display = isDrawerOpen ? 'grid' : 'none';
+      document.getElementById('drawerArrow').innerText = isDrawerOpen ? '▼' : '▲';
     }
 
-    function updateRoute(tx, ty) {
-      const sx = 685, sy = 195; // Xuất phát Cầu Thang 2
-      let path = '';
-      let arrows = '';
-
-      if (tx < 645) {
-        // Cánh Tây
-        path = `M ${sx} ${sy} L ${tx} 195 L ${tx} ${ty}`;
-        arrows += `<polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(${(sx + tx)/2}, 195) rotate(180)" />`;
-        arrows += `<polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(${tx}, ${ty > 195 ? ty - 10 : ty + 10}) rotate(${ty > 195 ? 90 : 270})" />`;
-      } else if (tx <= 1020) {
-        // Cánh Bắc
-        path = `M ${sx} ${sy} L ${tx} 195 L ${tx} ${ty}`;
-        arrows += `<polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(${(sx + tx)/2}, 195) rotate(0)" />`;
-        arrows += `<polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(${tx}, ${ty > 195 ? ty - 10 : ty + 10}) rotate(${ty > 195 ? 90 : 270})" />`;
-      } else {
-        // Cánh Đông dọc
-        path = `M ${sx} ${sy} L 1037 195 L 1037 ${ty} L ${tx} ${ty}`;
-        arrows += `<polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(${(sx + 1037)/2}, 195) rotate(0)" />`;
-        arrows += `<polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(1037, ${(195 + ty)/2}) rotate(90)" />`;
-        arrows += `<polygon points="-7,-4.5 3,0 -7,4.5 -4.5,0" fill="#0E434F" transform="translate(${(1037 + tx)/2}, ${ty}) rotate(0)" />`;
-      }
-
-      dynamicPath.setAttribute('d', path);
-      routeArrowsGroup.innerHTML = arrows;
-      avatarPin.setAttribute('transform', `translate(${tx}, ${ty})`);
+    function toggleSimulation(e) {
+      e.stopPropagation();
+      isSimulating = !isSimulating;
+      document.getElementById('simPlayBtn').innerText = isSimulating ? '⏸ Tạm dừng' : '▶ Mô phỏng bước đi';
     }
 
-    // Zoom
-    function zoomIn() { zoom = Math.min(2.5, zoom + 0.2); updateTransform(); }
-    function zoomOut() { zoom = Math.max(0.6, zoom - 0.2); updateTransform(); }
-    function resetZoom() { zoom = 1; panX = 0; panY = 0; updateTransform(); }
-    function updateTransform() { stage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`; }
-
-    // Drag
-    viewport.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY; });
-    window.addEventListener('mousemove', (e) => { if (!isDragging) return; panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); });
-    window.addEventListener('mouseup', () => { isDragging = false; });
-
-    viewport.addEventListener('touchstart', (e) => { if (e.touches.length === 1) { isDragging = true; startX = e.touches[0].clientX - panX; startY = e.touches[0].clientY - panY; } });
-    window.addEventListener('touchmove', (e) => { if (!isDragging || e.touches.length !== 1) return; panX = e.touches[0].clientX - startX; panY = e.touches[0].clientY - startY; updateTransform(); });
-    window.addEventListener('touchend', () => { isDragging = false; });
-
-    function toggleSim() {
-      const btn = document.getElementById('simBtn');
-      if (isSimulating) {
-        clearInterval(simTimer);
-        isSimulating = false;
-        btn.textContent = '▶ Mô phỏng bước đi';
-        btn.style.background = '#0E434F';
-      } else {
-        isSimulating = true;
-        btn.textContent = '❚❚ Tạm dừng';
-        btn.style.background = '#d97706';
-        let progress = 0;
-        simTimer = setInterval(() => {
-          progress += 0.05;
-          if (progress > 1) {
-            clearInterval(simTimer);
-            isSimulating = false;
-            btn.textContent = '▶ Mô phỏng bước đi';
-            btn.style.background = '#0E434F';
-            avatarPin.setAttribute('transform', `translate(${currentTargetX}, ${currentTargetY})`);
-          } else {
-            let x = 685 + (currentTargetX - 685) * progress;
-            let y = 195 + (currentTargetY - 195) * progress;
-            avatarPin.setAttribute('transform', `translate(${x}, ${y})`);
-          }
-        }, 100);
-      }
+    function adjustZoom(delta) {
+      zoomLevel = Math.max(0.6, Math.min(2.5, zoomLevel + delta));
+      document.getElementById('mapInner').style.transform = `scale(${zoomLevel})`;
     }
 
-    function handleSearch(q) {
-      if (!q.trim()) return;
-      const s = q.toUpperCase().trim();
-      const btns = document.querySelectorAll('.quick-btn');
-      for (let b of btns) {
-        if (b.textContent.toUpperCase().includes(s)) {
-          b.click();
-          break;
+    function resetZoom() {
+      zoomLevel = 1;
+      document.getElementById('mapInner').style.transform = 'scale(1)';
+    }
+
+    function setupSearch() {
+      const input = document.getElementById('searchInput');
+      const results = document.getElementById('searchResults');
+
+      input.addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase().trim();
+        if (!q) {
+          results.style.display = 'none';
+          return;
         }
-      }
+
+        const matches = ROOMS.filter(r =>
+          r.code.toLowerCase().includes(q) ||
+          r.name.toLowerCase().includes(q)
+        );
+
+        if (matches.length > 0) {
+          results.style.display = 'block';
+          results.innerHTML = matches.map(m => `
+            <div class="search-item" onclick="selectRoom('${m.id}'); document.getElementById('searchResults').style.display='none';">
+              <strong>${m.code} - ${m.name}</strong>
+              <span style="color:#7A736B; font-size:10px;">${m.floor} • ${m.part}</span>
+            </div>
+          `).join('');
+        } else {
+          results.style.display = 'none';
+        }
+      });
     }
 
-    // Init
-    renderFloor('ground');
-    selectRoomById('p1');
+    window.onload = init;
   </script>
 </body>
 </html>
