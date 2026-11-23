@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bản Đồ 2D Tầng Trệt Tòa B - Trường ĐH Giao Thông Vận Tải TP.HCM (UTH)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #E8E2D9;
+      color: #1A1817;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #D8CFC4;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 20;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-badge {
+      background: #0F4C5C;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #4A4540;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sub-title {
+      font-size: 11px;
+      color: #7A736B;
+    }
+
+    /* VIEW SWITCHER TABS */
+    .view-switcher {
+      display: flex;
+      background: #EAE4DC;
+      border: 1px solid #D8CFC4;
+      border-radius: 14px;
+      padding: 3px;
+      gap: 4px;
+    }
+    .view-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #4A4540;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .view-btn.active {
+      background: #0F4C5C;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(15, 76, 92, 0.25);
+    }
+
+    /* CONTROLS RIGHT */
+    .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .icon-btn {
+      background: #fff;
+      border: 1px solid #D8CFC4;
+      border-radius: 10px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: #4A4540;
+      transition: all 0.2s;
+    }
+    .icon-btn:hover {
+      background: #F3EFEA;
+    }
+
+    /* SUB-BAR SEARCH & TABS */
+    .sub-bar {
+      background: rgba(250, 247, 242, 0.85);
+      border-bottom: 1px solid #D8CFC4;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 15;
+      flex-shrink: 0;
+    }
+    .search-box {
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 6px 12px 6px 30px;
+      border-radius: 10px;
+      border: 1px solid #D8CFC4;
+      background: #fff;
+      font-size: 12px;
+      outline: none;
+      font-family: inherit;
+    }
+    .search-box input:focus {
+      border-color: #0F4C5C;
+      box-shadow: 0 0 0 2px rgba(15, 76, 92, 0.15);
+    }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: #7A736B;
+    }
+    .tab-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+    }
+    .tab-pill {
+      background: #fff;
+      border: 1px solid #D8CFC4;
+      padding: 5px 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #4A4540;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-pill.active {
+      background: #0F4C5C;
+      color: #fff;
+      border-color: #0F4C5C;
+    }
+
+    /* MAIN VIEWPORT */
+    main {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      padding: 10px;
+    }
+    main:active {
+      cursor: grabbing;
+    }
+    .map-stage {
+      transition: transform 0.05s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform;
+    }
+    .map-card {
+      background: #4A4540;
+      padding: 8px;
+      border-radius: 14px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+    }
+    svg {
+      background-color: #F3EFEA;
+      display: block;
+      border-radius: 8px;
+    }
+    .room-interactive {
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .room-interactive:hover {
+      opacity: 0.92;
+    }
+
+    /* FOOTER DRAWER */
+    footer {
+      background: #FAF7F2;
+      border-top: 1px solid #D8CFC4;
+      padding: 10px 16px;
+      z-index: 20;
+      flex-shrink: 0;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.04);
+    }
+    .footer-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .room-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+      color: #1A1817;
+      flex-shrink: 0;
+    }
+    .room-text h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #1A1817;
+    }
+    .room-text p {
+      font-size: 11px;
+      color: #7A736B;
+    }
+    .sim-btn {
+      background: #0F4C5C;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .sim-btn:hover {
+      background: #135d70;
+    }
+
+    @media (max-width: 640px) {
+      .sub-title { display: none; }
+      .view-btn { padding: 5px 8px; font-size: 10px; }
+      h1 { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. HEADER -->
+  <header>
+    <div class="header-left">
+      <div>
+        <h1>TÒA B • TẦNG TRỆT <span class="logo-badge">UTH 2D</span></h1>
+        <div class="sub-title">Sơ đồ mặt bằng kiến trúc tối giản tông ấm (3 Phần liên kết)</div>
+      </div>
+    </div>
+
+    <!-- View Switcher -->
+    <div class="view-switcher">
+      <button class="view-btn active" id="btn-unified" onclick="switchView('unified')">Bản đồ Liền mạch</button>
+      <button class="view-btn" id="btn-tabbed" onclick="switchView('tabbed')">3 Tab Phân đoạn</button>
+      <button class="view-btn" id="btn-split" onclick="switchView('split')">3 Khung Riêng</button>
+    </div>
+
+    <!-- Zoom & Reset -->
+    <div class="controls-right">
+      <button class="icon-btn" onclick="zoomIn()" title="Phóng to">+</button>
+      <button class="icon-btn" onclick="zoomOut()" title="Thu nhỏ">−</button>
+      <button class="icon-btn" onclick="resetZoom()" title="Đặt lại góc nhìn">⛶</button>
+    </div>
+  </header>
+
+  <!-- 2. SUB-BAR -->
+  <div class="sub-bar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Tìm phòng: B.2, B.001, B.104, B.008..." oninput="handleSearch(this.value)">
+    </div>
+
+    <div class="tab-pills" id="tabPillsContainer" style="display: none;">
+      <button class="tab-pill active" id="pill-part1" onclick="switchTab('part1')">Phần 1: B.2 • CT1 • B.001 - B.003</button>
+      <button class="tab-pill" id="pill-part2" onclick="switchTab('part2')">Phần 2: CT2 • B.104 - B.107</button>
+      <button class="tab-pill" id="pill-part3" onclick="switchTab('part3')">Phần 3: CT3 • B.008 - B.011 • CT4</button>
+    </div>
+  </div>
+
+  <!-- 3. MAIN MAP VIEWPORT -->
+  <main id="mainViewport">
+    <div class="map-stage" id="mapStage">
+
+      <!-- ================= VIEW 1: UNIFIED MASTERPLAN (L-SHAPE) ================= -->
+      <div class="map-card" id="view-unified">
+        <svg viewBox="0 0 1120 780" width="940" height="650">
+          <defs>
+            <pattern id="stairPatternU" width="30" height="6" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="3" x2="30" y2="3" stroke="#48443F" stroke-width="2.5" />
+            </pattern>
+          </defs>
+
+          <!-- Nền Hành lang -->
+          <rect x="0" y="0" width="1120" height="780" fill="#F3EFEA" />
+
+          <!-- PHẦN 1 -->
+          <!-- B.2 Tạp chí -->
+          <g class="room-interactive" onclick="selectRoom('B.2', 'Tạp chí Khoa học Công nghệ GTVT', 'Cánh Tây • Phòng lớn mặt tiền', '#CDB07A')">
+            <rect x="20" y="40" width="220" height="200" fill="#CDB07A" stroke="#4A4540" stroke-width="3.5" />
+            <text x="130" y="125" text-anchor="middle" fill="#1A1817" font-size="18" font-weight="800">B.2</text>
+            <text x="130" y="148" text-anchor="middle" fill="#1A1817" font-size="11" font-weight="700">TẠP CHÍ KHOA HỌC CÔNG NGHỆ</text>
+            <text x="130" y="165" text-anchor="middle" fill="#1A1817" font-size="11" font-weight="700">GIAO THÔNG VẬN TẢI</text>
+            <path d="M 215 240 A 25 25 0 0 1 240 215" fill="none" stroke="#7A736B" stroke-width="1.5" stroke-dasharray="3,3" />
+          </g>
+
+          <!-- Cầu thang 1 -->
+          <g class="room-interactive" onclick="selectRoom('CT1', 'Cầu Thang Bộ 1', 'Nằm giữa phòng B.2 và B.001', '#605B55')">
+            <rect x="240" y="40" width="70" height="150" fill="#605B55" stroke="#4A4540" stroke-width="3.5" />
+            <rect x="240" y="80" width="70" height="110" fill="url(#stairPatternU)" />
+            <path d="M 252 52 L 260 52 L 260 60 L 268 60 L 268 68 L 276 68 L 276 76" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+            <text x="275" y="180" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700">CT1</text>
+          </g>
+
+          <!-- B.001 -->
+          <g class="room-interactive" onclick="selectRoom('B.001', 'Phòng Học B.001', 'Phần 1 • Tầng trệt Cánh Tây', '#A89B8C')">
+            <rect x="310" y="40" width="95" height="150" fill="#A89B8C" stroke="#4A4540" stroke-width="3.5" />
+            <text x="357" y="125" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="700">B.001</text>
+            <path d="M 310 190 A 20 20 0 0 1 330 170" fill="none" stroke="#7A736B" stroke-width="1.5" stroke-dasharray="2,2" />
+          </g>
+
+          <!-- B.002 -->
+          <g class="room-interactive" onclick="selectRoom('B.002', 'Phòng Học B.002', 'Phần 1 • Tầng trệt Cánh Tây', '#A89B8C')">
+            <rect x="405" y="40" width="95" height="150" fill="#A89B8C" stroke="#4A4540" stroke-width="3.5" />
+            <text x="452" y="125" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="700">B.002</text>
+            <path d="M 405 190 A 20 20 0 0 1 425 170" fill="none" stroke="#7A736B" stroke-width="1.5" stroke-dasharray="2,2" />
+          </g>
+
+          <!-- B.003 -->
+          <g class="room-interactive" onclick="selectRoom('B.003', 'Phòng Học B.003', 'Phần 1 • Tầng trệt Cánh Tây', '#A89B8C')">
+            <rect x="500" y="40" width="95" height="150" fill="#A89B8C" stroke="#4A4540" stroke-width="3.5" />
+            <text x="547" y="125" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="700">B.003</text>
+            <path d="M 500 190 A 20 20 0 0 1 520 170" fill="none" stroke="#7A736B" stroke-width="1.5" stroke-dasharray="2,2" />
+          </g>
+          <line x1="240" y1="240" x2="595" y2="240" stroke="#4A4540" stroke-width="3.5" />
+
+          <!-- TRUNG TÂM: WC & CẦU THANG 2 -->
+          <g class="room-interactive" onclick="selectRoom('WC', 'Khu Vệ Sinh (WC)', 'Khu vực chuyển tiếp Phần 1 - 2', '#B5C2C9')">
+            <rect x="490" y="10" width="90" height="30" fill="#B5C2C9" stroke="#4A4540" stroke-width="3" />
+            <text x="535" y="30" text-anchor="middle" fill="#1A1817" font-size="13" font-weight="800">WC</text>
+          </g>
+          <g class="room-interactive" onclick="selectRoom('CT2', 'Cầu Thang Bộ 2', 'Nằm tại sảnh chuyển tiếp Phần 2', '#605B55')">
+            <rect x="580" y="10" width="55" height="100" fill="#605B55" stroke="#4A4540" stroke-width="3.5" />
+            <rect x="580" y="40" width="55" height="70" fill="url(#stairPatternU)" />
+            <text x="607" y="100" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700">CT2</text>
+          </g>
+          <rect x="580" y="110" width="55" height="70" fill="#EAE4DC" stroke="#4A4540" stroke-width="3" />
+
+          <!-- PHẦN 2 -->
+          <!-- B.104 -->
+          <g class="room-interactive" onclick="selectRoom('B.104', 'Phòng Học B.104', 'Phần 2 • Tầng trệt Cánh Bắc', '#FAF2E6')">
+            <rect x="635" y="40" width="90" height="140" fill="#FAF2E6" stroke="#4A4540" stroke-width="3.5" />
+            <text x="680" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="700">B.104</text>
+            <rect x="645" y="177" width="22" height="6" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+            <rect x="695" y="177" width="22" height="6" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+
+          <!-- B.105 -->
+          <g class="room-interactive" onclick="selectRoom('B.105', 'Phòng Học B.105', 'Phần 2 • Tầng trệt Cánh Bắc', '#FAF2E6')">
+            <rect x="725" y="40" width="90" height="140" fill="#FAF2E6" stroke="#4A4540" stroke-width="3.5" />
+            <text x="770" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="700">B.105</text>
+            <rect x="735" y="177" width="22" height="6" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+            <rect x="785" y="177" width="22" height="6" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+
+          <!-- B.106 -->
+          <g class="room-interactive" onclick="selectRoom('B.106', 'Phòng Học B.106', 'Phần 2 • Tầng trệt Cánh Bắc', '#FAF2E6')">
+            <rect x="815" y="40" width="90" height="140" fill="#FAF2E6" stroke="#4A4540" stroke-width="3.5" />
+            <text x="860" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="700">B.106</text>
+            <rect x="850" y="177" width="22" height="6" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+
+          <!-- B.107 -->
+          <g class="room-interactive" onclick="selectRoom('B.107', 'Phòng Học B.107', 'Phần 2 • Tầng trệt Cánh Bắc', '#FAF2E6')">
+            <rect x="905" y="40" width="90" height="140" fill="#FAF2E6" stroke="#4A4540" stroke-width="3.5" />
+            <text x="950" y="120" text-anchor="middle" fill="#1A1817" font-size="16" font-weight="700">B.107</text>
+            <rect x="920" y="177" width="22" height="6" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+          <line x1="635" y1="210" x2="995" y2="210" stroke="#4A4540" stroke-width="3.5" />
+
+          <!-- PHÒNG GÓC -->
+          <g class="room-interactive" onclick="selectRoom('B.GÓC', 'Khu Vực Góc Tòa B', 'Khối góc chuyển tiếp giữa 2 nhánh L', '#CDB07A')">
+            <rect x="995" y="40" width="105" height="140" fill="#CDB07A" stroke="#4A4540" stroke-width="3.5" />
+            <text x="1047" y="120" text-anchor="middle" fill="#1A1817" font-size="14" font-weight="800">B.GÓC</text>
+          </g>
+
+          <!-- PHẦN 3 -->
+          <!-- Cầu thang 3 -->
+          <g class="room-interactive" onclick="selectRoom('CT3', 'Cầu Thang Bộ 3', 'Phần 3 • Đầu phía Bắc Cánh Đông', '#605B55')">
+            <rect x="1035" y="180" width="65" height="60" fill="#605B55" stroke="#4A4540" stroke-width="3.5" />
+            <text x="1067" y="228" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700">CT3</text>
+          </g>
+
+          <!-- B.008 -->
+          <g class="room-interactive" onclick="selectRoom('B.008', 'Phòng Học B.008', 'Phần 3 • Tầng trệt Cánh Đông', '#A89B8C')">
+            <rect x="1035" y="240" width="65" height="110" fill="#A89B8C" stroke="#4A4540" stroke-width="3.5" />
+            <text x="1067" y="300" text-anchor="middle" fill="#1A1817" font-size="14" font-weight="700">B.008</text>
+            <rect x="1032" y="255" width="6" height="20" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+
+          <!-- B.009 -->
+          <g class="room-interactive" onclick="selectRoom('B.009', 'Phòng Học B.009', 'Phần 3 • Tầng trệt Cánh Đông', '#A89B8C')">
+            <rect x="1035" y="350" width="65" height="110" fill="#A89B8C" stroke="#4A4540" stroke-width="3.5" />
+            <text x="1067" y="410" text-anchor="middle" fill="#1A1817" font-size="14" font-weight="700">B.009</text>
+            <rect x="1032" y="365" width="6" height="20" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+
+          <!-- B.010 -->
+          <g class="room-interactive" onclick="selectRoom('B.010', 'Phòng Học B.010', 'Phần 3 • Tầng trệt Cánh Đông', '#A89B8C')">
+            <rect x="1035" y="460" width="65" height="110" fill="#A89B8C" stroke="#4A4540" stroke-width="3.5" />
+            <text x="1067" y="520" text-anchor="middle" fill="#1A1817" font-size="14" font-weight="700">B.010</text>
+            <rect x="1032" y="475" width="6" height="20" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+
+          <!-- B.011 -->
+          <g class="room-interactive" onclick="selectRoom('B.011', 'Phòng Học B.011', 'Phần 3 • Tầng trệt Cánh Đông', '#A89B8C')">
+            <rect x="1035" y="570" width="65" height="110" fill="#A89B8C" stroke="#4A4540" stroke-width="3.5" />
+            <text x="1067" y="630" text-anchor="middle" fill="#1A1817" font-size="14" font-weight="700">B.011</text>
+            <rect x="1032" y="585" width="6" height="20" fill="#FFFFFF" stroke="#4A4540" stroke-width="1" />
+          </g>
+          <line x1="995" y1="180" x2="995" y2="680" stroke="#4A4540" stroke-width="3.5" />
+
+          <!-- Cầu thang 4 -->
+          <g class="room-interactive" onclick="selectRoom('CT4', 'Cầu Thang Bộ 4', 'Phần 3 • Góc Nam Tòa B', '#605B55')">
+            <rect x="995" y="680" width="45" height="55" fill="#605B55" stroke="#4A4540" stroke-width="3.5" />
+            <text x="1017" y="725" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="700">CT4</text>
+          </g>
+
+          <!-- Tuyến đường dẫn lối (Route Demo) -->
+          <path d="M 230 230 L 357 230 L 680 200 L 770 200" fill="none" stroke="#0F4C5C" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="6,4" />
+          <!-- Pin -->
+          <g transform="translate(357, 230)">
+            <circle cx="0" cy="0" r="12" fill="#0F4C5C" opacity="0.2" />
+            <path d="M 0 6 C -6 0, -8 -4, -8 -8 C -8 -13, -4 -17, 0 -17 C 4 -17, 8 -13, 8 -8 C 8 -4, 6 0, 0 6 Z" fill="#0F4C5C" stroke="#FFFFFF" stroke-width="1.2" />
+            <circle cx="0" cy="-10" r="2" fill="#FFFFFF" />
+          </g>
+        </svg>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 4. FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="room-badge" id="fBadge" style="background: #A89B8C;">B.001</div>
+        <div class="room-text">
+          <h3 id="fName">Phòng Học B.001</h3>
+          <p id="fDesc">Phần 1 • Tầng trệt Cánh Tây Tòa B</p>
+        </div>
+      </div>
+      <div>
+        <button class="sim-btn" onclick="toggleSim()">▶ Mô phỏng bước đi</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let zoom = 1;
+    let panX = 0, panY = 0;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+
+    const stage = document.getElementById('mapStage');
+    const viewport = document.getElementById('mainViewport');
+
+    // Zoom controls
+    function zoomIn() { zoom = Math.min(2.5, zoom + 0.2); updateTransform(); }
+    function zoomOut() { zoom = Math.max(0.6, zoom - 0.2); updateTransform(); }
+    function resetZoom() { zoom = 1; panX = 0; panY = 0; updateTransform(); }
+
+    function updateTransform() {
+      stage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    }
+
+    // Drag & Pan
+    viewport.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      updateTransform();
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Touch Drag
+    viewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - panX;
+        startY = e.touches[0].clientY - panY;
+      }
+    });
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      panX = e.touches[0].clientX - startX;
+      panY = e.touches[0].clientY - startY;
+      updateTransform();
+    });
+    window.addEventListener('touchend', () => { isDragging = false; });
+
+    // View Switcher
+    function switchView(mode) {
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-' + mode).classList.add('active');
+      const pills = document.getElementById('tabPillsContainer');
+      pills.style.display = (mode === 'tabbed') ? 'flex' : 'none';
+      resetZoom();
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('pill-' + tab).classList.add('active');
+    }
+
+    // Select Room
+    function selectRoom(code, name, desc, color) {
+      document.getElementById('fBadge').textContent = code;
+      document.getElementById('fBadge').style.backgroundColor = color;
+      document.getElementById('fName').textContent = name;
+      document.getElementById('fDesc').textContent = desc;
+    }
+
+    // Search
+    function handleSearch(val) {
+      if (!val) return;
+      const q = val.toUpperCase().trim();
+      if (q.includes('B.2') || q.includes('TAP CHI')) {
+        selectRoom('B.2', 'Tạp chí Khoa học Công nghệ GTVT', 'Cánh Tây • Phòng lớn mặt tiền', '#CDB07A');
+      } else if (q.includes('B.001')) {
+        selectRoom('B.001', 'Phòng Học B.001', 'Phần 1 • Tầng trệt Cánh Tây', '#A89B8C');
+      } else if (q.includes('B.104')) {
+        selectRoom('B.104', 'Phòng Học B.104', 'Phần 2 • Tầng trệt Cánh Bắc', '#FAF2E6');
+      } else if (q.includes('B.008')) {
+        selectRoom('B.008', 'Phòng Học B.008', 'Phần 3 • Tầng trệt Cánh Đông', '#A89B8C');
+      }
+    }
+
+    function toggleSim() {
+      alert('Đang mô phỏng dẫn đường từ Lối vào Tòa B đến phòng học đã chọn!');
+    }
+  </script>
+</body>
+</html>

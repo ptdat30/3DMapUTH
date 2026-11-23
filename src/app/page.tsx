@@ -9,6 +9,7 @@ import { TopSearchBar } from '@/components/ui/TopSearchBar';
 import { FloorSelector } from '@/components/ui/FloorSelector';
 import { StepBottomSheet } from '@/components/ui/StepBottomSheet';
 import { Building2DNavigator } from '@/components/navigation2d/Building2DNavigator';
+import { BuildingB2DNavigator } from '@/components/navigation2d/BuildingB2DNavigator';
 import { useNavigationStore } from '@/store/useNavigationStore';
 import { useTwinStore } from '@/store/useTwinStore';
 import { MOCK_QR_NODES, MOCK_STEPS_CS1_TO_B302 } from '@/data/mockNavigationData';
@@ -123,10 +124,10 @@ function NavigationAppContent() {
                 type="button"
                 onClick={() => setShow2dModal(true)}
                 className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white shadow-md border border-indigo-500 text-xs font-bold transition-all cursor-pointer shrink-0"
-                title="Mở hệ thống dẫn đường 2D Tòa K (Cơ sở 3)"
+                title={currentCampusCode === 'cs1' ? "Mở hệ thống dẫn đường 2D Tòa B (Cơ sở 1)" : "Mở hệ thống dẫn đường 2D Tòa K (Cơ sở 3)"}
               >
                 <Map className="w-3.5 h-3.5" strokeWidth={1.5} />
-                <span>2D Tòa K</span>
+                <span>{currentCampusCode === 'cs1' ? '2D Tòa B' : '2D Tòa K'}</span>
               </button>
 
               {/* High-Tech Digital Twin NOC ON/OFF Toggle Button */}
@@ -172,7 +173,11 @@ function NavigationAppContent() {
       {show2dModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-0 sm:p-4 animate-in fade-in duration-200">
           <div className="w-full h-full sm:max-w-7xl sm:h-[92vh] sm:rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900 flex flex-col">
-            <Building2DNavigator onClose={() => setShow2dModal(false)} />
+            {currentCampusCode === 'cs1' ? (
+              <BuildingB2DNavigator onClose={() => setShow2dModal(false)} />
+            ) : (
+              <Building2DNavigator onClose={() => setShow2dModal(false)} />
+            )}
           </div>
         </div>
       )}
