@@ -65,6 +65,7 @@ export interface RoomData {
   floorLevel?: number;
   roomType?: string;
   notes?: string;
+  campus?: 'cs1' | 'cs3';
 }
 
 export interface NavigationStep {

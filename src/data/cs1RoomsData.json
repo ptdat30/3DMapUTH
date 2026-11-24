@@ -1,0 +1,2467 @@
+[
+  {
+    "id": "room_cs1_toa_b_b302_0",
+    "code": "B302",
+    "name": "Phòng học B302",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b302, phòng học b302, phong hoc b302, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      -8.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_khu_a_1",
+    "code": "Khu A",
+    "name": "Khu A (Trệt)",
+    "roomType": "FACILITY",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "khu a, khu a (trệt), khu a (tret), tòa nhà a, toa nha a, toa a, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -12.24,
+      0.4,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_khu_a_2",
+    "code": "Khu A",
+    "name": "Phòng hỗ trợ sinh viên",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "khu a, phòng hỗ trợ sinh viên, phong ho tro sinh vien, tòa nhà a, toa nha a, toa a, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      2,
+      0.4,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_khu_a_3",
+    "code": "Khu A",
+    "name": "Phòng mô phỏng điều khiển và khai thác đường sắt tốc độ cao",
+    "roomType": "FACILITY",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "khu a, phòng mô phỏng điều khiển và khai thác đường sắt tốc độ cao, phong mo phong dieu khien va khai thac duong sat toc do cao, tòa nhà a, toa nha a, toa a, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      16.24,
+      0.4,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_a101_4",
+    "code": "A101",
+    "name": "Phòng học A101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "a101, phòng học a101, phong hoc a101, tòa nhà a, toa nha a, toa a, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -12.24,
+      2.1,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_a102_5",
+    "code": "A102",
+    "name": "Phòng học A102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "a102, phòng học a102, phong hoc a102, tòa nhà a, toa nha a, toa a, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -6.54,
+      2.1,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_a103_6",
+    "code": "A103",
+    "name": "Phòng học A103",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "a103, phòng học a103, phong hoc a103, tòa nhà a, toa nha a, toa a, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -0.85,
+      2.1,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_a104_7",
+    "code": "A104",
+    "name": "Phòng học A104",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "a104, phòng học a104, phong hoc a104, tòa nhà a, toa nha a, toa a, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      4.85,
+      2.1,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_khu_a_8",
+    "code": "Khu A",
+    "name": "Phòng đào tạo, Trung tâm TT-TV",
+    "roomType": "LIBRARY",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "khu a, phòng đào tạo, trung tâm tt-tv, phong dao tao, trung tam tt-tv, tòa nhà a, toa nha a, toa a, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      10.54,
+      2.1,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_wc_t1_nam_nu_9",
+    "code": "WC-T1-Nam/Nữ",
+    "name": "Nhà vệ sinh nam/nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "wc-t1-nam/nữ, nhà vệ sinh nam/nữ, nha ve sinh nam/nu, tòa nhà a, toa nha a, toa a, tầng 1, tang 1, wc, nhà vệ sinh, nha ve sinh, toilet, cs1, co so 1",
+    "doorCoordinates": [
+      16.24,
+      2.1,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_khu_a_10",
+    "code": "Khu A",
+    "name": "Hội trường Khu A",
+    "roomType": "HALL",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "khu a, hội trường khu a, hoi truong khu a, tòa nhà a, toa nha a, toa a, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      2,
+      3.8,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b001_11",
+    "code": "B001",
+    "name": "Phòng học B001",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b001, phòng học b001, phong hoc b001, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      -8.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b002_12",
+    "code": "B002",
+    "name": "Phòng học B002",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b002, phòng học b002, phong hoc b002, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      -6
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b2_13",
+    "code": "B2",
+    "name": "Khu B2",
+    "roomType": "FACILITY",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b2, khu b2, khu b2, tòa nhà b, toa nha b, toa b, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      -3.2
+    ],
+    "notes": "Khu B2"
+  },
+  {
+    "id": "room_cs1_toa_b_b003_14",
+    "code": "B003",
+    "name": "Phòng học B003",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b003, phòng học b003, phong hoc b003, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      -0.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b004_15",
+    "code": "B004",
+    "name": "Phòng học B004",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b004, phòng học b004, phong hoc b004, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      2.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b005_16",
+    "code": "B005",
+    "name": "Phòng học B005",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b005, phòng học b005, phong hoc b005, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      5.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b006_17",
+    "code": "B006",
+    "name": "Phòng học B006",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b006, phòng học b006, phong hoc b006, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b007_18",
+    "code": "B007",
+    "name": "Phòng học B007",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b007, phòng học b007, phong hoc b007, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      10.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b007a_19",
+    "code": "B007A",
+    "name": "Phòng học B007A",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b007a, phòng học b007a, phong hoc b007a, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      13.6
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b008_20",
+    "code": "B008",
+    "name": "Phòng học B008",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b008, phòng học b008, phong hoc b008, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      16.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b009_21",
+    "code": "B009",
+    "name": "Phòng học B009",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b009, phòng học b009, phong hoc b009, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      19.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b010_22",
+    "code": "B010",
+    "name": "Phòng học B010",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b010, phòng học b010, phong hoc b010, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      22
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b011_23",
+    "code": "B011",
+    "name": "Phòng học B011",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "b011, phòng học b011, phong hoc b011, tòa nhà b, toa nha b, toa b, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      0.4,
+      24.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b101_24",
+    "code": "B101",
+    "name": "Phòng học B101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b101, phòng học b101, phong hoc b101, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      -8.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b101a_25",
+    "code": "B101A",
+    "name": "Phòng học B101A",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b101a, phòng học b101a, phong hoc b101a, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      -6
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b102_26",
+    "code": "B102",
+    "name": "Phòng học B102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b102, phòng học b102, phong hoc b102, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      -3.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b103_27",
+    "code": "B103",
+    "name": "Phòng học B103",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b103, phòng học b103, phong hoc b103, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      -0.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b104_28",
+    "code": "B104",
+    "name": "Phòng học B104",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b104, phòng học b104, phong hoc b104, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      2.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b105_29",
+    "code": "B105",
+    "name": "Phòng học B105",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b105, phòng học b105, phong hoc b105, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      5.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b106_30",
+    "code": "B106",
+    "name": "Phòng học B106",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b106, phòng học b106, phong hoc b106, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b107_31",
+    "code": "B107",
+    "name": "Phòng học B107",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b107, phòng học b107, phong hoc b107, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      10.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b107a_32",
+    "code": "B107A",
+    "name": "Phòng học B107A",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b107a, phòng học b107a, phong hoc b107a, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      13.6
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b108_33",
+    "code": "B108",
+    "name": "Phòng học B108",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b108, phòng học b108, phong hoc b108, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      16.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b109_34",
+    "code": "B109",
+    "name": "Phòng học B109",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b109, phòng học b109, phong hoc b109, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      19.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b110_35",
+    "code": "B110",
+    "name": "Phòng học B110",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b110, phòng học b110, phong hoc b110, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      22
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b111_36",
+    "code": "B111",
+    "name": "Phòng học B111",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "b111, phòng học b111, phong hoc b111, tòa nhà b, toa nha b, toa b, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      2.1,
+      24.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b201_37",
+    "code": "B201",
+    "name": "Phòng học B201",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b201, phòng học b201, phong hoc b201, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      -8.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b201a_38",
+    "code": "B201A",
+    "name": "Phòng học B201A",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b201a, phòng học b201a, phong hoc b201a, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      -6
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b202_39",
+    "code": "B202",
+    "name": "Phòng học B202",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b202, phòng học b202, phong hoc b202, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      -3.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b203_40",
+    "code": "B203",
+    "name": "Phòng học B203",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b203, phòng học b203, phong hoc b203, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      -0.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b204_41",
+    "code": "B204",
+    "name": "Phòng học B204",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b204, phòng học b204, phong hoc b204, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      2.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b205_42",
+    "code": "B205",
+    "name": "Phòng học B205",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b205, phòng học b205, phong hoc b205, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      5.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b206_43",
+    "code": "B206",
+    "name": "Phòng học B206",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b206, phòng học b206, phong hoc b206, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b207_44",
+    "code": "B207",
+    "name": "Phòng học B207",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b207, phòng học b207, phong hoc b207, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      10.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b207a_45",
+    "code": "B207A",
+    "name": "Phòng học B207A",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b207a, phòng học b207a, phong hoc b207a, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      13.6
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b208_46",
+    "code": "B208",
+    "name": "Phòng học B208",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b208, phòng học b208, phong hoc b208, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      16.4
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b209_47",
+    "code": "B209",
+    "name": "Phòng học B209",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b209, phòng học b209, phong hoc b209, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      19.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b210_48",
+    "code": "B210",
+    "name": "Phòng học B210",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b210, phòng học b210, phong hoc b210, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      22
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b211_49",
+    "code": "B211",
+    "name": "Phòng học B211",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "b211, phòng học b211, phong hoc b211, tòa nhà b, toa nha b, toa b, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      3.8,
+      24.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b301_50",
+    "code": "B301",
+    "name": "Phòng học B301",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b301, phòng học b301, phong hoc b301, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      -5.75
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b301a_new",
+    "code": "B301A",
+    "name": "Trung tâm TT-TV B301A",
+    "roomType": "LIBRARY",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b301a, trung tâm tt-tv b301a, trung tam tt-tv b301a, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      -2.69
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b303_51",
+    "code": "B303",
+    "name": "Phòng học B303",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b303, phòng học b303, phong hoc b303, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      0.36
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b304_52",
+    "code": "B304",
+    "name": "Phòng học B304",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b304, phòng học b304, phong hoc b304, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      3.42
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b305_53",
+    "code": "B305",
+    "name": "Phòng học B305",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b305, phòng học b305, phong hoc b305, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      6.47
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b306_54",
+    "code": "B306",
+    "name": "Phòng học B306",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b306, phòng học b306, phong hoc b306, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      9.53
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b307_55",
+    "code": "B307",
+    "name": "Phòng học B307",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b307, phòng học b307, phong hoc b307, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      12.58
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b308_56",
+    "code": "B308",
+    "name": "Phòng học B308",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b308, phòng học b308, phong hoc b308, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      15.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b309_57",
+    "code": "B309",
+    "name": "Phòng học B309",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b309, phòng học b309, phong hoc b309, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      18.69
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b310_58",
+    "code": "B310",
+    "name": "Phòng học B310",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b310, phòng học b310, phong hoc b310, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      21.75
+    ]
+  },
+  {
+    "id": "room_cs1_toa_b_b311_59",
+    "code": "B311",
+    "name": "Phòng học B311",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_b",
+    "buildingName": "Tòa Nhà B",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "b311, phòng học b311, phong hoc b311, tòa nhà b, toa nha b, toa b, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -18.9,
+      5.5,
+      24.8
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c001_60",
+    "code": "C001",
+    "name": "Phòng học C001",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c001, phòng học c001, phong hoc c001, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      -12.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c002_61",
+    "code": "C002",
+    "name": "Phòng học C002",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c002, phòng học c002, phong hoc c002, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      -9.98
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c003_62",
+    "code": "C003",
+    "name": "Phòng học C003",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c003, phòng học c003, phong hoc c003, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      -7.32
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c004_63",
+    "code": "C004",
+    "name": "Phòng học C004",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c004, phòng học c004, phong hoc c004, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      -4.66
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c005_64",
+    "code": "C005",
+    "name": "Phòng học C005",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c005, phòng học c005, phong hoc c005, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      -2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c006_65",
+    "code": "C006",
+    "name": "Phòng học C006",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c006, phòng học c006, phong hoc c006, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      0.66
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c007_66",
+    "code": "C007",
+    "name": "Phòng học C007",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c007, phòng học c007, phong hoc c007, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      3.32
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c008_67",
+    "code": "C008",
+    "name": "Phòng học C008",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c008, phòng học c008, phong hoc c008, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      5.98
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c009_68",
+    "code": "C009",
+    "name": "Phòng học C009",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "c009, phòng học c009, phong hoc c009, tòa nhà c, toa nha c, toa c, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      0.4,
+      8.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c101_69",
+    "code": "C101",
+    "name": "Phòng học C101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c101, phòng học c101, phong hoc c101, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      -12.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c102_70",
+    "code": "C102",
+    "name": "Phòng học C102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c102, phòng học c102, phong hoc c102, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      -9.98
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c103_71",
+    "code": "C103",
+    "name": "Phòng học C103",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c103, phòng học c103, phong hoc c103, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      -7.32
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c104_72",
+    "code": "C104",
+    "name": "Phòng học C104",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c104, phòng học c104, phong hoc c104, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      -4.66
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c105_73",
+    "code": "C105",
+    "name": "Phòng học C105",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c105, phòng học c105, phong hoc c105, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      -2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c106_74",
+    "code": "C106",
+    "name": "Phòng học C106",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c106, phòng học c106, phong hoc c106, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      0.66
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c107_75",
+    "code": "C107",
+    "name": "Phòng học C107",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c107, phòng học c107, phong hoc c107, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      3.32
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c108_76",
+    "code": "C108",
+    "name": "Phòng học C108",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c108, phòng học c108, phong hoc c108, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      5.98
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c109_77",
+    "code": "C109",
+    "name": "Phòng học C109",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "c109, phòng học c109, phong hoc c109, tòa nhà c, toa nha c, toa c, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      2.1,
+      8.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c201_78",
+    "code": "C201",
+    "name": "Phòng học C201",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c201, phòng học c201, phong hoc c201, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      -12.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c202_79",
+    "code": "C202",
+    "name": "Phòng học C202",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c202, phòng học c202, phong hoc c202, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      -9.98
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c203_80",
+    "code": "C203",
+    "name": "Phòng học C203",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c203, phòng học c203, phong hoc c203, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      -7.32
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c204_81",
+    "code": "C204",
+    "name": "Phòng học C204",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c204, phòng học c204, phong hoc c204, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      -4.66
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c205_82",
+    "code": "C205",
+    "name": "Phòng học C205",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c205, phòng học c205, phong hoc c205, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      -2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c206_83",
+    "code": "C206",
+    "name": "Phòng học C206",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c206, phòng học c206, phong hoc c206, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      0.66
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c207_84",
+    "code": "C207",
+    "name": "Phòng học C207",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c207, phòng học c207, phong hoc c207, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      3.32
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c208_85",
+    "code": "C208",
+    "name": "Phòng học C208",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c208, phòng học c208, phong hoc c208, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      5.98
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c209_86",
+    "code": "C209",
+    "name": "Phòng học C209",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "c209, phòng học c209, phong hoc c209, tòa nhà c, toa nha c, toa c, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      3.8,
+      8.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c301_87",
+    "code": "C301",
+    "name": "Phòng học C301",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "c301, phòng học c301, phong hoc c301, tòa nhà c, toa nha c, toa c, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      5.5,
+      -12.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c302_88",
+    "code": "C302",
+    "name": "Phòng học C302",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "c302, phòng học c302, phong hoc c302, tòa nhà c, toa nha c, toa c, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      5.5,
+      -2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_c_c303_89",
+    "code": "C303",
+    "name": "Phòng học C303",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_c",
+    "buildingName": "Tòa Nhà C",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "c303, phòng học c303, phong hoc c303, tòa nhà c, toa nha c, toa c, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      11.9,
+      5.5,
+      8.64
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d101_90",
+    "code": "D101",
+    "name": "Phòng học D101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "d101, phòng học d101, phong hoc d101, tòa nhà d, toa nha d, toa d, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      2.1,
+      -27.62
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d102_91",
+    "code": "D102",
+    "name": "Phòng học D102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "d102, phòng học d102, phong hoc d102, tòa nhà d, toa nha d, toa d, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      2.1,
+      -15.38
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d201_92",
+    "code": "D201",
+    "name": "Phòng học D201",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "d201, phòng học d201, phong hoc d201, tòa nhà d, toa nha d, toa d, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      3.8,
+      -27.62
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d202_93",
+    "code": "D202",
+    "name": "Phòng học D202",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "d202, phòng học d202, phong hoc d202, tòa nhà d, toa nha d, toa d, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      3.8,
+      -15.38
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d300_94",
+    "code": "D300",
+    "name": "Phòng học D300",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "d300, phòng học d300, phong hoc d300, tòa nhà d, toa nha d, toa d, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      5.5,
+      -27.62
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d301_95",
+    "code": "D301",
+    "name": "Phòng học D301",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "d301, phòng học d301, phong hoc d301, tòa nhà d, toa nha d, toa d, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      5.5,
+      -24.56
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d302_96",
+    "code": "D302",
+    "name": "Phòng học D302",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "d302, phòng học d302, phong hoc d302, tòa nhà d, toa nha d, toa d, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      5.5,
+      -21.5
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d303_97",
+    "code": "D303",
+    "name": "Phòng học D303",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "d303, phòng học d303, phong hoc d303, tòa nhà d, toa nha d, toa d, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      5.5,
+      -18.44
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d304_98",
+    "code": "D304",
+    "name": "Phòng học D304",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "d304, phòng học d304, phong hoc d304, tòa nhà d, toa nha d, toa d, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      5.5,
+      -15.38
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d401_99",
+    "code": "D401",
+    "name": "Phòng học D401",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "d401, phòng học d401, phong hoc d401, tòa nhà d, toa nha d, toa d, tầng 4, tang 4, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      7.2,
+      -27.62
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d402_100",
+    "code": "D402",
+    "name": "Phòng học D402",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "d402, phòng học d402, phong hoc d402, tòa nhà d, toa nha d, toa d, tầng 4, tang 4, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      7.2,
+      -23.54
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d403_101",
+    "code": "D403",
+    "name": "Phòng học D403",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "d403, phòng học d403, phong hoc d403, tòa nhà d, toa nha d, toa d, tầng 4, tang 4, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      7.2,
+      -19.46
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d404_102",
+    "code": "D404",
+    "name": "Phòng học D404",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "d404, phòng học d404, phong hoc d404, tòa nhà d, toa nha d, toa d, tầng 4, tang 4, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      7.2,
+      -15.38
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d501_103",
+    "code": "D501",
+    "name": "Phòng học D501",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "d501, phòng học d501, phong hoc d501, tòa nhà d, toa nha d, toa d, tầng 5, tang 5, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      8.9,
+      -27.62
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d502_104",
+    "code": "D502",
+    "name": "Phòng học D502",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "d502, phòng học d502, phong hoc d502, tòa nhà d, toa nha d, toa d, tầng 5, tang 5, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      8.9,
+      -21.5
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d503_504_105",
+    "code": "D503&504",
+    "name": "Phòng học D503&504",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "d503&504, phòng học d503&504, phong hoc d503&504, tòa nhà d, toa nha d, toa d, tầng 5, tang 5, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      8.9,
+      -15.38
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d601_106",
+    "code": "D601",
+    "name": "Phòng học D601",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "d601, phòng học d601, phong hoc d601, tòa nhà d, toa nha d, toa d, tầng 6, tang 6, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      10.6,
+      -27.62
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d602_107",
+    "code": "D602",
+    "name": "Phòng học D602",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "d602, phòng học d602, phong hoc d602, tòa nhà d, toa nha d, toa d, tầng 6, tang 6, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      10.6,
+      -23.54
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d603_108",
+    "code": "D603",
+    "name": "Phòng học D603",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "d603, phòng học d603, phong hoc d603, tòa nhà d, toa nha d, toa d, tầng 6, tang 6, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      10.6,
+      -19.46
+    ]
+  },
+  {
+    "id": "room_cs1_toa_d_d604_109",
+    "code": "D604",
+    "name": "Phòng học D604",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_d",
+    "buildingName": "Tòa Nhà D",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "d604, phòng học d604, phong hoc d604, tòa nhà d, toa nha d, toa d, tầng 6, tang 6, cs1, co so 1",
+    "doorCoordinates": [
+      -3.6,
+      10.6,
+      -15.38
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e001_110",
+    "code": "E001",
+    "name": "Gym E001",
+    "roomType": "FACILITY",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "e001, gym e001, gym e001, tòa nhà e, toa nha e, toa e, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      0.4,
+      3.14
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e002_111",
+    "code": "E002",
+    "name": "Trung tâm tư vấn tuyển sinh E002",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "e002, trung tâm tư vấn tuyển sinh e002, trung tam tu van tuyen sinh e002, tòa nhà e, toa nha e, toa e, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      0.4,
+      26.26
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e101_112",
+    "code": "E101",
+    "name": "Phòng học E101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "e101, phòng học e101, phong hoc e101, tòa nhà e, toa nha e, toa e, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      2.1,
+      3.14
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e102_113",
+    "code": "E102",
+    "name": "Phòng học E102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "e102, phòng học e102, phong hoc e102, tòa nhà e, toa nha e, toa e, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      2.1,
+      6.99
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e103_114",
+    "code": "E103",
+    "name": "Phòng học E103",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "e103, phòng học e103, phong hoc e103, tòa nhà e, toa nha e, toa e, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      2.1,
+      10.85
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e104_115",
+    "code": "E104",
+    "name": "Phòng học E104",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "e104, phòng học e104, phong hoc e104, tòa nhà e, toa nha e, toa e, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      2.1,
+      14.7
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e105_116",
+    "code": "E105",
+    "name": "Trung tâm ngôn ngữ, công nghệ thông tin và đào tạo nghiệp vụ E105",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "e105, trung tâm ngôn ngữ, công nghệ thông tin và đào tạo nghiệp vụ e105, trung tam ngon ngu, cong nghe thong tin va dao tao nghiep vu e105, tòa nhà e, toa nha e, toa e, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      2.1,
+      18.55
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_wc_e_t1_nam_117",
+    "code": "WC-E-T1-NAM",
+    "name": "Nhà vệ sinh nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "wc-e-t1-nam, nhà vệ sinh nam, nha ve sinh nam, tòa nhà e, toa nha e, toa e, tầng 1, tang 1, wc, nhà vệ sinh, nha ve sinh, toilet, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      2.1,
+      22.41
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_wc_e_t1_nu_118",
+    "code": "WC-E-T1-NU",
+    "name": "Nhà vệ sinh nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "wc-e-t1-nu, nhà vệ sinh nữ, nha ve sinh nu, tòa nhà e, toa nha e, toa e, tầng 1, tang 1, wc, nhà vệ sinh, nha ve sinh, toilet, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      2.1,
+      26.26
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e201_119",
+    "code": "E201",
+    "name": "Phòng học E201",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "e201, phòng học e201, phong hoc e201, tòa nhà e, toa nha e, toa e, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      3.8,
+      3.14
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e202_120",
+    "code": "E202",
+    "name": "Phòng học E202",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "e202, phòng học e202, phong hoc e202, tòa nhà e, toa nha e, toa e, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      3.8,
+      6.99
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e203_121",
+    "code": "E203",
+    "name": "Phòng học E203",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "e203, phòng học e203, phong hoc e203, tòa nhà e, toa nha e, toa e, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      3.8,
+      10.85
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e204_122",
+    "code": "E204",
+    "name": "Phòng học E204",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "e204, phòng học e204, phong hoc e204, tòa nhà e, toa nha e, toa e, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      3.8,
+      14.7
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e205_123",
+    "code": "E205",
+    "name": "Văn phòng ThS. Cao Hữu Vinh - Phó Trưởng phòng đào tạo E205",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "e205, văn phòng ths. cao hữu vinh - phó trưởng phòng đào tạo e205, van phong ths. cao huu vinh - pho truong phong dao tao e205, tòa nhà e, toa nha e, toa e, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      3.8,
+      18.55
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_wc_e_t2_nam_124",
+    "code": "WC-E-T2-NAM",
+    "name": "Nhà vệ sinh nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "wc-e-t2-nam, nhà vệ sinh nam, nha ve sinh nam, tòa nhà e, toa nha e, toa e, tầng 2, tang 2, wc, nhà vệ sinh, nha ve sinh, toilet, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      3.8,
+      22.41
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_wc_e_t2_nu_125",
+    "code": "WC-E-T2-NU",
+    "name": "Nhà vệ sinh nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "wc-e-t2-nu, nhà vệ sinh nữ, nha ve sinh nu, tòa nhà e, toa nha e, toa e, tầng 2, tang 2, wc, nhà vệ sinh, nha ve sinh, toilet, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      3.8,
+      26.26
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e301_126",
+    "code": "E301",
+    "name": "Phòng học E301",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "e301, phòng học e301, phong hoc e301, tòa nhà e, toa nha e, toa e, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      5.5,
+      3.14
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_e302_127",
+    "code": "E302",
+    "name": "Phòng học E302",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "e302, phòng học e302, phong hoc e302, tòa nhà e, toa nha e, toa e, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      5.5,
+      10.85
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_wc_e_t3_nam_128",
+    "code": "WC-E-T3-NAM",
+    "name": "Nhà vệ sinh nam",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "wc-e-t3-nam, nhà vệ sinh nam, nha ve sinh nam, tòa nhà e, toa nha e, toa e, tầng 3, tang 3, wc, nhà vệ sinh, nha ve sinh, toilet, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      5.5,
+      18.55
+    ]
+  },
+  {
+    "id": "room_cs1_toa_e_wc_e_t3_nu_129",
+    "code": "WC-E-T3-NU",
+    "name": "Nhà vệ sinh nữ",
+    "roomType": "RESTROOM",
+    "buildingCode": "toa_e",
+    "buildingName": "Tòa Nhà E",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "wc-e-t3-nu, nhà vệ sinh nữ, nha ve sinh nu, tòa nhà e, toa nha e, toa e, tầng 3, tang 3, wc, nhà vệ sinh, nha ve sinh, toilet, cs1, co so 1",
+    "doorCoordinates": [
+      25.9,
+      5.5,
+      26.26
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f001_130",
+    "code": "F001",
+    "name": "Phòng ăn căn tin F001",
+    "roomType": "FACILITY",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "f001, phòng ăn căn tin f001, phong an can tin f001, tòa nhà f, toa nha f, toa f, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -19.9,
+      0.4,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f101_131",
+    "code": "F101",
+    "name": "Phòng học F101",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "f101, phòng học f101, phong hoc f101, tòa nhà f, toa nha f, toa f, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -28.1,
+      2.1,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f102_132",
+    "code": "F102",
+    "name": "Phòng học F102",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "f102, phòng học f102, phong hoc f102, tòa nhà f, toa nha f, toa f, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -19.9,
+      2.1,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f103_133",
+    "code": "F103",
+    "name": "Phòng học F103",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "f103, phòng học f103, phong hoc f103, tòa nhà f, toa nha f, toa f, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      -11.7,
+      2.1,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f201_134",
+    "code": "F201",
+    "name": "Phòng học F201",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "f201, phòng học f201, phong hoc f201, tòa nhà f, toa nha f, toa f, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -28.1,
+      3.8,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f202_135",
+    "code": "F202",
+    "name": "Phòng học F202",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "f202, phòng học f202, phong hoc f202, tòa nhà f, toa nha f, toa f, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -19.9,
+      3.8,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f203_136",
+    "code": "F203",
+    "name": "Phòng học F203",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 2,
+    "floorName": "Tầng 2",
+    "searchKeywords": "f203, phòng học f203, phong hoc f203, tòa nhà f, toa nha f, toa f, tầng 2, tang 2, cs1, co so 1",
+    "doorCoordinates": [
+      -11.7,
+      3.8,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f301_137",
+    "code": "F301",
+    "name": "Phòng học F301",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "f301, phòng học f301, phong hoc f301, tòa nhà f, toa nha f, toa f, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -28.1,
+      5.5,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f302_138",
+    "code": "F302",
+    "name": "Phòng học F302",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "f302, phòng học f302, phong hoc f302, tòa nhà f, toa nha f, toa f, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -19.9,
+      5.5,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f303_139",
+    "code": "F303",
+    "name": "Phòng học F303",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 3,
+    "floorName": "Tầng 3",
+    "searchKeywords": "f303, phòng học f303, phong hoc f303, tòa nhà f, toa nha f, toa f, tầng 3, tang 3, cs1, co so 1",
+    "doorCoordinates": [
+      -11.7,
+      5.5,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f401_140",
+    "code": "F401",
+    "name": "Phòng học F401",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "f401, phòng học f401, phong hoc f401, tòa nhà f, toa nha f, toa f, tầng 4, tang 4, cs1, co so 1",
+    "doorCoordinates": [
+      -28.1,
+      7.2,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f402_141",
+    "code": "F402",
+    "name": "Phòng học F402",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "f402, phòng học f402, phong hoc f402, tòa nhà f, toa nha f, toa f, tầng 4, tang 4, cs1, co so 1",
+    "doorCoordinates": [
+      -19.9,
+      7.2,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f403_142",
+    "code": "F403",
+    "name": "Phòng học F403",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 4,
+    "floorName": "Tầng 4",
+    "searchKeywords": "f403, phòng học f403, phong hoc f403, tòa nhà f, toa nha f, toa f, tầng 4, tang 4, cs1, co so 1",
+    "doorCoordinates": [
+      -11.7,
+      7.2,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f501_143",
+    "code": "F501",
+    "name": "Phòng học F501",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "f501, phòng học f501, phong hoc f501, tòa nhà f, toa nha f, toa f, tầng 5, tang 5, cs1, co so 1",
+    "doorCoordinates": [
+      -28.1,
+      8.9,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f502_144",
+    "code": "F502",
+    "name": "Phòng học F502",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "f502, phòng học f502, phong hoc f502, tòa nhà f, toa nha f, toa f, tầng 5, tang 5, cs1, co so 1",
+    "doorCoordinates": [
+      -19.9,
+      8.9,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f503_145",
+    "code": "F503",
+    "name": "Phòng học F503",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 5,
+    "floorName": "Tầng 5",
+    "searchKeywords": "f503, phòng học f503, phong hoc f503, tòa nhà f, toa nha f, toa f, tầng 5, tang 5, cs1, co so 1",
+    "doorCoordinates": [
+      -11.7,
+      8.9,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f601_146",
+    "code": "F601",
+    "name": "Phòng học F601",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "f601, phòng học f601, phong hoc f601, tòa nhà f, toa nha f, toa f, tầng 6, tang 6, cs1, co so 1",
+    "doorCoordinates": [
+      -28.1,
+      10.6,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f602_147",
+    "code": "F602",
+    "name": "Phòng học F602",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "f602, phòng học f602, phong hoc f602, tòa nhà f, toa nha f, toa f, tầng 6, tang 6, cs1, co so 1",
+    "doorCoordinates": [
+      -19.9,
+      10.6,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_f_f603_148",
+    "code": "F603",
+    "name": "Phòng học F603",
+    "roomType": "CLASSROOM",
+    "buildingCode": "toa_f",
+    "buildingName": "Tòa Nhà F",
+    "floorLevel": 6,
+    "floorName": "Tầng 6",
+    "searchKeywords": "f603, phòng học f603, phong hoc f603, tòa nhà f, toa nha f, toa f, tầng 6, tang 6, cs1, co so 1",
+    "doorCoordinates": [
+      -11.7,
+      10.6,
+      -17.3
+    ]
+  },
+  {
+    "id": "room_cs1_toa_l_cs1_khu_l_149",
+    "code": "Khu L",
+    "name": "Phòng bộ phận y tế",
+    "roomType": "MEDICAL",
+    "buildingCode": "toa_l_cs1",
+    "buildingName": "Tòa Nhà L",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "khu l, phòng bộ phận y tế, phong bo phan y te, tòa nhà l, toa nha l, toa l, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      0,
+      0.4,
+      0
+    ]
+  },
+  {
+    "id": "room_cs1_toa_l_cs1_khu_l_150",
+    "code": "Khu L",
+    "name": "Phòng Fitness",
+    "roomType": "FACILITY",
+    "buildingCode": "toa_l_cs1",
+    "buildingName": "Tòa Nhà L",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "khu l, phòng fitness, phong fitness, tòa nhà l, toa nha l, toa l, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      0,
+      0.4,
+      0
+    ]
+  },
+  {
+    "id": "room_cs1_nha_da_nang_cs1_ndn_cantin_151",
+    "code": "NDN-CANTIN",
+    "name": "Căn tin",
+    "roomType": "FACILITY",
+    "buildingCode": "nha_da_nang_cs1",
+    "buildingName": "Nhà Đa Năng",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "ndn-cantin, căn tin, can tin, nhà đa năng, nha da nang, toa nha da nang, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      0,
+      0.4,
+      0
+    ]
+  },
+  {
+    "id": "room_cs1_nha_da_nang_cs1_ndn_t1_phongan_152",
+    "code": "NDN-T1-PHONGAN",
+    "name": "Phòng ăn",
+    "roomType": "FACILITY",
+    "buildingCode": "nha_da_nang_cs1",
+    "buildingName": "Nhà Đa Năng",
+    "floorLevel": 1,
+    "floorName": "Tầng 1",
+    "searchKeywords": "ndn-t1-phongan, phòng ăn, phong an, nhà đa năng, nha da nang, toa nha da nang, tầng 1, tang 1, cs1, co so 1",
+    "doorCoordinates": [
+      0,
+      2.1,
+      0
+    ]
+  }
+]

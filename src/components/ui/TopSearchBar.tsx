@@ -18,6 +18,12 @@ function getRoomTypeBadge(type?: string) {
       return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-purple-50 text-purple-700 border border-purple-200">Hội trường</span>;
     case 'WORKSHOP':
       return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-200">Xưởng TH</span>;
+    case 'LIBRARY':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">Thư viện</span>;
+    case 'MEDICAL':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-red-50 text-red-700 border border-red-200">Y tế</span>;
+    case 'FACILITY':
+      return <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-50 text-slate-600 border border-slate-200">Khu chức năng</span>;
     default:
       return null;
   }
@@ -37,16 +43,20 @@ export function TopSearchBar() {
   const startRouteBetweenBuildings = useNavigationStore((state) => state.startRouteBetweenBuildings);
   const resetNavigation = useNavigationStore((state) => state.resetNavigation);
 
+  const currentCampusCode = useNavigationStore((state) => state.currentCampusCode);
+
   const filteredRooms = useMemo(() => {
-    if (!searchQuery.trim()) return MOCK_ROOMS;
+    // Mỗi cơ sở chỉ tìm được phòng của chính nó
+    const pool = MOCK_ROOMS.filter((r) => (r.campus ?? 'cs1') === currentCampusCode);
+    if (!searchQuery.trim()) return pool;
     const query = searchQuery.toLowerCase();
-    return MOCK_ROOMS.filter(
+    return pool.filter(
       (room) =>
         room.code.toLowerCase().includes(query) ||
         room.name.toLowerCase().includes(query) ||
         room.searchKeywords.toLowerCase().includes(query)
     );
-  }, [searchQuery]);
+  }, [searchQuery, currentCampusCode]);
 
   const handleSelectRoom = (room: RoomData) => {
     setTargetRoom(room);

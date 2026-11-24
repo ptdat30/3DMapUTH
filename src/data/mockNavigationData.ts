@@ -1,5 +1,6 @@
 import { CampusData, BuildingData, FloorData, QrNodeData, RoomData, NavigationStep, NavigationRouteResult } from '@/types/navigation';
 import realRoomsJson from './realRoomsData.json';
+import cs1RoomsJson from './cs1RoomsData.json';
 
 export const MOCK_CAMPUSES: CampusData[] = [
   {
@@ -326,14 +327,36 @@ const CS3_REAL_ROOMS: RoomData[] = (realRoomsJson as unknown as Array<{
   floorLevel: r.floorLevel,
   floorId: `flr_${r.buildingCode}_${r.floorLevel}`,
   searchKeywords: r.searchKeywords,
+  campus: 'cs3' as const,
   doorCoordinates: r.doorCoordinates,
 }));
 
+// Phòng CS1 import từ 2 file Excel (Phan_loai_phong_CS1 + File_bổ_sung).
+// Phòng đã có trong CS1_ROOMS (trùng mã) thì đè nội dung mới từ Excel,
+// riêng id / floorId / tọa độ cửa phòng giữ nguyên để không hỏng lộ trình mẫu.
+const CS1_OLD_BY_CODE = new Map(CS1_ROOMS.map((r) => [r.code, r]));
+const CS1_IMPORTED_CODES = new Set((cs1RoomsJson as Array<{ code: string }>).map((r) => r.code));
+const CS1_MERGED_ROOMS: RoomData[] = [
+  ...(cs1RoomsJson as unknown as Array<Omit<RoomData, 'floorId'>>).map((r) => {
+    const old = CS1_OLD_BY_CODE.get(r.code);
+    return {
+      ...r,
+      campus: 'cs1' as const,
+      id: old?.id ?? r.id,
+      floorId: old?.floorId ?? `flr_${r.buildingCode}_${r.floorLevel}`,
+      doorCoordinates: old?.doorCoordinates ?? r.doorCoordinates,
+    };
+  }),
+  // Phòng CS1 cũ không có trong Excel thì giữ lại
+  ...CS1_ROOMS.filter((r) => !CS1_IMPORTED_CODES.has(r.code)).map((r) => ({ ...r, campus: 'cs1' as const })),
+];
+
 export const MOCK_ROOMS: RoomData[] = [
-  ...CS1_ROOMS,
+  ...CS1_MERGED_ROOMS,
   ...CS3_REAL_ROOMS,
   {
     id: 'room_l_fitness',
+    campus: 'cs3',
     code: 'L_FITNESS',
     name: 'Trung Tâm Thể Thao & Gym UTH Fitness (Tòa L)',
     searchKeywords: 'fitness, gym, the duc, the thao, toa l, cs3, tap gym, u-fitness, phong the chat',
