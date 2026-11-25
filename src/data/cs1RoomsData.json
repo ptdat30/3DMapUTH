@@ -16,6 +16,22 @@
     ]
   },
   {
+    "id": "room_cs1_toa_a_a001a_new0",
+    "code": "A001A",
+    "name": "Trung tâm tư vấn - tuyển sinh A001A",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "a001a, trung tâm tư vấn - tuyển sinh a001a, trung tam tu van - tuyen sinh a001a, tòa nhà a, toa nha a, toa a, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      -12.24,
+      0.4,
+      18.2
+    ]
+  },
+  {
     "id": "room_cs1_toa_a_khu_a_1",
     "code": "Khu A",
     "name": "Khu A (Trệt)",
@@ -26,7 +42,7 @@
     "floorName": "Trệt",
     "searchKeywords": "khu a, khu a (trệt), khu a (tret), tòa nhà a, toa nha a, toa a, trệt, tret, cs1, co so 1",
     "doorCoordinates": [
-      -12.24,
+      -5.12,
       0.4,
       18.2
     ]
@@ -57,6 +73,22 @@
     "floorLevel": 0,
     "floorName": "Trệt",
     "searchKeywords": "khu a, phòng mô phỏng điều khiển và khai thác đường sắt tốc độ cao, phong mo phong dieu khien va khai thac duong sat toc do cao, tòa nhà a, toa nha a, toa a, trệt, tret, cs1, co so 1",
+    "doorCoordinates": [
+      9.12,
+      0.4,
+      18.2
+    ]
+  },
+  {
+    "id": "room_cs1_toa_a_khu_a_new1",
+    "code": "Khu A",
+    "name": "Trung tâm điều hành",
+    "roomType": "OFFICE",
+    "buildingCode": "toa_a",
+    "buildingName": "Tòa Nhà A",
+    "floorLevel": 0,
+    "floorName": "Trệt",
+    "searchKeywords": "khu a, trung tâm điều hành, trung tam dieu hanh, tòa nhà a, toa nha a, toa a, trệt, tret, cs1, co so 1",
     "doorCoordinates": [
       16.24,
       0.4,
@@ -2398,70 +2430,6 @@
       -11.7,
       10.6,
       -17.3
-    ]
-  },
-  {
-    "id": "room_cs1_toa_l_cs1_khu_l_149",
-    "code": "Khu L",
-    "name": "Phòng bộ phận y tế",
-    "roomType": "MEDICAL",
-    "buildingCode": "toa_l_cs1",
-    "buildingName": "Tòa Nhà L",
-    "floorLevel": 0,
-    "floorName": "Trệt",
-    "searchKeywords": "khu l, phòng bộ phận y tế, phong bo phan y te, tòa nhà l, toa nha l, toa l, trệt, tret, cs1, co so 1",
-    "doorCoordinates": [
-      0,
-      0.4,
-      0
-    ]
-  },
-  {
-    "id": "room_cs1_toa_l_cs1_khu_l_150",
-    "code": "Khu L",
-    "name": "Phòng Fitness",
-    "roomType": "FACILITY",
-    "buildingCode": "toa_l_cs1",
-    "buildingName": "Tòa Nhà L",
-    "floorLevel": 0,
-    "floorName": "Trệt",
-    "searchKeywords": "khu l, phòng fitness, phong fitness, tòa nhà l, toa nha l, toa l, trệt, tret, cs1, co so 1",
-    "doorCoordinates": [
-      0,
-      0.4,
-      0
-    ]
-  },
-  {
-    "id": "room_cs1_nha_da_nang_cs1_ndn_cantin_151",
-    "code": "NDN-CANTIN",
-    "name": "Căn tin",
-    "roomType": "FACILITY",
-    "buildingCode": "nha_da_nang_cs1",
-    "buildingName": "Nhà Đa Năng",
-    "floorLevel": 0,
-    "floorName": "Trệt",
-    "searchKeywords": "ndn-cantin, căn tin, can tin, nhà đa năng, nha da nang, toa nha da nang, trệt, tret, cs1, co so 1",
-    "doorCoordinates": [
-      0,
-      0.4,
-      0
-    ]
-  },
-  {
-    "id": "room_cs1_nha_da_nang_cs1_ndn_t1_phongan_152",
-    "code": "NDN-T1-PHONGAN",
-    "name": "Phòng ăn",
-    "roomType": "FACILITY",
-    "buildingCode": "nha_da_nang_cs1",
-    "buildingName": "Nhà Đa Năng",
-    "floorLevel": 1,
-    "floorName": "Tầng 1",
-    "searchKeywords": "ndn-t1-phongan, phòng ăn, phong an, nhà đa năng, nha da nang, toa nha da nang, tầng 1, tang 1, cs1, co so 1",
-    "doorCoordinates": [
-      0,
-      2.1,
-      0
     ]
   }
 ]
