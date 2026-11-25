@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   TrendingUp,
   CheckCircle2,
@@ -26,11 +27,16 @@ function WalkingPersonIcon() {
   );
 }
 
-export function StepBottomSheet() {
+export interface StepBottomSheetProps {
+  onConfirmArrivedBuilding?: () => void;
+}
+
+export function StepBottomSheet({ onConfirmArrivedBuilding }: StepBottomSheetProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const activeSteps = useNavigationStore((state) => state.activeSteps);
   const activeRoute = useNavigationStore((state) => state.activeRoute);
+  const targetRoom = useNavigationStore((state) => state.targetRoom);
   const currentStepIndex = useNavigationStore((state) => state.currentStepIndex);
   const nextStep = useNavigationStore((state) => state.nextStep);
   const prevStep = useNavigationStore((state) => state.prevStep);
@@ -70,10 +76,25 @@ export function StepBottomSheet() {
   };
 
   return (
-    <div className="absolute bottom-0 inset-x-0 max-w-md mx-auto z-30 pointer-events-auto landscape:max-w-sm landscape:bottom-3 landscape:right-4 landscape:left-auto">
+    <AnimatePresence>
+      <motion.div
+        key="step-bottom-sheet-shell"
+        initial={{ y: 80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 80, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 360, damping: 32, mass: 0.9 }}
+        className="absolute bottom-0 inset-x-0 max-w-md mx-auto z-30 pointer-events-auto landscape:max-w-sm landscape:bottom-3 landscape:right-4 landscape:left-auto"
+      >
       {/* Collapsed Mini Bottom Bar Mode */}
       {isCollapsed ? (
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl mx-3 mb-3 px-3.5 py-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.12)] border border-slate-200/90 flex items-center justify-between gap-2.5">
+        <motion.div
+          key="collapsed-bar"
+          initial={{ y: 16, opacity: 0, scale: 0.97 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: 16, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+          className="bg-white/95 backdrop-blur-md rounded-2xl mx-3 mb-3 px-3.5 py-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.12)] border border-slate-200/90 flex items-center justify-between gap-2.5"
+        >
           <div
             onClick={() => setIsCollapsed(false)}
             className="flex-1 min-w-0 flex items-center gap-2.5 cursor-pointer"
@@ -115,10 +136,16 @@ export function StepBottomSheet() {
               <X className="w-4 h-4" />
             </button>
           </div>
-        </div>
+        </motion.div>
       ) : (
         /* Expanded Full Bottom Sheet Card */
-        <div className="bg-white/95 backdrop-blur-md rounded-t-[26px] landscape:rounded-[24px] px-5 sm:px-6 pt-2.5 pb-6 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] border-t landscape:border border-slate-100">
+        <motion.div
+          key={`expanded-card-${step.id}`}
+          initial={{ y: 24, opacity: 0.7, scale: 0.98 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+          className="bg-white/95 backdrop-blur-md rounded-t-[26px] landscape:rounded-[24px] px-5 sm:px-6 pt-2.5 pb-6 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] border-t landscape:border border-slate-100"
+        >
           {/* Grey Drag Handle Pill with Collapse Click */}
           <button
             type="button"
@@ -202,36 +229,57 @@ export function StepBottomSheet() {
             </div>
           </div>
 
-          {/* Two Rounded Action Buttons */}
-          <div className="grid grid-cols-2 gap-2.5">
+          {/* Action Buttons */}
+          {totalSteps === 1 && onConfirmArrivedBuilding ? (
             <button
               type="button"
-              onClick={prevStep}
-              disabled={isFirstStep}
-              className={`py-2.5 sm:py-3 rounded-xl font-semibold text-xs transition-all text-center cursor-pointer ${
-                isFirstStep
-                  ? 'bg-[#e9edf2]/50 text-slate-400 cursor-not-allowed'
-                  : 'bg-[#e9edf2] text-slate-800 hover:bg-[#dfe4eb] active:scale-[0.98]'
-              }`}
+              onClick={onConfirmArrivedBuilding}
+              className="w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all text-center shadow-md cursor-pointer bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/30 active:scale-[0.98]"
             >
-              Quay lại
+              ✓ Tôi đã tới {targetRoom?.buildingName ?? 'tòa nhà'}
             </button>
+          ) : (
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={prevStep}
+                disabled={isFirstStep}
+                className={`py-2.5 sm:py-3 rounded-xl font-semibold text-xs transition-all text-center cursor-pointer ${
+                  isFirstStep
+                    ? 'bg-[#e9edf2]/50 text-slate-400 cursor-not-allowed'
+                    : 'bg-[#e9edf2] text-slate-800 hover:bg-[#dfe4eb] active:scale-[0.98]'
+                }`}
+              >
+                Quay lại
+              </button>
 
-            <button
-              type="button"
-              onClick={nextStep}
-              disabled={isLastStep}
-              className={`py-2.5 sm:py-3 rounded-xl font-semibold text-xs transition-all text-center shadow-md cursor-pointer ${
-                isLastStep
-                  ? 'bg-emerald-600 text-white shadow-emerald-600/25'
-                  : 'bg-[#1d74f5] text-white hover:bg-[#1565d8] shadow-blue-500/25 active:scale-[0.98]'
-              }`}
-            >
-              {isLastStep ? 'Đã đến nơi' : 'Bước tiếp theo'}
-            </button>
-          </div>
-        </div>
+              {isLastStep && onConfirmArrivedBuilding ? (
+                <button
+                  type="button"
+                  onClick={onConfirmArrivedBuilding}
+                  className="py-2.5 sm:py-3 px-2 rounded-xl font-bold text-xs transition-all text-center shadow-md cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/30 active:scale-[0.98]"
+                >
+                  ✓ Tôi đã tới {targetRoom?.buildingName ?? 'tòa nhà'}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  disabled={isLastStep}
+                  className={`py-2.5 sm:py-3 rounded-xl font-semibold text-xs transition-all text-center shadow-md cursor-pointer ${
+                    isLastStep
+                      ? 'bg-emerald-600 text-white shadow-emerald-600/25'
+                      : 'bg-[#1d74f5] text-white hover:bg-[#1565d8] shadow-blue-500/25 active:scale-[0.98]'
+                  }`}
+                >
+                  {isLastStep ? 'Đã đến nơi' : 'Bước tiếp theo'}
+                </button>
+              )}
+            </div>
+          )}
+        </motion.div>
       )}
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

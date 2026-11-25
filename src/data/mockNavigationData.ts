@@ -1,4 +1,5 @@
 import { CampusData, BuildingData, FloorData, QrNodeData, RoomData, NavigationStep, NavigationRouteResult } from '@/types/navigation';
+import { CS1_QR_STATIONS } from './cs1OutdoorRouting';
 import realRoomsJson from './realRoomsData.json';
 import cs1RoomsJson from './cs1RoomsData.json';
 
@@ -184,6 +185,7 @@ export const MOCK_FLOORS: FloorData[] = [
 ];
 
 export const MOCK_QR_NODES: QrNodeData[] = [
+  ...CS1_QR_STATIONS,
   {
     id: 'qr_cs1_cong_chinh',
     code: 'cs1_qr_cong_chinh',

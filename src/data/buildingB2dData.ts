@@ -6,7 +6,54 @@
 
 export type BuildingFloor = 'ground' | 'floor1' | 'floor2' | 'floor3';
 export type BuildingPart = 'part1' | 'part2' | 'part3';
+export type BuildingBGateId = 'gate1_parking' | 'gate2_north_south' | 'gate3_north_east';
 export type RoomCategory = 'classroom' | 'office' | 'stairs' | 'restroom' | 'facility';
+
+export interface BuildingBGateInfo {
+  id: BuildingBGateId;
+  shortLabel: string;
+  name: string;
+  landmark: string;
+  stairsCode: string;
+  primaryPart: BuildingPart;
+  masterPoint: { x: number; y: number };
+}
+
+export const BUILDING_B_GATES: Record<BuildingBGateId, BuildingBGateInfo> = {
+  gate1_parking: {
+    id: 'gate1_parking',
+    shortLabel: 'Cổng 1',
+    name: 'Cổng 1 • Gần Nhà xe',
+    landmark: 'Gần Nhà xe • Khối Nam (CT1)',
+    stairsCode: 'CT1',
+    primaryPart: 'part1',
+    masterPoint: { x: 220, y: 234 },
+  },
+  gate2_north_south: {
+    id: 'gate2_north_south',
+    shortLabel: 'Cổng 2',
+    name: 'Cổng 2 • Nối Khối Bắc – Nam',
+    landmark: 'Đoạn nối Khối Bắc & Khối Nam (CT2)',
+    stairsCode: 'CT2',
+    primaryPart: 'part2',
+    masterPoint: { x: 475, y: 234 },
+  },
+  gate3_north_east: {
+    id: 'gate3_north_east',
+    shortLabel: 'Cổng 3',
+    name: 'Cổng 3 • Nối Khối Bắc – Cánh Đông',
+    landmark: 'Đoạn nối Khối Bắc & Cánh Đông (CT3)',
+    stairsCode: 'CT3',
+    primaryPart: 'part3',
+    masterPoint: { x: 840, y: 220 },
+  },
+};
+
+export const BUILDING_B_GATE_LIST: BuildingBGateInfo[] = [
+  BUILDING_B_GATES.gate1_parking,
+  BUILDING_B_GATES.gate2_north_south,
+  BUILDING_B_GATES.gate3_north_east,
+];
 
 export interface RoomBInfo {
   id: string;
@@ -2123,4 +2170,20 @@ export function searchRooms(query: string): RoomBInfo[] {
 
 export function getRoomById(id: string): RoomBInfo | undefined {
   return TOA_B_ROOMS[id];
+}
+
+export function getRoomByCode(rawCode: string): RoomBInfo | undefined {
+  const cleaned = rawCode.trim().toUpperCase();
+  const normalized = !cleaned.includes('.') && /^B\d/.test(cleaned)
+    ? `B.${cleaned.slice(1)}`
+    : cleaned;
+  return Object.values(TOA_B_ROOMS).find(
+    (room) => room.code.toUpperCase() === normalized || room.code.toUpperCase() === cleaned
+  );
+}
+
+export function getRecommendedGateForPart(part: BuildingPart): BuildingBGateId {
+  if (part === 'part1') return 'gate1_parking';
+  if (part === 'part2') return 'gate2_north_south';
+  return 'gate3_north_east';
 }

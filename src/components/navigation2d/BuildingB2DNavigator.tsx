@@ -4,6 +4,10 @@ import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import {
   BuildingFloor,
   BuildingPart,
+  BuildingBGateId,
+  BUILDING_B_GATES,
+  BUILDING_B_GATE_LIST,
+  getRecommendedGateForPart,
   RoomBInfo,
   TOA_B_ROOMS,
   PART_INFO,
@@ -30,11 +34,13 @@ import {
   Map as MapIcon,
   Check,
   RotateCcw,
+  DoorOpen,
 } from 'lucide-react';
 
 export interface BuildingB2DNavigatorProps {
   onClose?: () => void;
   initialRoomCode?: string;
+  initialEntryGate?: BuildingBGateId;
 }
 
 type ViewMode = 'vector' | 'image';
@@ -67,6 +73,7 @@ interface TurnInstruction {
 export function BuildingB2DNavigator({
   onClose,
   initialRoomCode = 'B.003',
+  initialEntryGate,
 }: BuildingB2DNavigatorProps) {
   // Resolve initial destination room (defaults to B.003 to match mobile mockup)
   const initialRoom = useMemo<RoomBInfo>(() => {
@@ -76,10 +83,18 @@ export function BuildingB2DNavigator({
     return found || TOA_B_ROOMS['b_003'];
   }, [initialRoomCode]);
 
+  const resolvedInitialGate: BuildingBGateId =
+    initialEntryGate ?? getRecommendedGateForPart(initialRoom.part);
+  const startsInDifferentWing =
+    BUILDING_B_GATES[resolvedInitialGate].primaryPart !== initialRoom.part;
+
   // Core navigation state
   const [selectedRoomId, setSelectedRoomId] = useState<string>(initialRoom.id);
   const [currentFloor, setCurrentFloor] = useState<BuildingFloor>(initialRoom.floor);
-  const [activePart, setActivePart] = useState<ActivePartSelection>(initialRoom.part);
+  const [entryGate, setEntryGate] = useState<BuildingBGateId>(resolvedInitialGate);
+  const [activePart, setActivePart] = useState<ActivePartSelection>(
+    startsInDifferentWing ? 'master' : initialRoom.part
+  );
   const [viewMode, setViewMode] = useState<ViewMode>('vector');
   const [startPoint, setStartPoint] = useState<StartPointOption>('nearest_stairs');
 
@@ -89,10 +104,10 @@ export function BuildingB2DNavigator({
   const [isBottomExpanded, setIsBottomExpanded] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Map camera state (pan, zoom, subtle 2.5D compass tilt matching mobile reference)
+  // Map camera state (pan, zoom, straight 0deg alignment by default)
   const [zoom, setZoom] = useState<number>(1);
   const [pan, setPan] = useState<Point>({ x: 0, y: 0 });
-  const [isTilted, setIsTilted] = useState<boolean>(true);
+  const [isTilted, setIsTilted] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStartRef = useRef<Point>({ x: 0, y: 0 });
 
@@ -123,34 +138,78 @@ export function BuildingB2DNavigator({
     return searchRooms(trimmed).slice(0, 16);
   }, [searchQuery, currentFloor]);
 
-  // Select any room -> auto-sync floor, part, reset view cleanly
-  const handleSelectRoom = useCallback((room: RoomBInfo) => {
-    setSelectedRoomId(room.id);
-    setCurrentFloor(room.floor);
-    setActivePart(room.part);
-    setIsSearchOpen(false);
-    setIsFloorMenuOpen(false);
-    setSearchQuery('');
-    setPan({ x: 0, y: 0 });
-    setZoom(1);
-    setSimProgress(0.18);
-    setIsPlaying(false);
-  }, []);
+  const entryGateInfo = BUILDING_B_GATES[entryGate];
+  const isCrossWing = entryGateInfo.primaryPart !== selectedRoom.part;
+
+  // Select any room -> auto-sync floor, auto-open L-shape master if cross-wing
+  const handleSelectRoom = useCallback(
+    (room: RoomBInfo) => {
+      setSelectedRoomId(room.id);
+      setCurrentFloor(room.floor);
+      const differentWing = BUILDING_B_GATES[entryGate].primaryPart !== room.part;
+      setActivePart(differentWing ? 'master' : room.part);
+      setIsSearchOpen(false);
+      setIsFloorMenuOpen(false);
+      setSearchQuery('');
+      setPan({ x: 0, y: 0 });
+      setZoom(1);
+      setSimProgress(0.12);
+      setIsPlaying(false);
+    },
+    [entryGate]
+  );
+
+  // Switch entry gate (Cổng 1 / Cổng 2 / Cổng 3) -> auto-switch between Master L-shape & wing zoom
+  const handleSwitchEntryGate = useCallback(
+    (nextGate: BuildingBGateId) => {
+      setEntryGate(nextGate);
+      const differentWing = BUILDING_B_GATES[nextGate].primaryPart !== selectedRoom.part;
+      setActivePart(differentWing ? 'master' : selectedRoom.part);
+      setPan({ x: 0, y: 0 });
+      setZoom(1);
+      setSimProgress(0.1);
+      setIsPlaying(false);
+    },
+    [selectedRoom.part]
+  );
 
   // Compute navigation waypoints in the active viewBox
   const routeWaypoints: Point[] = useMemo(() => {
     if (activePart === 'master') {
       const door = selectedRoom.masterCoords.door;
-      const startX =
-        selectedRoom.part === 'part1'
-          ? 220
-          : selectedRoom.part === 'part2'
-          ? 495
-          : 865;
-      const startY = selectedRoom.part === 'part3' ? 200 : 220;
+      const gatePt = BUILDING_B_GATES[entryGate].masterPoint;
+      const spineY = 234;
+      const eastSpineX = 840;
+
+      // Cross-wing & same-wing L-shape corridor routing on Master Overview
+      if (selectedRoom.part === 'part3') {
+        if (entryGate === 'gate3_north_east') {
+          return [
+            { x: gatePt.x, y: gatePt.y },
+            { x: eastSpineX, y: door.y },
+            { x: door.x, y: door.y },
+          ];
+        }
+        return [
+          { x: gatePt.x, y: spineY },
+          { x: eastSpineX, y: spineY },
+          { x: eastSpineX, y: door.y },
+          { x: door.x, y: door.y },
+        ];
+      }
+
+      if (entryGate === 'gate3_north_east') {
+        return [
+          { x: gatePt.x, y: gatePt.y },
+          { x: eastSpineX, y: spineY },
+          { x: door.x, y: spineY },
+          { x: door.x, y: door.y },
+        ];
+      }
+
       return [
-        { x: startX, y: startY },
-        { x: door.x, y: startY },
+        { x: gatePt.x, y: spineY },
+        { x: door.x, y: spineY },
         { x: door.x, y: door.y },
       ];
     }
@@ -193,7 +252,7 @@ export function BuildingB2DNavigator({
       { x: door.x, y: corridorY },
       { x: door.x, y: door.y - 10 },
     ];
-  }, [activePart, selectedRoom]);
+  }, [activePart, selectedRoom, entryGate]);
 
   // SVG path d string for active remaining route
   const routeSvgPath = useMemo(() => {
@@ -247,8 +306,14 @@ export function BuildingB2DNavigator({
     return { x: last.x, y: last.y, angle: 0 };
   }, [routeWaypoints, simProgress]);
 
-  // Turn instruction matching corridor direction
+  // Turn instruction matching corridor direction (supports cross-wing L-shape routing)
   const turnInstruction: TurnInstruction = useMemo(() => {
+    if (isCrossWing && activePart === 'master') {
+      return {
+        direction: 'straight',
+        actionText: `Từ ${entryGateInfo.shortLabel} đi xuyên hành lang sang ${selectedRoom.partLabel} tới`,
+      };
+    }
     if (selectedRoom.category === 'stairs') {
       return { direction: 'straight', actionText: 'Đi thẳng đến' };
     }
@@ -258,18 +323,21 @@ export function BuildingB2DNavigator({
       return { direction: 'left', actionText: 'Rẽ trái vào' };
     }
     return { direction: 'right', actionText: 'Rẽ phải vào' };
-  }, [routeWaypoints, selectedRoom]);
+  }, [routeWaypoints, selectedRoom, isCrossWing, activePart, entryGateInfo.shortLabel]);
 
-  // Dynamic remaining distance & ETA based on simulation progress
+  // Dynamic remaining distance & ETA based on simulation progress (adds cross-wing corridor length)
   const remainingMeters = useMemo(() => {
-    const base = Math.max(selectedRoom.estimatedDistanceMeters, 10);
+    const crossWingExtra = isCrossWing ? 36 : 0;
+    const base = Math.max(selectedRoom.estimatedDistanceMeters, 10) + crossWingExtra;
     return Math.max(0, Math.round(base * (1 - simProgress * 0.85)));
-  }, [selectedRoom.estimatedDistanceMeters, simProgress]);
+  }, [selectedRoom.estimatedDistanceMeters, simProgress, isCrossWing]);
 
   const etaMinutes = useMemo(() => {
-    const remainingSeconds = selectedRoom.walkingSeconds * (1 - simProgress * 0.85);
+    const crossWingExtraSec = isCrossWing ? 42 : 0;
+    const remainingSeconds =
+      (selectedRoom.walkingSeconds + crossWingExtraSec) * (1 - simProgress * 0.85);
     return Math.max(1, Math.ceil(remainingSeconds / 60));
-  }, [selectedRoom.walkingSeconds, simProgress]);
+  }, [selectedRoom.walkingSeconds, simProgress, isCrossWing]);
 
   // Animation loop for "Tiếp tục dẫn đường"
   useEffect(() => {
@@ -396,11 +464,11 @@ export function BuildingB2DNavigator({
           viewBox="0 0 430 932"
           preserveAspectRatio="xMidYMid slice"
         >
-          {/* Upper soft sky-blue campus court / canal zone */}
-          <polygon points="-40,80 480,-30 480,250 -40,390" fill="#CDE5FA" opacity="0.65" />
+          {/* Upper soft sky-blue campus court zone (straight horizontal alignment) */}
+          <rect x="0" y="0" width="430" height="270" fill="#CDE5FA" opacity="0.55" />
 
-          {/* Surrounding building blocks & campus walkways tilted at -8deg */}
-          <g transform="rotate(-8 215 466)">
+          {/* Surrounding building blocks & campus walkways aligned straight (0deg) */}
+          <g>
             {/* Campus roads/paths (white strips) */}
             <rect x="-80" y="345" width="600" height="36" fill="#F8FAFC" opacity="0.9" />
             <rect x="-80" y="515" width="600" height="44" fill="#F8FAFC" opacity="0.92" />
@@ -598,33 +666,61 @@ export function BuildingB2DNavigator({
                             className="transition-colors duration-200"
                           />
 
-                          {/* Staircase Treads Graphic (Clean white ladder steps matching screenshot) */}
+                          {/* Crisp ISO Staircase Icon + Label (CT1..CT4) */}
                           {isStairs && (
-                            <g pointerEvents="none">
-                              {Array.from({ length: 10 }).map((_, idx) => {
-                                const stepY = y + height * 0.28 + idx * 8.5;
-                                return (
-                                  <line
-                                    key={idx}
-                                    x1={x + width * 0.24}
-                                    y1={stepY}
-                                    x2={x + width * 0.76}
-                                    y2={stepY}
-                                    stroke="#F1F5F9"
-                                    strokeWidth="2"
-                                    opacity="0.88"
-                                  />
-                                );
-                              })}
-                              <line
-                                x1={x + width * 0.34}
-                                y1={y + height * 0.25}
-                                x2={x + width * 0.66}
-                                y2={y + height * 0.78}
+                            <g
+                              transform={`translate(${x + width / 2}, ${y + height / 2 - 4})`}
+                              pointerEvents="none"
+                            >
+                              {/* Soft rounded dark badge frame */}
+                              <rect
+                                x="-34"
+                                y="-34"
+                                width="68"
+                                height="68"
+                                rx="14"
+                                fill="#2B3441"
+                                stroke="#475569"
+                                strokeWidth="1.5"
+                              />
+                              {/* Ascending 4-step staircase silhouette */}
+                              <path
+                                d="M -22 20 L -11 20 L -11 9 L 0 9 L 0 -2 L 11 -2 L 11 -13 L 22 -13"
+                                fill="none"
                                 stroke="#FFFFFF"
-                                strokeWidth="2.5"
+                                strokeWidth="4.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              {/* Diagonal handrail / up-down direction arrow */}
+                              <line
+                                x1="-18"
+                                y1="2"
+                                x2="-2"
+                                y2="-14"
+                                stroke="#93C5FD"
+                                strokeWidth="2.8"
                                 strokeLinecap="round"
                               />
+                              <polyline
+                                points="-10,-14 -2,-14 -2,-6"
+                                fill="none"
+                                stroke="#93C5FD"
+                                strokeWidth="2.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              {/* Clear staircase code label below icon */}
+                              <text
+                                x="0"
+                                y="52"
+                                fill="#E2E8F0"
+                                fontSize="13"
+                                fontWeight="800"
+                                textAnchor="middle"
+                              >
+                                {room.code}
+                              </text>
                             </g>
                           )}
 
@@ -688,58 +784,19 @@ export function BuildingB2DNavigator({
                       );
                     })}
 
-                    {/* Vibrant Blue Turn-by-Turn Route Line (White Casing + Blue Core) */}
-                    <g filter="url(#routeGlow)" pointerEvents="none">
-                      <path
-                        d={routeSvgPath}
-                        fill="none"
-                        stroke="#FFFFFF"
-                        strokeWidth="12"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        opacity="0.9"
-                      />
-                      <path
-                        d={routeSvgPath}
-                        fill="none"
-                        stroke="#1A63EB"
-                        strokeWidth="7.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      {/* Entry Arrowhead into Destination Door */}
-                      <polygon
-                        points={`${selectedRoom.partCoords.door.x},${selectedRoom.partCoords.door.y - 24} ${selectedRoom.partCoords.door.x - 10},${selectedRoom.partCoords.door.y - 6} ${selectedRoom.partCoords.door.x + 10},${selectedRoom.partCoords.door.y - 6}`}
-                        fill="#1A63EB"
-                      />
-                    </g>
-
-                    {/* Animated User Location Puck (Blue Circle + Heading Arrow + Halo) */}
-                    <g
-                      transform={`translate(${puckState.x}, ${puckState.y})`}
+                    {/* Vibrant Highlight Halo on Selected Room */}
+                    <rect
+                      x={selectedRoom.partCoords.x - 3}
+                      y={selectedRoom.partCoords.y - 3}
+                      width={selectedRoom.partCoords.width + 6}
+                      height={selectedRoom.partCoords.height + 6}
+                      rx="4"
+                      fill="none"
+                      stroke="#1A63EB"
+                      strokeWidth="4.5"
+                      filter="url(#routeGlow)"
                       pointerEvents="none"
-                    >
-                      <circle
-                        r="34"
-                        fill="#3B82F6"
-                        opacity="0.18"
-                        className="animate-pulse"
-                      />
-                      <circle r="21" fill="#3B82F6" opacity="0.22" />
-                      <circle
-                        r="16"
-                        fill="#1A63EB"
-                        stroke="#FFFFFF"
-                        strokeWidth="3.5"
-                      />
-                      {/* White directional arrowhead rotated with walking vector */}
-                      <g transform={`rotate(${puckState.angle})`}>
-                        <polygon
-                          points="0,-9 7,7 0,3.5 -7,7"
-                          fill="#FFFFFF"
-                        />
-                      </g>
-                    </g>
+                    />
 
                     {/* Classic Red Teardrop Destination Map Pin floating above Target Room */}
                     <g
@@ -760,7 +817,7 @@ export function BuildingB2DNavigator({
                     </g>
                   </g>
                 ) : (
-                  /* Master 3-Part Overview */
+                  /* Master 3-Part Overview (Full L-Shape Cross-Wing Wayfinding) */
                   <g id="masterOverview">
                     <rect
                       x="0"
@@ -772,70 +829,151 @@ export function BuildingB2DNavigator({
                       stroke="#CBD5E1"
                       strokeWidth="3"
                     />
+
+                    {/* Continuous L-Shape White Connecting Corridor Strip */}
+                    <path
+                      d="M 40 220 L 855 220 L 855 560 L 826 560 L 826 248 L 40 248 Z"
+                      fill="#FFFFFF"
+                      stroke="#94A3B8"
+                      strokeWidth="2"
+                    />
+
                     <g onClick={() => setActivePart('part1')} className="cursor-pointer">
                       <rect
                         x="20"
                         y="100"
-                        width="465"
-                        height="145"
+                        width="445"
+                        height="120"
                         rx="10"
                         fill={selectedRoom.part === 'part1' ? '#DBEAFE' : '#CFDCEB'}
                         stroke={selectedRoom.part === 'part1' ? '#1A63EB' : '#475569'}
                         strokeWidth="3.5"
                       />
-                      <text x="252" y="164" fill="#1E293B" fontSize="22" fontWeight="800" textAnchor="middle">
+                      <text x="242" y="154" fill="#1E293B" fontSize="22" fontWeight="800" textAnchor="middle">
                         PHẦN 1 (KHỐI NAM)
                       </text>
-                      <text x="252" y="194" fill="#475569" fontSize="14" fontWeight="600" textAnchor="middle">
-                        B.2 / B.101A.. • CT1 • .001 – .003
+                      <text x="242" y="184" fill="#475569" fontSize="14" fontWeight="600" textAnchor="middle">
+                        CT1 • Phòng .001 – .003
                       </text>
                     </g>
 
                     <g onClick={() => setActivePart('part2')} className="cursor-pointer">
                       <rect
-                        x="420"
+                        x="475"
                         y="30"
-                        width="415"
-                        height="185"
+                        width="355"
+                        height="190"
                         rx="10"
                         fill={selectedRoom.part === 'part2' ? '#DBEAFE' : '#CFDCEB'}
                         stroke={selectedRoom.part === 'part2' ? '#1A63EB' : '#475569'}
                         strokeWidth="3.5"
                       />
-                      <text x="627" y="114" fill="#1E293B" fontSize="22" fontWeight="800" textAnchor="middle">
+                      <text x="652" y="116" fill="#1E293B" fontSize="22" fontWeight="800" textAnchor="middle">
                         PHẦN 2 (KHỐI BẮC)
                       </text>
-                      <text x="627" y="144" fill="#475569" fontSize="14" fontWeight="600" textAnchor="middle">
-                        WC • CT2 • .004 – .007
+                      <text x="652" y="146" fill="#475569" fontSize="14" fontWeight="600" textAnchor="middle">
+                        WC • CT2 • Phòng .004 – .007
                       </text>
                     </g>
 
                     <g onClick={() => setActivePart('part3')} className="cursor-pointer">
                       <rect
-                        x="845"
+                        x="855"
                         y="30"
-                        width="160"
+                        width="150"
                         height="535"
                         rx="10"
                         fill={selectedRoom.part === 'part3' ? '#DBEAFE' : '#CFDCEB'}
                         stroke={selectedRoom.part === 'part3' ? '#1A63EB' : '#475569'}
                         strokeWidth="3.5"
                       />
-                      <text x="925" y="280" fill="#1E293B" fontSize="20" fontWeight="800" textAnchor="middle">
+                      <text x="930" y="280" fill="#1E293B" fontSize="20" fontWeight="800" textAnchor="middle">
                         PHẦN 3
                       </text>
-                      <text x="925" y="308" fill="#475569" fontSize="13" fontWeight="600" textAnchor="middle">
+                      <text x="930" y="308" fill="#475569" fontSize="13" fontWeight="600" textAnchor="middle">
                         Cánh Đông
                       </text>
-                      <text x="925" y="330" fill="#475569" fontSize="13" fontWeight="600" textAnchor="middle">
-                        .008 – .011
+                      <text x="930" y="330" fill="#475569" fontSize="13" fontWeight="600" textAnchor="middle">
+                        CT3–CT4 • .008–.011
                       </text>
                     </g>
+
+                    {/* Clickable 3 Entrance Gate Markers (Cổng 1, Cổng 2, Cổng 3) */}
+                    {BUILDING_B_GATE_LIST.map((gate) => {
+                      const isCurrentGate = entryGate === gate.id;
+                      const badgeY =
+                        gate.id === 'gate3_north_east'
+                          ? gate.masterPoint.y + 42
+                          : gate.masterPoint.y + 38;
+                      return (
+                        <g
+                          key={`master-gate-${gate.id}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSwitchEntryGate(gate.id);
+                          }}
+                          className="cursor-pointer"
+                        >
+                          <line
+                            x1={gate.masterPoint.x}
+                            y1={gate.masterPoint.y}
+                            x2={gate.masterPoint.x}
+                            y2={badgeY - 12}
+                            stroke={isCurrentGate ? '#1A63EB' : '#94A3B8'}
+                            strokeWidth="2.5"
+                            strokeDasharray="4 3"
+                          />
+                          <circle
+                            cx={gate.masterPoint.x}
+                            cy={gate.masterPoint.y}
+                            r="7"
+                            fill={isCurrentGate ? '#1A63EB' : '#FFFFFF'}
+                            stroke={isCurrentGate ? '#FFFFFF' : '#64748B'}
+                            strokeWidth="2.5"
+                          />
+                          <rect
+                            x={gate.masterPoint.x - 66}
+                            y={badgeY - 12}
+                            width="132"
+                            height="30"
+                            rx="15"
+                            fill={isCurrentGate ? '#1A63EB' : '#FFFFFF'}
+                            stroke={isCurrentGate ? '#1D4ED8' : '#CBD5E1'}
+                            strokeWidth="2"
+                          />
+                          <text
+                            x={gate.masterPoint.x}
+                            y={badgeY + 7}
+                            fill={isCurrentGate ? '#FFFFFF' : '#334155'}
+                            fontSize="12"
+                            fontWeight="800"
+                            textAnchor="middle"
+                          >
+                            {isCurrentGate ? `● ${gate.shortLabel} (${gate.stairsCode})` : `${gate.shortLabel} (${gate.stairsCode})`}
+                          </text>
+                        </g>
+                      );
+                    })}
+
+                    {/* Highlighted Target Room Box on Master Overview */}
+                    <rect
+                      x={selectedRoom.masterCoords.x}
+                      y={selectedRoom.masterCoords.y}
+                      width={selectedRoom.masterCoords.width}
+                      height={selectedRoom.masterCoords.height}
+                      rx="6"
+                      fill="#93C5FD"
+                      stroke="#1A63EB"
+                      strokeWidth="3.5"
+                      filter="url(#routeGlow)"
+                      pointerEvents="none"
+                    />
 
                     {/* Red Pin at Selected Room on Master Plan */}
                     <g
                       transform={`translate(${selectedRoom.masterCoords.door.x}, ${selectedRoom.masterCoords.door.y})`}
                       filter="url(#pinShadow)"
+                      pointerEvents="none"
                     >
                       <path
                         d="M 0,0 C -14,-16 -20,-28 -20,-38 C -20,-49 -11,-58 0,-58 C 11,-58 20,-49 20,-38 C 20,-28 14,-16 0,0 Z"
@@ -844,6 +982,24 @@ export function BuildingB2DNavigator({
                         strokeWidth="2.5"
                       />
                       <circle cx="0" cy="-38" r="7" fill="#FFFFFF" />
+                      <rect
+                        x="-36"
+                        y="-82"
+                        width="72"
+                        height="20"
+                        rx="10"
+                        fill="#0F172A"
+                      />
+                      <text
+                        x="0"
+                        y="-68"
+                        fill="#FFFFFF"
+                        fontSize="11"
+                        fontWeight="800"
+                        textAnchor="middle"
+                      >
+                        {selectedRoom.code}
+                      </text>
                     </g>
                   </g>
                 )}
@@ -870,28 +1026,29 @@ export function BuildingB2DNavigator({
           LAYER 1: TOP FLOATING TURN-BY-TURN HEADER CARD (EXACT MOBILE RATIO)
           ===================================================================== */}
       <div className="absolute top-3 inset-x-3 sm:max-w-[430px] sm:mx-auto z-30 pointer-events-none flex flex-col gap-2.5">
-        {/* Main Floating Direction Pill */}
+        {/* Main Floating Highlighted Room Pill */}
         <div className="pointer-events-auto bg-white/95 backdrop-blur-md rounded-[28px] shadow-[0_8px_28px_rgba(15,23,42,0.12)] border border-white/90 px-3.5 py-2.5 flex items-center gap-3">
-          {/* Blue Turn Arrow */}
-          <div className="w-10 h-10 flex items-center justify-center shrink-0 text-[#1A63EB]">
-            {renderTurnIcon('w-8 h-8')}
+          {/* Highlighted Room Pin Icon */}
+          <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-[#1A63EB]">
+            <MapPin className="w-5 h-5" strokeWidth={1.8} />
           </div>
 
-          {/* Distance & Target Room (Tap to Search / Switch Room) */}
+          {/* Target Room Name & Location (Tap to Search / Switch Room) */}
           <button
             type="button"
             onClick={() => setIsSearchOpen(true)}
-            className="flex-1 min-w-0 text-left group"
+            className="flex-1 min-w-0 text-left group cursor-pointer"
             title="Chạm để tìm phòng khác"
           >
-            <div className="text-[20px] font-extrabold text-slate-900 leading-tight tracking-tight">
-              {remainingMeters} m
+            <div className="text-[18px] font-extrabold text-slate-900 leading-tight tracking-tight truncate">
+              {destinationLabel}
             </div>
-            <div className="text-[13px] text-slate-600 truncate leading-snug">
-              về hướng{' '}
-              <span className="font-bold text-[#1A63EB] group-hover:underline">
-                {destinationLabel}
-              </span>
+            <div className="text-[12.5px] text-slate-600 truncate leading-snug">
+              <span className="font-bold text-[#1A63EB]">{FLOOR_INFO[selectedRoom.floor].label}</span>
+              {' • '}
+              <span>{selectedRoom.partLabel}</span>
+              {' • '}
+              <span>Gần {selectedRoom.nearestStairs}</span>
             </div>
           </button>
 
@@ -926,6 +1083,10 @@ export function BuildingB2DNavigator({
             >
               <Layers className="w-4 h-4 text-[#1A63EB]" strokeWidth={1.5} />
               <span>{FLOOR_INFO[currentFloor].label}</span>
+              <span className="text-[11px] font-semibold text-slate-400">•</span>
+              <span className="text-[12px] font-extrabold text-emerald-600">
+                {entryGateInfo.shortLabel}
+              </span>
               <ChevronDown
                 className={`w-3.5 h-3.5 text-[#1A63EB] transition-transform ${
                   isFloorMenuOpen ? 'rotate-180' : ''
@@ -933,6 +1094,25 @@ export function BuildingB2DNavigator({
                 strokeWidth={2}
               />
             </button>
+
+            {/* Cross-Wing Quick Switch Pill: jump to zoomed target wing anytime */}
+            {isCrossWing && activePart === 'master' && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActivePart(selectedRoom.part);
+                  setPan({ x: 0, y: 0 });
+                  setZoom(1);
+                }}
+                className="mt-2 bg-amber-50/95 hover:bg-amber-100 backdrop-blur-md text-amber-900 border border-amber-300/80 rounded-full px-3 py-1.5 text-[11px] font-bold shadow-sm flex items-center gap-1.5 active:scale-95 transition cursor-pointer"
+              >
+                <span>Xuyên cánh từ {entryGateInfo.shortLabel} →</span>
+                <span className="underline text-[#1A63EB]">
+                  Zoom {selectedRoom.partLabel.replace(/^Phần \d+\s*/, '')}
+                </span>
+              </button>
+            )}
 
             {/* Floor, Part & ViewMode Popover Menu */}
             {isFloorMenuOpen && (
@@ -973,6 +1153,38 @@ export function BuildingB2DNavigator({
                         );
                       }
                     )}
+                  </div>
+                </div>
+
+                <div className="border-t border-slate-100 pt-2.5">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 px-1">
+                    Cổng bạn đi vào (điểm xuất phát)
+                  </div>
+                  <div className="space-y-1">
+                    {BUILDING_B_GATE_LIST.map((gate) => {
+                      const isActive = entryGate === gate.id;
+                      return (
+                        <button
+                          key={gate.id}
+                          type="button"
+                          onClick={() => {
+                            handleSwitchEntryGate(gate.id);
+                            setIsFloorMenuOpen(false);
+                          }}
+                          className={`w-full px-2.5 py-1.5 rounded-xl text-xs text-left transition flex items-center justify-between gap-2 ${
+                            isActive
+                              ? 'bg-emerald-50 text-emerald-700 font-bold'
+                              : 'text-slate-700 hover:bg-slate-100 font-medium'
+                          }`}
+                        >
+                          <span className="truncate flex items-center gap-1.5">
+                            <DoorOpen className="w-3.5 h-3.5 shrink-0" strokeWidth={1.5} />
+                            <span className="truncate">{gate.name}</span>
+                          </span>
+                          {isActive && <Check className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -1091,7 +1303,7 @@ export function BuildingB2DNavigator({
       </div>
 
       {/* =====================================================================
-          LAYER 2: BOTTOM NAVIGATION SHEET CARD (EXACT MOBILE MOCKUP MATCH)
+          LAYER 2: COMPACT BOTTOM ROOM HIGHLIGHT CARD
           ===================================================================== */}
       <div className="absolute bottom-3 inset-x-3 sm:max-w-[430px] sm:mx-auto z-30">
         <div className="bg-white/98 backdrop-blur-xl rounded-[28px] shadow-[0_12px_38px_rgba(15,23,42,0.16)] border border-white/90 px-4 pt-2.5 pb-4 transition-all duration-300">
@@ -1101,34 +1313,27 @@ export function BuildingB2DNavigator({
             className="w-10 h-1 rounded-full bg-slate-300 mx-auto mb-3 cursor-pointer"
           />
 
-          {/* Row 1: Next Turn Summary */}
+          {/* Row 1: Highlighted Room Summary */}
           <div className="flex items-center gap-3">
-            {/* Vibrant Blue Circle with White Turn Arrow */}
-            <div className="w-11 h-11 rounded-full bg-[#1A63EB] text-white flex items-center justify-center shrink-0 shadow-[0_4px_12px_rgba(26,99,235,0.32)]">
-              {renderTurnIcon('w-6 h-6')}
+            <div className="w-11 h-11 rounded-2xl bg-[#1A63EB] text-white flex items-center justify-center shrink-0 shadow-[0_4px_12px_rgba(26,99,235,0.32)] font-extrabold text-xs">
+              {selectedRoom.shortBadge}
             </div>
 
-            {/* Distance & Turn Text */}
             <div className="flex-1 min-w-0">
-              <div className="text-[20px] font-extrabold text-slate-900 leading-tight tracking-tight">
-                {remainingMeters} m
+              <div className="text-[17px] font-extrabold text-slate-900 leading-tight tracking-tight truncate">
+                {selectedRoom.name}
               </div>
-              <div className="text-[13.5px] text-slate-600 truncate">
-                {turnInstruction.actionText}{' '}
-                <span className="font-bold text-[#1A63EB]">
-                  {selectedRoom.category === 'classroom'
-                    ? `phòng ${selectedRoom.code}`
-                    : selectedRoom.name}
-                </span>
+              <div className="text-[12.5px] text-slate-600 truncate mt-0.5">
+                {FLOOR_INFO[selectedRoom.floor].label} • {selectedRoom.partLabel} • Gần{' '}
+                <span className="font-bold text-[#1A63EB]">{selectedRoom.nearestStairs}</span>
               </div>
             </div>
 
-            {/* Expand/Collapse Sheet Chevron */}
             <button
               type="button"
               onClick={() => setIsBottomExpanded((prev) => !prev)}
-              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center shrink-0 transition"
-              aria-label="Mở rộng hướng dẫn chi tiết"
+              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center shrink-0 transition cursor-pointer"
+              aria-label="Mở rộng danh sách phòng cùng khu"
             >
               {isBottomExpanded ? (
                 <ChevronDown className="w-4 h-4" strokeWidth={1.8} />
@@ -1138,125 +1343,57 @@ export function BuildingB2DNavigator({
             </button>
           </div>
 
-          {/* Row 2: Metrics Bar (Khoảng cách | Thời gian ước tính) */}
-          <div className="grid grid-cols-2 divide-x divide-slate-200/80 my-3.5 py-0.5">
-            <div className="flex items-center gap-2.5 pr-3">
-              <Footprints className="w-5 h-5 text-slate-500 shrink-0" strokeWidth={1.5} />
-              <div>
-                <div className="text-[11px] text-slate-500 leading-tight">Khoảng cách</div>
-                <div className="text-[15px] font-extrabold text-slate-900 leading-snug">
-                  {selectedRoom.estimatedDistanceMeters} m
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5 pl-4">
-              <Clock className="w-5 h-5 text-slate-500 shrink-0" strokeWidth={1.5} />
-              <div>
-                <div className="text-[11px] text-slate-500 leading-tight">
-                  Thời gian ước tính
-                </div>
-                <div className="text-[15px] font-extrabold text-slate-900 leading-snug">
-                  {etaMinutes} phút
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Expandable Detailed Step-by-Step Guidance & Quick Part Controls */}
+          {/* Expandable Quick Switch Rooms on Current Part */}
           {isBottomExpanded && (
-            <div className="mb-3.5 pt-3 border-t border-slate-100 space-y-3 max-h-[34vh] overflow-y-auto">
-              {/* Origin Switcher */}
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  Xuất phát từ:
-                </span>
-                <div className="flex bg-slate-100 p-0.5 rounded-full text-[11px] font-bold">
-                  <button
-                    type="button"
-                    onClick={() => setStartPoint('nearest_stairs')}
-                    className={`px-2.5 py-1 rounded-full transition ${
-                      startPoint === 'nearest_stairs'
-                        ? 'bg-white text-[#1A63EB] shadow-sm'
-                        : 'text-slate-600'
-                    }`}
-                  >
-                    {selectedRoom.nearestStairs}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStartPoint('ground_gate')}
-                    className={`px-2.5 py-1 rounded-full transition ${
-                      startPoint === 'ground_gate'
-                        ? 'bg-white text-[#1A63EB] shadow-sm'
-                        : 'text-slate-600'
-                    }`}
-                  >
-                    Cổng Tòa B
-                  </button>
-                </div>
+            <div className="mt-3 pt-3 border-t border-slate-100 space-y-2.5 max-h-[30vh] overflow-y-auto">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Các phòng khác tại {PART_INFO[selectedRoom.part].label} ({FLOOR_INFO[selectedRoom.floor].label}):
               </div>
-
-              {/* Conversational Steps */}
-              <div className="space-y-2 bg-slate-50/90 rounded-2xl p-3 border border-slate-100">
-                {activeSteps.map((step, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-700">
-                    <span className="w-5 h-5 rounded-full bg-[#1A63EB] text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
-                      {idx + 1}
-                    </span>
-                    <span className="leading-relaxed">{step}</span>
-                  </div>
+              <div className="flex flex-wrap gap-1.5">
+                {currentPartRooms.map((r) => (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => handleSelectRoom(r)}
+                    className={`px-2.5 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
+                      r.id === selectedRoomId
+                        ? 'bg-[#1A63EB] text-white'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    {r.code}
+                  </button>
                 ))}
-              </div>
-
-              {/* Quick Switch Rooms on Current Part */}
-              <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                  Phòng cùng {PART_INFO[selectedRoom.part].label}:
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {currentPartRooms.map((r) => (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onClick={() => handleSelectRoom(r)}
-                      className={`px-2.5 py-1 rounded-full text-xs font-bold transition ${
-                        r.id === selectedRoomId
-                          ? 'bg-[#1A63EB] text-white'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      }`}
-                    >
-                      {r.code}
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
           )}
 
-          {/* Row 3: Primary Blue Full-Width CTA Pill Button */}
-          <button
-            type="button"
-            onClick={handlePrimaryNavigationCta}
-            className="w-full py-3.5 rounded-full bg-[#1A63EB] hover:bg-[#1554CC] active:scale-[0.98] text-white font-bold text-[15px] flex items-center justify-center gap-2 shadow-[0_6px_18px_rgba(26,99,235,0.34)] transition-all cursor-pointer"
-          >
-            {simProgress >= 0.99 ? (
-              <>
-                <RotateCcw className="w-4 h-4" strokeWidth={2} />
-                <span>Đã đến nơi • Dẫn đường lại</span>
-              </>
-            ) : isPlaying ? (
-              <>
-                <Navigation className="w-4 h-4 fill-white" strokeWidth={1.5} />
-                <span>Đang dẫn đường... (Tạm dừng)</span>
-              </>
-            ) : (
-              <>
-                <Navigation className="w-4 h-4 fill-white" strokeWidth={1.5} />
-                <span>Tiếp tục dẫn đường</span>
-              </>
-            )}
-          </button>
+          {/* Row 2: Action Buttons (Switch Master <-> Wing Zoom & Search Another Room) */}
+          <div className="grid grid-cols-2 gap-2 mt-3.5">
+            <button
+              type="button"
+              onClick={() => {
+                setActivePart((prev) => (prev === 'master' ? selectedRoom.part : 'master'));
+                setPan({ x: 0, y: 0 });
+                setZoom(1);
+              }}
+              className="py-3 px-3 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-[0.98] text-slate-800 font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
+            >
+              <MapIcon className="w-4 h-4 text-[#1A63EB]" strokeWidth={1.5} />
+              <span className="truncate">
+                {activePart === 'master' ? `Zoom ${selectedRoom.partLabel.replace(/^Phần \d+\s*/, '')}` : 'Xem toàn cảnh 3 khối'}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsSearchOpen(true)}
+              className="py-3 px-3 rounded-full bg-[#1A63EB] hover:bg-[#1554CC] active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-[0_6px_18px_rgba(26,99,235,0.3)] transition cursor-pointer"
+            >
+              <Search className="w-4 h-4" strokeWidth={1.8} />
+              <span>Tìm phòng khác</span>
+            </button>
+          </div>
         </div>
       </div>
 

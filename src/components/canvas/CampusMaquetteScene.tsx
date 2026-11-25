@@ -19,6 +19,7 @@ import {
   CS1_PARKINGS_LAYOUT,
   CS1BuildingConfig,
 } from '@/data/cs1Layout';
+import { CS1_QR_STATIONS } from '@/data/cs1OutdoorRouting';
 
 // Preload 3D models for instant, stutter-free display
 useGLTF.preload('/models/cs1/toa_a.glb');
@@ -409,6 +410,168 @@ function PerimeterAndGate({ materials }: { materials: ReturnType<typeof useMaque
 }
 
 // ============================================================================
+// 3D QR STATIONS (QR 1 & QR 2) + TARGET BUILDING 3D HIGHLIGHT HALO
+// ============================================================================
+function Cs1QrAndOutdoorRouteLayer() {
+  const currentQr = useNavigationStore((state) => state.currentQr);
+  const setCurrentQr = useNavigationStore((state) => state.setCurrentQr);
+  const selectedBuildingCode = useNavigationStore((state) => state.selectedBuildingCode);
+  const targetRoom = useNavigationStore((state) => state.targetRoom);
+  const isNavigating = useNavigationStore((state) => state.isNavigating);
+
+  const highlightedCode = selectedBuildingCode || (isNavigating ? targetRoom?.buildingCode ?? null : null);
+  const highlightedBuilding = useMemo(
+    () => CS1_BUILDINGS_LAYOUT.find((b) => b.code === highlightedCode) ?? null,
+    [highlightedCode]
+  );
+
+  return (
+    <group>
+      {/* 2 Physical QR Stations on CS1 Courtyard (Clickable to test switching origin) */}
+      {CS1_QR_STATIONS.map((qr) => {
+        const isHere = currentQr?.code === qr.code;
+        return (
+          <group
+            key={qr.id}
+            position={[qr.coordinates[0], 0.2, qr.coordinates[2]]}
+            onClick={(e) => {
+              e.stopPropagation();
+              setCurrentQr(qr);
+            }}
+          >
+            <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+              <ringGeometry args={[0.75, 1.15, 28]} />
+              <meshBasicMaterial
+                color={isHere ? '#2563eb' : '#10b981'}
+                transparent
+                opacity={isHere ? 0.65 : 0.45}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+            <mesh position={[0, 1.5, 0]} castShadow>
+              <sphereGeometry args={[0.42, 16, 16]} />
+              <meshStandardMaterial
+                color={isHere ? '#2563eb' : '#10b981'}
+                emissive={isHere ? '#1d4ed8' : '#059669'}
+                emissiveIntensity={0.65}
+              />
+            </mesh>
+            <mesh position={[0, 0.95, 0]} rotation={[Math.PI, 0, 0]}>
+              <coneGeometry args={[0.38, 0.75, 16]} />
+              <meshStandardMaterial color={isHere ? '#2563eb' : '#10b981'} />
+            </mesh>
+            <mesh position={[0, 1.5, 0.34]}>
+              <sphereGeometry args={[0.14, 12, 12]} />
+              <meshBasicMaterial color="#ffffff" />
+            </mesh>
+            <Html position={[0, 2.5, 0]} center distanceFactor={32} zIndexRange={[100, 0]}>
+              <div
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold shadow-lg border whitespace-nowrap cursor-pointer transition-transform hover:scale-105 ${
+                  isHere
+                    ? 'bg-blue-600 text-white border-blue-400'
+                    : 'bg-white/95 text-slate-800 border-slate-200'
+                }`}
+              >
+                <span className={isHere ? 'text-amber-300 font-extrabold' : 'text-emerald-600 font-extrabold'}>
+                  {isHere ? '● BẠN Ở ĐÂY' : 'QR'}
+                </span>
+                <span>{qr.name}</span>
+              </div>
+            </Html>
+          </group>
+        );
+      })}
+
+      {/* Vivid 3D Highlight Halo around the Target Building (no outdoor path tube) */}
+      {highlightedBuilding && (
+        <group>
+          {highlightedBuilding.parts && highlightedBuilding.parts.length > 0 ? (
+            highlightedBuilding.parts.map((part, idx) => (
+              <group key={`hl-part-${idx}`} position={[part.position[0], 0.16, part.position[2]]}>
+                {/* Glowing ground footprint */}
+                <mesh receiveShadow>
+                  <boxGeometry args={[part.size[0] + 1.6, 0.22, part.size[2] + 1.6]} />
+                  <meshStandardMaterial
+                    color="#2563eb"
+                    emissive="#3b82f6"
+                    emissiveIntensity={0.85}
+                    transparent
+                    opacity={0.45}
+                  />
+                </mesh>
+                {/* Translucent glowing building envelope */}
+                <mesh position={[0, part.size[1] / 2, 0]}>
+                  <boxGeometry args={[part.size[0] + 0.9, part.size[1] + 0.8, part.size[2] + 0.9]} />
+                  <meshStandardMaterial
+                    color="#38bdf8"
+                    emissive="#2563eb"
+                    emissiveIntensity={0.55}
+                    transparent
+                    opacity={0.22}
+                    depthWrite={false}
+                  />
+                </mesh>
+              </group>
+            ))
+          ) : (
+            <group position={[highlightedBuilding.position[0], 0.16, highlightedBuilding.position[2]]}>
+              <mesh receiveShadow>
+                <boxGeometry
+                  args={[highlightedBuilding.plotSize[0] + 1.6, 0.22, highlightedBuilding.plotSize[1] + 1.6]}
+                />
+                <meshStandardMaterial
+                  color="#2563eb"
+                  emissive="#3b82f6"
+                  emissiveIntensity={0.85}
+                  transparent
+                  opacity={0.45}
+                />
+              </mesh>
+              <mesh position={[0, highlightedBuilding.height / 2, 0]}>
+                <boxGeometry
+                  args={[
+                    highlightedBuilding.plotSize[0] + 0.9,
+                    highlightedBuilding.height + 0.8,
+                    highlightedBuilding.plotSize[1] + 0.9,
+                  ]}
+                />
+                <meshStandardMaterial
+                  color="#38bdf8"
+                  emissive="#2563eb"
+                  emissiveIntensity={0.55}
+                  transparent
+                  opacity={0.22}
+                  depthWrite={false}
+                />
+              </mesh>
+            </group>
+          )}
+
+          {/* Floating Target Building Beacon Pin */}
+          <group
+            position={[
+              highlightedBuilding.position[0],
+              highlightedBuilding.heightOffset + 2.4,
+              highlightedBuilding.position[2],
+            ]}
+          >
+            <Html center distanceFactor={34} zIndexRange={[120, 0]}>
+              <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-600 text-white text-xs font-extrabold shadow-xl border-2 border-white whitespace-nowrap animate-bounce">
+                <span>📍</span>
+                <span>
+                  ĐÍCH ĐẾN: {highlightedBuilding.shortName.toUpperCase()}
+                  {targetRoom ? ` • ${targetRoom.code}` : ''}
+                </span>
+              </div>
+            </Html>
+          </group>
+        </group>
+      )}
+    </group>
+  );
+}
+
+// ============================================================================
 // MAIN CAMPUS MAQUETTE SCENE (CƠ SỞ 1)
 // ============================================================================
 export function CampusMaquetteScene() {
@@ -526,30 +689,8 @@ export function CampusMaquetteScene() {
           </>
         )}
 
-        {/* QR Cổng Chính 3D Pin (Tại mặt tiền đường Võ Oanh) */}
-        {!isTwinMode && (
-          <group position={[0, 0.2, 28.0]}>
-            <mesh position={[0, 1.4, 0]} castShadow>
-              <sphereGeometry args={[0.38, 16, 16]} />
-              <meshStandardMaterial color="#22c55e" emissive="#16a34a" emissiveIntensity={0.6} />
-            </mesh>
-            <mesh position={[0, 0.9, 0]} rotation={[Math.PI, 0, 0]}>
-              <coneGeometry args={[0.36, 0.7, 16]} />
-              <meshStandardMaterial color="#22c55e" />
-            </mesh>
-            <mesh position={[0, 1.4, 0.3]}>
-              <sphereGeometry args={[0.13, 12, 12]} />
-              <meshBasicMaterial color="#ffffff" />
-            </mesh>
-
-            <Html position={[0, 0.1, 1.4]} center distanceFactor={28} zIndexRange={[100, 0]}>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-800 text-[11px] font-bold shadow-lg border border-slate-200/90 whitespace-nowrap">
-                <span className="text-emerald-500 font-extrabold">QR</span>
-                <span>Cổng Chính (Số 2 Võ Oanh)</span>
-              </div>
-            </Html>
-          </group>
-        )}
+        {/* 2 Điểm QR Vật Lý (QR 1 & QR 2) + Tuyến Đường 3D Ngoài Trời */}
+        {!isTwinMode && <Cs1QrAndOutdoorRouteLayer />}
       </Canvas>
     </div>
   );

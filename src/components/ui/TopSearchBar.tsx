@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Search, X, ChevronRight, MapPin } from 'lucide-react';
 import { useNavigationStore } from '@/store/useNavigationStore';
-import { MOCK_ROOMS, MOCK_STEPS_CS1_TO_B302 } from '@/data/mockNavigationData';
+import { MOCK_ROOMS } from '@/data/mockNavigationData';
+import { buildCs1OutdoorRoute } from '@/data/cs1OutdoorRouting';
 import { RoomData } from '@/types/navigation';
 
 function getRoomTypeBadge(type?: string) {
@@ -29,10 +31,16 @@ function getRoomTypeBadge(type?: string) {
   }
 }
 
-export function TopSearchBar() {
+export interface TopSearchBarProps {
+  autoOpen?: boolean;
+  onAutoOpenHandled?: () => void;
+}
+
+export function TopSearchBar({ autoOpen = false, onAutoOpenHandled }: TopSearchBarProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  const currentQr = useNavigationStore((state) => state.currentQr);
   const targetRoom = useNavigationStore((state) => state.targetRoom);
   const activeRoute = useNavigationStore((state) => state.activeRoute);
   const selectedBuildingCode = useNavigationStore((state) => state.selectedBuildingCode);
@@ -44,6 +52,13 @@ export function TopSearchBar() {
   const resetNavigation = useNavigationStore((state) => state.resetNavigation);
 
   const currentCampusCode = useNavigationStore((state) => state.currentCampusCode);
+
+  useEffect(() => {
+    if (autoOpen) {
+      setIsSearchOpen(true);
+      onAutoOpenHandled?.();
+    }
+  }, [autoOpen, onAutoOpenHandled]);
 
   const filteredRooms = useMemo(() => {
     // Mỗi cơ sở chỉ tìm được phòng của chính nó
@@ -63,15 +78,13 @@ export function TopSearchBar() {
     setIsSearchOpen(false);
     setSearchQuery('');
 
+    const isCs3Room = Boolean(
+      room.buildingCode &&
+        ['toa_h', 'toa_i_lon', 'toa_k', 'xuong_oto', 'toa_j', 'toa_l'].includes(room.buildingCode)
+    );
 
-
-    if (room.buildingCode && ['toa_h', 'toa_i_lon', 'toa_k', 'xuong_oto', 'toa_j', 'toa_l'].includes(room.buildingCode)) {
+    if (isCs3Room) {
       setCampus('cs3');
-    }
-
-    if (room.code === 'B302') {
-      setRouteSteps(MOCK_STEPS_CS1_TO_B302);
-    } else {
       const isIndoor = room.floorLevel !== undefined && room.floorLevel > 0;
       setRouteSteps([
         {
@@ -93,7 +106,13 @@ export function TopSearchBar() {
           distanceMeters: 35,
         },
       ]);
+    } else {
+      // CS1: Luồng QR -> Cửa vào tòa nhà 3D ngoài trời -> Bấm xác nhận mở Bản đồ 2D
+      setCampus('cs1');
+      const outdoorSteps = buildCs1OutdoorRoute(currentQr, room);
+      setRouteSteps(outdoorSteps);
     }
+
     // Focus camera vào tòa nhà sau khi thiết lập lộ trình
     if (room.buildingCode) {
       setSelectedBuilding(room.buildingCode);
@@ -148,10 +167,27 @@ export function TopSearchBar() {
         </div>
       </div>
 
-      {/* Search Modal Overlay */}
-      {isSearchOpen && (
-        <div className="fixed inset-0 z-50 pointer-events-auto bg-black/40 backdrop-blur-sm flex items-start justify-center p-4 pt-16 animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl w-full max-w-md p-4 shadow-2xl border border-slate-100">
+      {/* Search Modal Overlay (iPhone Spotlight Spring Transition) */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            key="search-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
+            onClick={() => setIsSearchOpen(false)}
+            className="fixed inset-0 z-50 pointer-events-auto bg-slate-900/45 backdrop-blur-md flex items-start justify-center p-4 pt-16"
+          >
+            <motion.div
+              key="search-card"
+              initial={{ y: -20, scale: 0.95, opacity: 0 }}
+              animate={{ y: 0, scale: 1, opacity: 1 }}
+              exit={{ y: -14, scale: 0.96, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 420, damping: 32, mass: 0.85 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white/98 backdrop-blur-xl rounded-3xl w-full max-w-md p-4 shadow-2xl border border-white/90"
+            >
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div className="text-sm font-bold text-slate-800 flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-blue-600" />
@@ -231,9 +267,10 @@ export function TopSearchBar() {
                 </div>
               )}
             </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
