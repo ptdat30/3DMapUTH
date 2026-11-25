@@ -1,3 +1,4 @@
+import { CS1_BUILDINGS_LAYOUT } from '@/data/cs1Layout';
 import { create } from 'zustand';
 import {
   NavigationStoreState,
@@ -56,25 +57,55 @@ export const useNavigationStore = create<NavigationStoreState>((set, get) => ({
     set({ targetRoom: room });
   },
 
-  setSelectedBuilding: (code: string | null) => {
-    set({ selectedBuildingCode: code });
-    if (!code) return;
+setSelectedBuilding: (code: string | null) => {
+  set({ selectedBuildingCode: code });
 
-    // Smoothly focus camera when a building is selected
-    if (code === 'toa_j') {
-      set({
-        cameraPosition: [25, 18, -6],
-        cameraTarget: [13.5, 2, -15.4],
-        isCameraAnimating: true,
-      });
-    } else if (code === 'toa_h') {
-      set({
-        cameraPosition: [6, 18, 18],
-        cameraTarget: [-4.5, 2, 7],
-        isCameraAnimating: true,
-      });
-    }
-  },
+  if (!code) return;
+
+  // Tìm tòa nhà tại Cơ sở 1
+  const building = CS1_BUILDINGS_LAYOUT.find(
+    (item) => item.code === code
+  );
+
+  if (building) {
+    const [x, y, z] = building.position;
+
+    // Tự tính khoảng cách zoom theo kích thước tòa nhà
+    const distance =
+      Math.max(...building.plotSize) * 1.2;
+
+    const target: Vector3Tuple = [x, y + 2, z];
+
+    const position: Vector3Tuple = [
+      x + distance * 0.65,
+      y + 2 + distance * 0.65,
+      z + distance * 0.85,
+    ];
+
+    set({
+      cameraPosition: position,
+      cameraTarget: target,
+      isCameraAnimating: true,
+    });
+
+    return;
+  }
+
+  // Giữ nguyên camera của Cơ sở 3
+  if (code === 'toa_j') {
+    set({
+      cameraPosition: [25, 18, -6],
+      cameraTarget: [13.5, 2, -15.4],
+      isCameraAnimating: true,
+    });
+  } else if (code === 'toa_h') {
+    set({
+      cameraPosition: [6, 18, 18],
+      cameraTarget: [-4.5, 2, 7],
+      isCameraAnimating: true,
+    });
+  }
+},
 
   setActiveRoute: (route: NavigationRouteResult | null) => {
     if (!route) {

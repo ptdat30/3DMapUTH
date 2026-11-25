@@ -63,9 +63,7 @@ export function TopSearchBar() {
     setIsSearchOpen(false);
     setSearchQuery('');
 
-    if (room.buildingCode) {
-      setSelectedBuilding(room.buildingCode);
-    }
+
 
     if (room.buildingCode && ['toa_h', 'toa_i_lon', 'toa_k', 'xuong_oto', 'toa_j', 'toa_l'].includes(room.buildingCode)) {
       setCampus('cs3');
@@ -95,6 +93,10 @@ export function TopSearchBar() {
           distanceMeters: 35,
         },
       ]);
+    }
+    // Focus camera vào tòa nhà sau khi thiết lập lộ trình
+    if (room.buildingCode) {
+      setSelectedBuilding(room.buildingCode);
     }
   };
 
@@ -148,7 +150,7 @@ export function TopSearchBar() {
 
       {/* Search Modal Overlay */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-start justify-center p-4 pt-16 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 pointer-events-auto bg-black/40 backdrop-blur-sm flex items-start justify-center p-4 pt-16 animate-in fade-in duration-200">
           <div className="bg-white rounded-3xl w-full max-w-md p-4 shadow-2xl border border-slate-100">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div className="text-sm font-bold text-slate-800 flex items-center gap-2">
