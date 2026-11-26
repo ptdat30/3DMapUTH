@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "3DMapUTH — Kiến trúc Hệ thống Bản đồ 3D & Định vị 2D",
+    "output": ".archify/architecture-3dmaputh-20261127-033500/3dmaputh-architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/ptdat30/3DMapUTH.git",
+      "revision": "90ab64a559c092e02a98a7b8a577f96320218c14"
+    }
+  },
+  "layout": {
+    "mode": "auto"
+  },
+  "components": [
+    {
+      "id": "student",
+      "type": "external",
+      "label": "Sinh viên UTH",
+      "sublabel": "Quét QR 1/2 hoặc truy cập Web",
+      "explanation": "Người dùng quét mã QR đặt tại Cơ sở 1 (?campus=cs1&qr=cs1_qr_1|2) hoặc mở trực tiếp ứng dụng trên trình duyệt di động."
+    },
+    {
+      "id": "app_shell",
+      "type": "frontend",
+      "label": "App Shell & QR Sync",
+      "sublabel": "src/app/page.tsx",
+      "tag": "Next.js 16 App Router",
+      "sources": [
+        { "path": "src/app/page.tsx", "line": 29, "end_line": 106 }
+      ],
+      "explanation": "Đọc query params (?campus, ?qr), đồng bộ vị trí quét vào Zustand store, điều phối modal chọn cổng/tầng và chuyển cảnh mượt kiểu iOS sang bản đồ 2D."
+    },
+    {
+      "id": "search_ui",
+      "type": "frontend",
+      "label": "Tìm phòng & BottomSheet",
+      "sublabel": "TopSearchBar + StepBottomSheet",
+      "sources": [
+        { "path": "src/components/ui/StepBottomSheet.tsx", "line": 30, "end_line": 53 }
+      ],
+      "explanation": "Tự mở ô tìm kiếm khi quét QR, hiển thị tòa nhà đích + gợi ý cổng gần nhất và nút xác nhận đã tới tòa nhà."
+    },
+    {
+      "id": "gate_modal",
+      "type": "frontend",
+      "label": "Chọn 3 Cổng & Leo Tầng",
+      "sublabel": "FloorClimbTransitionModal",
+      "tag": "iOS Spring + 3 Gates",
+      "sources": [
+        { "path": "src/components/ui/FloorClimbTransitionModal.tsx", "line": 276, "end_line": 325 }
+      ],
+      "explanation": "Cho phép chọn 1 chạm 3 cổng vào Tòa B (Nhà xe, nối Bắc–Nam, nối Bắc–Đông), hiển thị animation sinh viên leo cầu thang khi phòng ở tầng 1–3."
+    },
+    {
+      "id": "nav_store",
+      "type": "backend",
+      "label": "Navigation Store",
+      "sublabel": "Zustand Client State",
+      "sources": [
+        { "path": "src/store/useNavigationStore.ts", "line": 22, "end_line": 45 }
+      ],
+      "explanation": "Quản lý trạng thái cơ sở (CS1/CS3), điểm QR hiện tại, phòng đích, camera 3D và bước điều hướng."
+    },
+    {
+      "id": "scene_3d",
+      "type": "frontend",
+      "label": "Bản đồ 3D Campus",
+      "sublabel": "R3F Three.js (CS1 & CS3)",
+      "sources": [
+        { "path": "src/app/page.tsx", "line": 260, "end_line": 267 }
+      ],
+      "explanation": "Render mô hình 3D khuôn viên CS1/CS3 bằng React Three Fiber, hiển thị 2 pin QR thực địa và highlight nổi bật tòa nhà đích."
+    },
+    {
+      "id": "map_2d",
+      "type": "frontend",
+      "label": "Bản đồ 2D Highlight",
+      "sublabel": "Tòa B (3 khối) & Tòa K",
+      "tag": "Vector SVG + TOAB_2D",
+      "sources": [
+        { "path": "src/components/navigation2d/BuildingB2DNavigator.tsx", "line": 73, "end_line": 115 }
+      ],
+      "explanation": "Làm nổi bật trực tiếp phòng tìm kiếm kèm ghim đỏ trên sơ đồ tầng thẳng góc 0°; tự mở sơ đồ tổng thể chữ L khi người dùng vào cổng khác cánh."
+    },
+    {
+      "id": "twin_noc",
+      "type": "frontend",
+      "label": "Digital Twin NOC HUD",
+      "sublabel": "useTwinStore + Telemetry",
+      "tag": "Opt-in NOC Mode",
+      "sources": [
+        { "path": "src/store/useTwinStore.ts", "line": 18, "end_line": 45 }
+      ],
+      "explanation": "Chế độ giám sát mạng WiFi Digital Twin tùy chọn trên cùng khung hình 3D với các dock phân tích, biểu đồ và timeline."
+    },
+    {
+      "id": "local_data",
+      "type": "database",
+      "label": "Local Campus Data",
+      "sublabel": "buildingB2dData & cs1Routing",
+      "sources": [
+        { "path": "src/data/buildingB2dData.ts", "line": 13, "end_line": 53 },
+        { "path": "src/data/cs1OutdoorRouting.ts", "line": 21, "end_line": 44 }
+      ],
+      "explanation": "Nguồn dữ liệu chuẩn cho 4 tầng × 3 khối Tòa B, 3 cổng vào, 2 trạm QR CS1 và danh mục phòng CS1/CS3."
+    },
+    {
+      "id": "api_routes",
+      "type": "backend",
+      "label": "Next.js API Routes",
+      "sublabel": "/api/init-qr & /api/route-path",
+      "sources": [
+        { "path": "src/app/api/init-qr/route.ts", "line": 10, "end_line": 70 },
+        { "path": "src/app/api/route-path/route.ts", "line": 16, "end_line": 89 }
+      ],
+      "explanation": "Cung cấp API khởi tạo phiên QR và tính tuyến liên tòa; tự động fallback sang dữ liệu cục bộ nếu DB offline."
+    },
+    {
+      "id": "prisma_db",
+      "type": "database",
+      "label": "Prisma Database",
+      "sublabel": "Campus, Building, Room, QR",
+      "sources": [
+        { "path": "src/app/api/init-qr/route.ts", "line": 18, "end_line": 55 }
+      ],
+      "explanation": "Cơ sở dữ liệu quan hệ truy vấn qua Prisma Client cho danh mục tòa nhà, tầng, phòng và điểm QR."
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Next.js Client Runtime (Browser)",
+      "wraps": ["app_shell", "search_ui", "gate_modal", "nav_store", "scene_3d", "map_2d", "twin_noc"]
+    },
+    {
+      "kind": "region",
+      "label": "Next.js Server & Data Layer",
+      "wraps": ["api_routes", "prisma_db", "local_data"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "student-to-app",
+      "from": "student",
+      "to": "app_shell",
+      "label": "Mở URL ?campus=&qr=",
+      "variant": "emphasis"
+    },
+    {
+      "id": "app-to-search",
+      "from": "app_shell",
+      "to": "search_ui",
+      "label": "Tự mở tìm phòng"
+    },
+    {
+      "id": "search-to-store",
+      "from": "search_ui",
+      "to": "nav_store",
+      "label": "Chọn phòng & Tòa đích"
+    },
+    {
+      "id": "store-to-3d",
+      "from": "nav_store",
+      "to": "scene_3d",
+      "label": "Highlight tòa & zoom 3D",
+      "variant": "emphasis"
+    },
+    {
+      "id": "search-to-gate",
+      "from": "search_ui",
+      "to": "gate_modal",
+      "label": "Xác nhận tới tòa"
+    },
+    {
+      "id": "gate-to-2d",
+      "from": "gate_modal",
+      "to": "map_2d",
+      "label": "Truyền cổng vào & tầng",
+      "variant": "emphasis"
+    },
+    {
+      "id": "app-to-twin",
+      "from": "app_shell",
+      "to": "twin_noc",
+      "label": "Bật chế độ NOC",
+      "variant": "dashed"
+    },
+    {
+      "id": "store-to-local",
+      "from": "nav_store",
+      "to": "local_data",
+      "label": "Đọc phòng, QR, 3 cổng"
+    },
+    {
+      "id": "map2d-to-local",
+      "from": "map_2d",
+      "to": "local_data",
+      "label": "Đọc sơ đồ 4 tầng × 3 khối"
+    },
+    {
+      "id": "app-to-api",
+      "from": "app_shell",
+      "to": "api_routes",
+      "label": "HTTP JSON (tùy chọn)",
+      "variant": "dashed"
+    },
+    {
+      "id": "api-to-db",
+      "from": "api_routes",
+      "to": "prisma_db",
+      "label": "Prisma query"
+    },
+    {
+      "id": "api-to-local",
+      "from": "api_routes",
+      "to": "local_data",
+      "label": "Fallback khi DB offline",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Luồng QR → 3D → 2D Highlight",
+      "items": [
+        "Quét 1 trong 2 QR CS1 → tự mở tìm phòng & gắn pin vị trí",
+        "Highlight 3D tòa nhà đích + gợi ý cổng gần nhất",
+        "Chọn 1 trong 3 cổng Tòa B → mở bản đồ 2D highlight phòng (tự mở sơ đồ chữ L nếu đi khác cánh)"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Dữ liệu & Fallback tin cậy",
+      "items": [
+        "Tòa B gồm 4 tầng × 3 khối kiến trúc + 12 bản vẽ gốc TOAB_2D",
+        "API /api/init-qr và /api/route-path truy vấn Prisma và tự fallback về dữ liệu cục bộ khi DB offline"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Ghi chú phạm vi",
+      "items": [
+        "Trang in QR (/qr-admin) và chế độ Digital Twin NOC là các nhánh bổ trợ trên cùng ứng dụng Next.js",
+        "Viewer UI sử dụng giao diện tiếng Anh mặc định của Archify"
+      ]
+    }
+  ]
+}
