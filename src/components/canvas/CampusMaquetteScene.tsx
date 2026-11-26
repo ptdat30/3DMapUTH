@@ -375,24 +375,24 @@ function ParkingZones({ materials }: { materials: ReturnType<typeof useMaquetteM
 function PerimeterAndGate({ materials }: { materials: ReturnType<typeof useMaquetteMaterials> }) {
   return (
     <group>
-      {/* Tường rào mặt tiền phía Nam (Z = 28.5) */}
-      <mesh position={[-16, 1.0, 28.5]} castShadow material={materials.clayWhite}>
-        <boxGeometry args={[26, 2.0, 0.3]} />
+      {/* Tường rào mặt tiền phía Nam (Z = 29) */}
+      <mesh position={[-7.9, 1.0, 29]} castShadow material={materials.clayWhite}>
+        <boxGeometry args={[16, 2.0, 0.3]} />
       </mesh>
-      <mesh position={[18, 1.0, 28.5]} castShadow material={materials.clayWhite}>
-        <boxGeometry args={[22, 2.0, 0.3]} />
+      <mesh position={[13, 1.0, 29]} castShadow material={materials.clayWhite}>
+        <boxGeometry args={[13.6, 2.0, 0.3]} />
       </mesh>
 
-      {/* Cột Cổng Chính (Lối vào rộng 6m tại X = 0, Z = 28.5) */}
-      <mesh position={[-3.2, 1.6, 28.5]} castShadow material={materials.clayDarker}>
+      {/* Cột Cổng Chính (Lối vào rộng 6m tại X = 0, Z = 29) */}
+      <mesh position={[0, 1.6, 29]} castShadow material={materials.clayDarker}>
         <boxGeometry args={[0.7, 3.2, 0.7]} />
       </mesh>
-      <mesh position={[3.2, 1.6, 28.5]} castShadow material={materials.clayDarker}>
+      <mesh position={[6.4, 1.6, 29]} castShadow material={materials.clayDarker}>
         <boxGeometry args={[0.7, 3.2, 0.7]} />
       </mesh>
 
       {/* Bảng tên trường trên cổng */}
-      <mesh position={[0, 3.3, 28.5]} material={materials.clayDarker}>
+      <mesh position={[3.2, 3.3, 29]} material={materials.clayDarker}>
         <boxGeometry args={[7.2, 0.5, 0.35]} />
       </mesh>
 
