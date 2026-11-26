@@ -551,7 +551,7 @@ function Cs1QrAndOutdoorRouteLayer() {
           <group
             position={[
               highlightedBuilding.position[0],
-              highlightedBuilding.heightOffset + 2.4,
+              highlightedBuilding.heightOffset + 9,
               highlightedBuilding.position[2],
             ]}
           >
