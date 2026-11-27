@@ -264,9 +264,9 @@ function NavigationAppContent() {
       {/* Layer 2: Center 3D Viewport (Mount only active canvas to prevent dual WebGL frame drop) */}
       <div className="absolute inset-0 z-0">
         {isTwinMode || currentCampusCode === 'cs1' ? (
-          <CampusMaquetteScene />
+          <CampusMaquetteScene key="cs1-scene" />
         ) : (
-          <CampusCS3Scene />
+          <CampusCS3Scene key="cs3-scene" />
         )}
       </div>
 

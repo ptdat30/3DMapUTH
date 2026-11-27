@@ -784,37 +784,41 @@ export function BuildingB2DNavigator({
                       );
                     })}
 
-                    {/* Vibrant Highlight Halo on Selected Room */}
-                    <rect
-                      x={selectedRoom.partCoords.x - 3}
-                      y={selectedRoom.partCoords.y - 3}
-                      width={selectedRoom.partCoords.width + 6}
-                      height={selectedRoom.partCoords.height + 6}
-                      rx="4"
-                      fill="none"
-                      stroke="#1A63EB"
-                      strokeWidth="4.5"
-                      filter="url(#routeGlow)"
-                      pointerEvents="none"
-                    />
+                    {selectedRoom.part === activePart && selectedRoom.floor === currentFloor && (
+                      <>
+                        {/* Vibrant Highlight Halo on Selected Room */}
+                        <rect
+                          x={selectedRoom.partCoords.x - 3}
+                          y={selectedRoom.partCoords.y - 3}
+                          width={selectedRoom.partCoords.width + 6}
+                          height={selectedRoom.partCoords.height + 6}
+                          rx="4"
+                          fill="none"
+                          stroke="#1A63EB"
+                          strokeWidth="4.5"
+                          filter="url(#routeGlow)"
+                          pointerEvents="none"
+                        />
 
-                    {/* Classic Red Teardrop Destination Map Pin floating above Target Room */}
-                    <g
-                      transform={`translate(${
-                        selectedRoom.partCoords.x + selectedRoom.partCoords.width / 2
-                      }, ${selectedRoom.partCoords.y + 42})`}
-                      filter="url(#pinShadow)"
-                      pointerEvents="none"
-                    >
-                      <ellipse cx="0" cy="4" rx="10" ry="3.5" fill="#0F172A" opacity="0.22" />
-                      <path
-                        d="M 0,2 C -14,-14 -20,-26 -20,-36 C -20,-47 -11,-56 0,-56 C 11,-56 20,-47 20,-36 C 20,-26 14,-14 0,2 Z"
-                        fill="#EA4335"
-                        stroke="#FFFFFF"
-                        strokeWidth="2.5"
-                      />
-                      <circle cx="0" cy="-36" r="7" fill="#FFFFFF" />
-                    </g>
+                        {/* Classic Red Teardrop Destination Map Pin floating above Target Room */}
+                        <g
+                          transform={`translate(${
+                            selectedRoom.partCoords.x + selectedRoom.partCoords.width / 2
+                          }, ${selectedRoom.partCoords.y + 42})`}
+                          filter="url(#pinShadow)"
+                          pointerEvents="none"
+                        >
+                          <ellipse cx="0" cy="4" rx="10" ry="3.5" fill="#0F172A" opacity="0.22" />
+                          <path
+                            d="M 0,2 C -14,-14 -20,-26 -20,-36 C -20,-47 -11,-56 0,-56 C 11,-56 20,-47 20,-36 C 20,-26 14,-14 0,2 Z"
+                            fill="#EA4335"
+                            stroke="#FFFFFF"
+                            strokeWidth="2.5"
+                          />
+                          <circle cx="0" cy="-36" r="7" fill="#FFFFFF" />
+                        </g>
+                      </>
+                    )}
                   </g>
                 ) : (
                   /* Master 3-Part Overview (Full L-Shape Cross-Wing Wayfinding) */

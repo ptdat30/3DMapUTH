@@ -13,16 +13,18 @@ import {
 } from 'lucide-react';
 import { useNavigationStore } from '@/store/useNavigationStore';
 
-// Custom Walking Pedestrian SVG Icon matching reference image
-function WalkingPersonIcon() {
+// Walking pedestrian icon (matching user-provided reference silhouette)
+function WalkingPersonIcon({ className = 'w-7 h-7 text-slate-900' }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="w-7 h-7 text-slate-900"
+      className={className}
+      aria-hidden="true"
     >
-      <circle cx="12" cy="4" r="2" />
-      <path d="M15.89 8.11C15.5 7.72 14.83 7 13.53 7h-2.06c-.85 0-1.63.48-2 1.24L7.5 12.2l1.83.82 1.67-3.4V14l-2.6 3.9 1.66 1.1 2.94-4.41V22h2v-8.5l1.88-2.35 2.12 3.18 1.66-1.1-2.9-4.36-.8-2.66 1.1.26z" />
+      <circle cx="12.6" cy="3.6" r="2.1" />
+      <path d="M11.1 6.2c1.1 0 2.1.6 2.6 1.5l1.6 2.9 2.3 1.2c.5.3.7.9.4 1.4-.3.5-.9.7-1.4.4l-2.7-1.4c-.2-.1-.4-.3-.5-.5l-.7-1.2-.8 3.1 2.9 2.9c.3.3.5.6.6 1l1.4 4.1c.2.6-.1 1.3-.7 1.5-.6.2-1.3-.1-1.5-.7l-1.3-3.7-3.4-3.4c-.5-.5-.7-1.2-.5-1.9l.8-3.4-1.5 1.3-.9 2.6c-.2.6-.8.9-1.4.7-.6-.2-.9-.8-.7-1.4l1-3c.1-.3.3-.5.5-.7l2.5-2.1c.6-.5 1.3-.8 2.1-.8z" />
+      <path d="M9.1 14.4l1.7 1.7-1.2 2.4-2.2 3.3c-.4.5-1.1.7-1.6.3-.5-.4-.7-1.1-.3-1.6l2-3 1.6-3.1z" />
     </svg>
   );
 }
@@ -54,14 +56,7 @@ export function StepBottomSheet({ onConfirmArrivedBuilding }: StepBottomSheetPro
   const renderStepIcon = (small = false) => {
     const iconClass = small ? 'w-5 h-5 text-slate-800' : 'w-7 h-7 text-slate-900';
     if (step.directionType === 'STRAIGHT' || step.stepOrder === 1) {
-      return small ? (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-slate-900">
-          <circle cx="12" cy="4" r="2" />
-          <path d="M15.89 8.11C15.5 7.72 14.83 7 13.53 7h-2.06c-.85 0-1.63.48-2 1.24L7.5 12.2l1.83.82 1.67-3.4V14l-2.6 3.9 1.66 1.1 2.94-4.41V22h2v-8.5l1.88-2.35 2.12 3.18 1.66-1.1-2.9-4.36-.8-2.66 1.1.26z" />
-        </svg>
-      ) : (
-        <WalkingPersonIcon />
-      );
+      return <WalkingPersonIcon className={small ? 'w-5 h-5 text-slate-900' : 'w-7 h-7 text-slate-900'} />;
     }
     if (step.directionType === 'LEFT') {
       return <CornerUpLeft className={iconClass} strokeWidth={2} />;
