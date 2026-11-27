@@ -2,12 +2,13 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, ArrowLeft, DoorOpen, AlertTriangle, Sparkles } from 'lucide-react';
+import { CheckCircle2, ArrowLeft, ArrowRight, AlertTriangle } from 'lucide-react';
 import { RoomData } from '@/types/navigation';
 import {
   BUILDING_B_GATES,
   BUILDING_B_GATE_LIST,
   BuildingBGateId,
+  BuildingPart,
   getRecommendedGateForPart,
   getRoomByCode,
 } from '@/data/buildingB2dData';
@@ -29,9 +30,231 @@ const IOS_SPRING = {
 };
 
 /**
- * Modern Apple / Lottie-style vector animation of a student with a backpack
- * climbing 3D-shaded architectural stairs with true joint-pivot motion
- * and sequential step-glow highlights.
+ * Step 1 Interactive Stage: Full L-shape Building B overview map showing
+ * all 3 wings, target room pin, all 3 clickable gates, and a live animated
+ * stick-figure walking into the currently selected gate with radar ripples.
+ */
+function BuildingBOverviewGateStage({
+  selectedGate,
+  recommendedGate,
+  targetPart,
+  targetRoomCode,
+  onSelectGate,
+}: {
+  selectedGate: BuildingBGateId;
+  recommendedGate: BuildingBGateId;
+  targetPart: BuildingPart;
+  targetRoomCode: string;
+  onSelectGate: (gate: BuildingBGateId) => void;
+}) {
+  // Compact coordinates inside viewBox 0 0 320 185 (L-shape Building B)
+  const gateCoords: Record<BuildingBGateId, { x: number; y: number; walkFrom: [number, number]; label: string }> = {
+    gate1_parking: { x: 64, y: 84, walkFrom: [64, 126], label: 'Cổng 1' },
+    gate2_north_south: { x: 146, y: 84, walkFrom: [146, 126], label: 'Cổng 2' },
+    gate3_north_east: { x: 234, y: 92, walkFrom: [192, 118], label: 'Cổng 3' },
+  };
+
+  const targetPinPos: Record<BuildingPart, { x: number; y: number }> = {
+    part1: { x: 74, y: 50 },
+    part2: { x: 184, y: 42 },
+    part3: { x: 274, y: 122 },
+  };
+
+  const activeGateCoord = gateCoords[selectedGate];
+  const pinPos = targetPinPos[targetPart];
+
+  return (
+    <div className="relative w-full flex-1 min-h-[240px] sm:flex-none sm:h-48 rounded-[24px] overflow-hidden bg-gradient-to-b from-[#F0F7FF] via-[#E8F2FF] to-[#DCEBFF] border border-blue-200/70 shadow-inner flex items-center justify-center p-2">
+      {/* Subtle Top-Left Legend */}
+      <div className="absolute top-2.5 left-3 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-xs text-slate-600 text-[10px] font-bold border border-slate-200/80 shadow-xs">
+        Toàn cảnh Tòa B
+      </div>
+
+      {/* Top-Right Room Pin Indicator */}
+      <div className="absolute top-2.5 right-3 px-2.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-extrabold shadow-sm flex items-center gap-1">
+        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+        <span>{targetRoomCode}</span>
+      </div>
+
+      <svg viewBox="0 0 320 185" className="w-full h-full max-w-[330px]" aria-label="Sơ đồ 3 cổng Tòa B">
+        {/* Subtle campus courtyard ground */}
+        <rect x="14" y="20" width="292" height="150" rx="14" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1.5" />
+
+        {/* Parking lot hint near Gate 1 */}
+        <rect x="24" y="132" width="76" height="28" rx="6" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1" />
+        <text x="62" y="149" fill="#475569" fontSize="8.5" fontWeight="700" textAnchor="middle">
+          NHÀ XE
+        </text>
+
+        {/* Continuous L-Shape Corridor */}
+        <path
+          d="M 24 76 L 246 76 L 246 162 L 234 162 L 234 88 L 24 88 Z"
+          fill="#FFFFFF"
+          stroke="#94A3B8"
+          strokeWidth="1.2"
+        />
+
+        {/* Wing 1: Khối Nam */}
+        <rect
+          x="24"
+          y="36"
+          width="116"
+          height="40"
+          rx="6"
+          fill={targetPart === 'part1' ? '#BFDBFE' : '#DBEAFE'}
+          stroke={targetPart === 'part1' ? '#1A63EB' : '#64748B'}
+          strokeWidth={targetPart === 'part1' ? '2.2' : '1.4'}
+        />
+        <text x="82" y="59" fill="#1E293B" fontSize="9.5" fontWeight="800" textAnchor="middle">
+          KHỐI NAM
+        </text>
+
+        {/* Wing 2: Khối Bắc */}
+        <rect
+          x="148"
+          y="24"
+          width="96"
+          height="52"
+          rx="6"
+          fill={targetPart === 'part2' ? '#BFDBFE' : '#DBEAFE'}
+          stroke={targetPart === 'part2' ? '#1A63EB' : '#64748B'}
+          strokeWidth={targetPart === 'part2' ? '2.2' : '1.4'}
+        />
+        <text x="196" y="53" fill="#1E293B" fontSize="9.5" fontWeight="800" textAnchor="middle">
+          KHỐI BẮC
+        </text>
+
+        {/* Wing 3: Cánh Đông */}
+        <rect
+          x="248"
+          y="24"
+          width="50"
+          height="138"
+          rx="6"
+          fill={targetPart === 'part3' ? '#BFDBFE' : '#DBEAFE'}
+          stroke={targetPart === 'part3' ? '#1A63EB' : '#64748B'}
+          strokeWidth={targetPart === 'part3' ? '2.2' : '1.4'}
+        />
+        <text x="273" y="91" fill="#1E293B" fontSize="9" fontWeight="800" textAnchor="middle">
+          CÁNH
+        </text>
+        <text x="273" y="103" fill="#1E293B" fontSize="9" fontWeight="800" textAnchor="middle">
+          ĐÔNG
+        </text>
+
+        {/* Target Room Red Pin on the Overview Map */}
+        <g transform={`translate(${pinPos.x}, ${pinPos.y})`} pointerEvents="none">
+          <motion.g
+            animate={{ y: [0, -3, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <path
+              d="M 0,2 C -5,-4 -7,-8 -7,-11 C -7,-15 -4,-18 0,-18 C 4,-18 7,-15 7,-11 C 7,-8 5,-4 0,2 Z"
+              fill="#EF4444"
+              stroke="#FFFFFF"
+              strokeWidth="1.4"
+            />
+            <circle cx="0" cy="-11" r="2.2" fill="#FFFFFF" />
+          </motion.g>
+        </g>
+
+        {/* Animated Radar Ripple + Directional Entry Arrow at Selected Gate */}
+        <g key={`gate-anim-${selectedGate}`} pointerEvents="none">
+          {/* Dual Expanding Blue Radar Rings */}
+          <circle cx={activeGateCoord.x} cy={activeGateCoord.y} r="7" fill="none" stroke="#1A63EB" strokeWidth="2.2">
+            <animate attributeName="r" values="6;22" dur="1.5s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.9;0" dur="1.5s" repeatCount="indefinite" />
+          </circle>
+          <circle cx={activeGateCoord.x} cy={activeGateCoord.y} r="7" fill="none" stroke="#38BDF8" strokeWidth="1.6">
+            <animate attributeName="r" values="6;22" begin="0.75s" dur="1.5s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.75;0" begin="0.75s" dur="1.5s" repeatCount="indefinite" />
+          </circle>
+
+          {/* Animated Entry Arrow Pulses pointing into the Selected Gate */}
+          <line
+            x1={activeGateCoord.walkFrom[0]}
+            y1={activeGateCoord.walkFrom[1]}
+            x2={activeGateCoord.x}
+            y2={activeGateCoord.y}
+            stroke="#1A63EB"
+            strokeWidth="2.5"
+            strokeDasharray="4 4"
+            strokeLinecap="round"
+            opacity="0.85"
+          >
+            <animate attributeName="stroke-dashoffset" values="16;0" dur="0.9s" repeatCount="indefinite" />
+          </line>
+
+          {/* Moving Blue Glow Dot gliding cleanly into the gate */}
+          <motion.circle
+            r="4.2"
+            fill="#1A63EB"
+            stroke="#FFFFFF"
+            strokeWidth="1.5"
+            initial={{ cx: activeGateCoord.walkFrom[0], cy: activeGateCoord.walkFrom[1], opacity: 0 }}
+            animate={{
+              cx: [activeGateCoord.walkFrom[0], activeGateCoord.x],
+              cy: [activeGateCoord.walkFrom[1], activeGateCoord.y],
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration: 1.4,
+              times: [0, 0.15, 0.85, 1],
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </g>
+
+        {/* 3 Clickable Gate Pins Directly on the Overview Map */}
+        {BUILDING_B_GATE_LIST.map((gate) => {
+          const pt = gateCoords[gate.id];
+          const isActive = selectedGate === gate.id;
+          const isRec = recommendedGate === gate.id;
+          return (
+            <g
+              key={`overview-gate-${gate.id}`}
+              onClick={() => onSelectGate(gate.id)}
+              className="cursor-pointer"
+            >
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r={isActive ? 7.5 : 5.5}
+                fill={isActive ? '#1A63EB' : isRec ? '#10B981' : '#FFFFFF'}
+                stroke={isActive ? '#FFFFFF' : '#334155'}
+                strokeWidth="2"
+              />
+              <rect
+                x={pt.x - 21}
+                y={pt.y + (gate.id === 'gate3_north_east' ? -24 : 11)}
+                width="42"
+                height="15"
+                rx="7.5"
+                fill={isActive ? '#1A63EB' : '#FFFFFF'}
+                stroke={isActive ? '#1D4ED8' : '#CBD5E1'}
+                strokeWidth="1.2"
+              />
+              <text
+                x={pt.x}
+                y={pt.y + (gate.id === 'gate3_north_east' ? -13.5 : 21.5)}
+                fill={isActive ? '#FFFFFF' : '#1E293B'}
+                fontSize="8.2"
+                fontWeight="800"
+                textAnchor="middle"
+              >
+                {pt.label}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+/**
+ * Step 2 Animation: Seamless monolithic stick-figure climbing 3D-shaded stairs.
  */
 function ClimbingStairsAnimation({ targetFloor }: { targetFloor: number }) {
   const cycle = 2.8;
@@ -45,7 +268,7 @@ function ClimbingStairsAnimation({ targetFloor }: { targetFloor: number }) {
   ];
 
   return (
-    <div className="relative w-full h-48 rounded-[24px] overflow-hidden bg-gradient-to-b from-[#F0F7FF] via-[#E8F2FF] to-[#DCEBFF] border border-blue-200/70 shadow-inner flex items-center justify-center">
+    <div className="relative w-full flex-1 min-h-[240px] sm:flex-none sm:h-48 rounded-[24px] overflow-hidden bg-gradient-to-b from-[#F0F7FF] via-[#E8F2FF] to-[#DCEBFF] border border-blue-200/70 shadow-inner flex items-center justify-center p-2">
       {/* Soft Apple-style ambient radial light */}
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
@@ -142,23 +365,24 @@ function ClimbingStairsAnimation({ targetFloor }: { targetFloor: number }) {
           />
         ))}
 
-        {/* Destination Beacon Pin on Top Landing */}
-        <motion.g
-          transform="translate(242, 46)"
-          animate={{ y: [0, -3.5, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-        >
+        {/* Destination Beacon Pin on Top Landing (outer static translate, inner bounce) */}
+        <g transform="translate(242, 46)">
           <ellipse cx="0" cy="6" rx="7" ry="2.2" fill="#1E3A8A" opacity="0.22" />
-          <path
-            d="M 0,4 C -6,-3 -9,-8 -9,-12 C -9,-17 -5,-21 0,-21 C 5,-21 9,-17 9,-12 C 9,-8 6,-3 0,4 Z"
-            fill="#EF4444"
-            stroke="#FFFFFF"
-            strokeWidth="1.8"
-          />
-          <circle cx="0" cy="-12" r="3" fill="#FFFFFF" />
-        </motion.g>
+          <motion.g
+            animate={{ y: [0, -3.5, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <path
+              d="M 0,4 C -6,-3 -9,-8 -9,-12 C -9,-17 -5,-21 0,-21 C 5,-21 9,-17 9,-12 C 9,-8 6,-3 0,4 Z"
+              fill="#EF4444"
+              stroke="#FFFFFF"
+              strokeWidth="1.8"
+            />
+            <circle cx="0" cy="-12" r="3" fill="#FFFFFF" />
+          </motion.g>
+        </g>
 
-        {/* Stylized Modern Student Character Climbing Smoothly (Joint-Pivoted!) */}
+        {/* Seamless Monolithic Stick-Figure Climber (Apple Pictogram style, locked joints) */}
         <motion.g
           animate={{
             x: [56, 78, 102, 124, 148, 170, 198, 214],
@@ -172,101 +396,116 @@ function ClimbingStairsAnimation({ targetFloor }: { targetFloor: number }) {
             ease: 'easeInOut',
           }}
         >
-          {/* Contact shadow beneath shoes */}
-          <ellipse cx="0" cy="1" rx="11" ry="2.5" fill="#0F172A" opacity="0.2" />
+          {/* Contact shadow beneath feet */}
+          <ellipse cx="1" cy="1" rx="10" ry="2.4" fill="#0F172A" opacity="0.22" />
 
-          {/* Back Leg (pivots cleanly from hip at 0, -20) */}
-          <motion.g
-            style={{ originX: '0px', originY: '-20px' }}
-            animate={{ rotate: [26, -28, 26, -28, 26] }}
-            transition={{ duration: cycle, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <rect x="-3.5" y="-20" width="7" height="17" rx="3.5" fill="#1E293B" />
-            {/* White sneaker */}
-            <rect x="-3.5" y="-5" width="11" height="5" rx="2.5" fill="#FFFFFF" stroke="#334155" strokeWidth="1" />
-          </motion.g>
+          {/* Back Leg — anchored strictly at Hip (0, -21) */}
+          <g transform="translate(0, -21)">
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="30 0 0;-30 0 0;30 0 0;-30 0 0;30 0 0"
+                keyTimes="0;0.25;0.5;0.75;1"
+                calcMode="spline"
+                keySplines="0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1"
+                dur={`${cycle}s`}
+                repeatCount="indefinite"
+              />
+              <path
+                d="M 0 0 L 4 10 L 0 20"
+                fill="none"
+                stroke="#334155"
+                strokeWidth="5.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </g>
+          </g>
 
-          {/* Back Arm (pivots cleanly from shoulder at 2, -37) */}
-          <motion.g
-            style={{ originX: '2px', originY: '-37px' }}
-            animate={{ rotate: [-28, 30, -28, 30, -28] }}
-            transition={{ duration: cycle, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <rect x="-1" y="-37" width="6" height="15" rx="3" fill="#60A5FA" />
-            <circle cx="2" cy="-21.5" r="2.8" fill="#FDBA74" />
-          </motion.g>
+          {/* Back Arm — anchored strictly at Shoulder (3, -38) */}
+          <g transform="translate(3, -38)">
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="-32 0 0;30 0 0;-32 0 0;30 0 0;-32 0 0"
+                keyTimes="0;0.25;0.5;0.75;1"
+                calcMode="spline"
+                keySplines="0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1"
+                dur={`${cycle}s`}
+                repeatCount="indefinite"
+              />
+              <path
+                d="M 0 0 L 3 9 L 9 14"
+                fill="none"
+                stroke="#334155"
+                strokeWidth="4.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </g>
+          </g>
 
-          {/* White Student Backpack */}
-          <rect
-            x="-13.5"
-            y="-40"
-            width="10"
-            height="17"
-            rx="4.5"
-            fill="#FFFFFF"
-            stroke="#94A3B8"
-            strokeWidth="1.2"
-            transform="rotate(8 -8 -31)"
-          />
-          <rect
-            x="-12"
-            y="-35"
-            width="6"
-            height="4"
-            rx="1.5"
-            fill="#DBEAFE"
-            transform="rotate(8 -8 -31)"
-          />
-
-          {/* Front Leg (pivots cleanly from hip at 1, -20) */}
-          <motion.g
-            style={{ originX: '1px', originY: '-20px' }}
-            animate={{ rotate: [-30, 28, -30, 28, -30] }}
-            transition={{ duration: cycle, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <rect x="-2.5" y="-20" width="7.2" height="17" rx="3.6" fill="#0F172A" />
-            {/* White sneaker */}
-            <rect x="-2.5" y="-5" width="11.5" height="5" rx="2.5" fill="#FFFFFF" stroke="#1E293B" strokeWidth="1" />
-          </motion.g>
-
-          {/* Stylish Rounded Torso / UTH Blue Hoodie */}
-          <rect
-            x="-6.5"
-            y="-42"
-            width="15"
-            height="24"
-            rx="7"
-            fill="url(#hoodieGrad)"
-            transform="rotate(10 1 -30)"
+          {/* Unified Seamless Torso connecting Hip (0, -21) to Shoulder (3, -38) */}
+          <path
+            d="M 0 -21 L 3 -38"
+            fill="none"
+            stroke="#0F172A"
+            strokeWidth="7.4"
+            strokeLinecap="round"
           />
 
-          {/* Front Arm (pivots cleanly from shoulder at 2, -37) */}
-          <motion.g
-            style={{ originX: '2px', originY: '-37px' }}
-            animate={{ rotate: [32, -26, 32, -26, 32] }}
-            transition={{ duration: cycle, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <rect x="-1" y="-37" width="6.2" height="15" rx="3.1" fill="#3B82F6" />
-            <circle cx="2.1" cy="-21.5" r="2.9" fill="#FDBA74" />
-          </motion.g>
+          {/* Front Leg — anchored strictly at Hip (0, -21) */}
+          <g transform="translate(0, -21)">
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="-32 0 0;28 0 0;-32 0 0;28 0 0;-32 0 0"
+                keyTimes="0;0.25;0.5;0.75;1"
+                calcMode="spline"
+                keySplines="0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1"
+                dur={`${cycle}s`}
+                repeatCount="indefinite"
+              />
+              <path
+                d="M 0 0 L 5 10 L 1 20"
+                fill="none"
+                stroke="#0F172A"
+                strokeWidth="5.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </g>
+          </g>
 
-          {/* Head + Hair (subtle friendly head bob) */}
-          <motion.g
-            animate={{ y: [0, -1.5, 0, -1.5, 0] }}
-            transition={{ duration: cycle, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            {/* Neck */}
-            <rect x="1.5" y="-46" width="4" height="5" rx="2" fill="#FDBA74" />
-            {/* Face */}
-            <circle cx="4.5" cy="-52" r="7.5" fill="#FDBA74" />
-            {/* Stylish dark hair cap */}
-            <path
-              d="M -3 -53 C -3 -59.5, 4 -61.5, 10.5 -58 C 12 -57, 12.5 -55, 11.5 -53.5 C 8.5 -55.5, 2.5 -55, -1 -51 Z"
-              fill="#1E293B"
-            />
-            {/* Friendly eye dot */}
-            <circle cx="8.2" cy="-51.5" r="1.1" fill="#0F172A" />
-          </motion.g>
+          {/* Front Arm — anchored strictly at Shoulder (3, -38) */}
+          <g transform="translate(3, -38)">
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="32 0 0;-30 0 0;32 0 0;-30 0 0;32 0 0"
+                keyTimes="0;0.25;0.5;0.75;1"
+                calcMode="spline"
+                keySplines="0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1;0.45 0 0.55 1"
+                dur={`${cycle}s`}
+                repeatCount="indefinite"
+              />
+              <path
+                d="M 0 0 L 3 9 L 9 14"
+                fill="none"
+                stroke="#0F172A"
+                strokeWidth="4.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </g>
+          </g>
+
+          {/* Clean Solid Head aligned above Shoulder */}
+          <circle cx="5.2" cy="-49.5" r="6.2" fill="#0F172A" />
         </motion.g>
       </svg>
     </div>
@@ -294,11 +533,13 @@ export function FloorClimbTransitionModal({
   }, [roomBInfo]);
 
   const [selectedGate, setSelectedGate] = useState<BuildingBGateId>(recommendedGateId);
+  const [wizardStep, setWizardStep] = useState<'select_gate' | 'climb_floor'>('select_gate');
 
-  // Sync default gate whenever modal opens for a new room
+  // Always start at Step 1 (Overview map + Gate picker) whenever modal opens
   useEffect(() => {
     if (isOpen) {
       setSelectedGate(recommendedGateId);
+      setWizardStep('select_gate');
     }
   }, [isOpen, recommendedGateId]);
 
@@ -306,6 +547,7 @@ export function FloorClimbTransitionModal({
   const isDifferentWing = Boolean(
     roomBInfo && selectedGateInfo.primaryPart !== roomBInfo.part
   );
+  const targetPart: BuildingPart = roomBInfo?.part ?? 'part1';
 
   return (
     <AnimatePresence>
@@ -316,162 +558,206 @@ export function FloorClimbTransitionModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.26, ease: IOS_EASE }}
-          className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-md flex items-end sm:items-center justify-center p-2.5 sm:p-4"
+          className="fixed inset-0 z-50 bg-white sm:bg-slate-900/50 sm:backdrop-blur-md flex items-stretch sm:items-center justify-center p-0 sm:p-4"
           onClick={onCancel}
         >
           <motion.div
             key="floor-climb-card"
-            initial={{ y: 56, scale: 0.94, opacity: 0 }}
-            animate={{ y: 0, scale: 1, opacity: 1 }}
-            exit={{ y: 40, scale: 0.95, opacity: 0 }}
-            transition={IOS_SPRING}
+            initial={{ y: '100%', opacity: 0.6 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: '100%', opacity: 0.6 }}
+            transition={{ duration: 0.36, ease: IOS_EASE }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[420px] max-h-[92dvh] overflow-y-auto bg-white/98 backdrop-blur-xl rounded-[30px] p-4 sm:p-5 shadow-[0_24px_60px_rgba(15,23,42,0.28)] border border-white/90 text-center space-y-3.5"
+            className="w-full h-[100dvh] sm:h-auto sm:max-w-[420px] sm:max-h-[92dvh] overflow-y-auto bg-white sm:bg-white/98 sm:backdrop-blur-xl rounded-none sm:rounded-[30px] px-5 pt-6 pb-8 sm:p-5 sm:shadow-[0_24px_60px_rgba(15,23,42,0.28)] sm:border sm:border-white/90 text-center flex flex-col"
           >
-            {/* iOS Top Handle Pill */}
-            <div className="w-10 h-1 rounded-full bg-slate-200 mx-auto -mt-0.5 sm:hidden" />
-
-            {/* Live Climbing Stairs Animation (Upper Floors) or Clean Entry Header (Ground Floor) */}
-            {isUpperFloor ? (
-              <ClimbingStairsAnimation targetFloor={targetFloor} />
-            ) : (
-              <div className="w-14 h-14 mx-auto rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#1A63EB] shadow-xs">
-                <DoorOpen className="w-7 h-7" strokeWidth={1.5} />
+            {/* Step Indicator Dots (only shown when upper floor requires 2 steps) */}
+            {isUpperFloor && (
+              <div className="flex items-center justify-center gap-1.5 mb-4 sm:mb-3 shrink-0">
+                <span
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    wizardStep === 'select_gate' ? 'w-6 bg-[#1A63EB]' : 'w-2 bg-blue-200'
+                  }`}
+                />
+                <span
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    wizardStep === 'climb_floor' ? 'w-6 bg-[#1A63EB]' : 'w-2 bg-slate-200'
+                  }`}
+                />
               </div>
             )}
 
-            {/* Room & Wing Header */}
-            <div className="space-y-1">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-[11px] font-extrabold uppercase tracking-wide border border-blue-100">
-                {targetRoom.buildingName ?? 'Tòa Nhà B'} • Phòng {targetRoom.code}
-                {roomBInfo ? ` • ${roomBInfo.partLabel}` : ''}
-              </span>
-              <h2 className="text-[19px] sm:text-[21px] font-extrabold text-slate-900 tracking-tight leading-snug">
-                {isUpperFloor
-                  ? `Chọn cổng vào & lên Tầng ${targetFloor}`
-                  : 'Bạn vừa vào Tòa B từ cổng nào?'}
-              </h2>
-            </div>
+            {/* Smooth iOS Horizontal Step Transition */}
+            <AnimatePresence mode="wait" initial={false}>
+              {wizardStep === 'select_gate' ? (
+                <motion.div
+                  key="step-select-gate"
+                  initial={{ x: -28, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -28, opacity: 0 }}
+                  transition={{ duration: 0.24, ease: IOS_EASE }}
+                  className="flex-1 flex flex-col justify-between gap-4 sm:gap-3.5"
+                >
+                  {/* Full L-Shape Building B Overview Map with Animated Gate Entry */}
+                  <BuildingBOverviewGateStage
+                    selectedGate={selectedGate}
+                    recommendedGate={recommendedGateId}
+                    targetPart={targetPart}
+                    targetRoomCode={targetRoom.code}
+                    onSelectGate={setSelectedGate}
+                  />
 
-            {/* 3-Gate Selector matching Building B real entrances */}
-            <div className="text-left space-y-1.5">
-              <div className="flex items-center justify-between px-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                  Vị trí cổng bạn đang đứng
-                </span>
-                <span className="text-[10px] font-semibold text-blue-600">
-                  1 chạm để chọn đúng vị trí
-                </span>
-              </div>
+                  {/* Concise Title */}
+                  <div className="space-y-1">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[11px] font-extrabold tracking-wide border border-blue-100">
+                      {targetRoom.code}
+                      {roomBInfo
+                        ? ` • ${roomBInfo.partLabel.replace(/^Phần \d+\s*\((.+)\)$/, '$1')}`
+                        : ''}
+                    </span>
+                    <h2 className="text-[20px] font-extrabold text-slate-900 tracking-tight leading-snug">
+                      Chọn cổng bạn vào
+                    </h2>
+                  </div>
 
-              <div className="grid grid-cols-1 gap-1.5">
-                {BUILDING_B_GATE_LIST.map((gate) => {
-                  const isActive = selectedGate === gate.id;
-                  const isRecommended = recommendedGateId === gate.id;
-                  return (
-                    <button
-                      key={gate.id}
-                      type="button"
-                      onClick={() => setSelectedGate(gate.id)}
-                      className={`w-full text-left px-3 py-2.5 rounded-2xl border transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                        isActive
-                          ? 'bg-blue-50/95 border-[#1A63EB] shadow-xs ring-2 ring-blue-500/15'
-                          : 'bg-slate-50/80 border-slate-200/80 hover:bg-slate-100/80'
-                      }`}
-                    >
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <span
+                  {/* Compact 3-Column Gate Picker */}
+                  <div className="grid grid-cols-3 gap-1.5 pt-1">
+                    {BUILDING_B_GATE_LIST.map((gate) => {
+                      const isActive = selectedGate === gate.id;
+                      const isRecommended = recommendedGateId === gate.id;
+                      const shortDesc =
+                        gate.id === 'gate1_parking'
+                          ? 'Gần nhà xe'
+                          : gate.id === 'gate2_north_south'
+                          ? 'Bắc – Nam'
+                          : 'Bắc – Đông';
+                      return (
+                        <button
+                          key={gate.id}
+                          type="button"
+                          onClick={() => setSelectedGate(gate.id)}
+                          className={`relative px-2 py-2.5 rounded-2xl border text-center transition-all cursor-pointer ${
+                            isActive
+                              ? 'bg-blue-50 border-[#1A63EB] ring-2 ring-blue-500/15'
+                              : 'bg-slate-50 border-slate-200/80 hover:bg-slate-100'
+                          }`}
+                        >
+                          {isRecommended && (
+                            <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-1.5 py-0.2 rounded-full bg-emerald-500 text-white text-[9px] font-bold whitespace-nowrap shadow-xs">
+                              Gần nhất
+                            </span>
+                          )}
+                          <div
                             className={`text-xs font-extrabold ${
                               isActive ? 'text-[#1A63EB]' : 'text-slate-900'
                             }`}
                           >
-                            {gate.name}
-                          </span>
-                          {isRecommended && (
-                            <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[9px] font-bold">
-                              <Sparkles className="w-2.5 h-2.5" strokeWidth={1.5} />
-                              Gần phòng nhất
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-[11px] text-slate-500 truncate mt-0.5">
-                          {gate.landmark}
-                        </div>
-                      </div>
-                      <div
-                        className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-                          isActive
-                            ? 'border-[#1A63EB] bg-[#1A63EB]'
-                            : 'border-slate-300 bg-white'
-                        }`}
-                      >
-                        {isActive && <span className="w-2 h-2 rounded-full bg-white" />}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+                            {gate.shortLabel}
+                          </div>
+                          <div className="text-[10.5px] text-slate-500 mt-0.5 truncate">
+                            {shortDesc}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
 
-            {/* Smart Cross-Wing Warning when user enters from a different wing than target room */}
-            {isDifferentWing && roomBInfo ? (
-              <div className="text-left rounded-2xl bg-amber-50 border border-amber-200/90 px-3 py-2.5 flex items-start gap-2.5">
-                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" strokeWidth={1.5} />
-                <p className="text-[11.5px] text-amber-900 leading-relaxed">
-                  Bạn đang ở <strong>{selectedGateInfo.shortLabel}</strong>, còn phòng{' '}
-                  <strong>{roomBInfo.code}</strong> nằm ở <strong>{roomBInfo.partLabel}</strong>.{' '}
-                  {isUpperFloor
-                    ? `Hãy leo cầu thang ${selectedGateInfo.stairsCode} lên Tầng ${targetFloor} — `
-                    : ''}
-                  Bản đồ 2D sẽ mở <strong>sơ đồ tổng thể chữ L</strong> làm nổi bật vị trí phòng và cổng bạn đang đứng!
-                </p>
-              </div>
-            ) : (
-              <p className="text-[12px] text-slate-600 leading-relaxed px-1">
-                {isUpperFloor ? (
-                  <>
-                    Đi cầu thang <strong>{selectedGateInfo.stairsCode}</strong> ngay tại{' '}
-                    <strong>{selectedGateInfo.shortLabel}</strong> lên{' '}
-                    <strong>Tầng {targetFloor}</strong>, sau đó bấm xác nhận để xem vị trí phòng nổi bật trên bản đồ 2D.
-                  </>
-                ) : (
-                  <>
-                    Bản đồ 2D sẽ làm nổi bật vị trí phòng{' '}
-                    <strong className="text-blue-600">{targetRoom.code}</strong> ngay trên sơ đồ Tầng Trệt.
-                  </>
-                )}
-              </p>
-            )}
+                  {/* Step 1 Primary CTA */}
+                  <div className="space-y-1.5 pt-0.5">
+                    <motion.button
+                      type="button"
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ duration: 0.12 }}
+                      onClick={() => {
+                        if (isUpperFloor) {
+                          setWizardStep('climb_floor');
+                        } else {
+                          onConfirmArrivedFloor(selectedGate);
+                        }
+                      }}
+                      className="w-full py-3.5 px-4 rounded-full bg-[#1A63EB] hover:bg-[#1554CC] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_8px_22px_rgba(26,99,235,0.35)] transition-colors cursor-pointer"
+                    >
+                      {isUpperFloor ? (
+                        <>
+                          <span>Tiếp tục • Lên Tầng {targetFloor}</span>
+                          <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                        </>
+                      ) : (
+                        <>
+                          <CheckCircle2 className="w-4 h-4" strokeWidth={2} />
+                          <span>Mở bản đồ 2D</span>
+                        </>
+                      )}
+                    </motion.button>
 
-            {/* Tactile iOS Action Buttons */}
-            <div className="space-y-2 pt-0.5">
-              <motion.button
-                type="button"
-                whileTap={{ scale: 0.96 }}
-                transition={{ duration: 0.12 }}
-                onClick={() => onConfirmArrivedFloor(selectedGate)}
-                className="w-full py-3.5 px-4 rounded-full bg-[#1A63EB] hover:bg-[#1554CC] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_8px_22px_rgba(26,99,235,0.35)] transition-colors cursor-pointer"
-              >
-                <CheckCircle2 className="w-4 h-4" strokeWidth={2} />
-                <span>
-                  {isUpperFloor
-                    ? `Đã lên Tầng ${targetFloor} (${selectedGateInfo.shortLabel}) — Mở 2D`
-                    : `Mở bản đồ 2D từ ${selectedGateInfo.shortLabel}`}
-                </span>
-              </motion.button>
+                    <motion.button
+                      type="button"
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.12 }}
+                      onClick={onCancel}
+                      className="w-full py-2 rounded-full text-slate-500 hover:text-slate-700 font-semibold text-xs flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
+                      <span>Quay lại</span>
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="step-climb-floor"
+                  initial={{ x: 28, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: 28, opacity: 0 }}
+                  transition={{ duration: 0.24, ease: IOS_EASE }}
+                  className="flex-1 flex flex-col justify-between gap-4 sm:gap-3.5"
+                >
+                  {/* Live Seamless Stick-Figure Climbing Stairs Animation */}
+                  <ClimbingStairsAnimation targetFloor={targetFloor} />
 
-              <motion.button
-                type="button"
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.12 }}
-                onClick={onCancel}
-                className="w-full py-2.5 rounded-full bg-slate-100 hover:bg-slate-200/80 text-slate-600 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
-                <span>Quay lại bản đồ 3D</span>
-              </motion.button>
-            </div>
+                  {/* Minimal Floor Climb Header */}
+                  <div className="space-y-1">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[11px] font-extrabold tracking-wide border border-blue-100">
+                      {selectedGateInfo.shortLabel} • Cầu thang {selectedGateInfo.stairsCode}
+                    </span>
+                    <h2 className="text-[20px] font-extrabold text-slate-900 tracking-tight leading-snug">
+                      Lên Tầng {targetFloor}
+                    </h2>
+                  </div>
+
+                  {/* Single-line cross-wing hint only when entering a different wing */}
+                  {isDifferentWing && roomBInfo && (
+                    <div className="rounded-xl bg-amber-50 border border-amber-200/80 px-3 py-2 flex items-center justify-center gap-1.5 text-[11.5px] font-semibold text-amber-800">
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" strokeWidth={1.8} />
+                      <span>Khác cánh • Sẽ mở sơ đồ tổng thể 3 khối</span>
+                    </div>
+                  )}
+
+                  {/* Step 2 Action Buttons */}
+                  <div className="space-y-1.5 pt-0.5">
+                    <motion.button
+                      type="button"
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ duration: 0.12 }}
+                      onClick={() => onConfirmArrivedFloor(selectedGate)}
+                      className="w-full py-3.5 px-4 rounded-full bg-[#1A63EB] hover:bg-[#1554CC] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_8px_22px_rgba(26,99,235,0.35)] transition-colors cursor-pointer"
+                    >
+                      <CheckCircle2 className="w-4 h-4" strokeWidth={2} />
+                      <span>Đã lên Tầng {targetFloor} • Mở 2D</span>
+                    </motion.button>
+
+                    <motion.button
+                      type="button"
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.12 }}
+                      onClick={() => setWizardStep('select_gate')}
+                      className="w-full py-2 rounded-full text-slate-500 hover:text-slate-700 font-semibold text-xs flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
+                      <span>Đổi cổng</span>
+                    </motion.button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </motion.div>
       )}

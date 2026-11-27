@@ -1,0 +1,25 @@
+name: Repo Visualizer
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  visualize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate Repo Visualizer SVG
+        uses: githubocto/repo-visualizer@0.6.1
+        with:
+          output_file: diagram.svg
+          excluded_paths: "node_modules,.next,.git,.archify,.agents,.agent,public/models,public/toab,VietBaoCaoHangTuan,cad_models,dist,build"
+          max_depth: 5
+          commit_message: "docs(viz): update repo-visualizer diagram.svg"

@@ -9,6 +9,18 @@ Hệ thống bản đồ số 3D Isometric và dẫn đường tương tác ph�
 [![Prisma](https://img.shields.io/badge/Prisma-6.19-2d3748?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16+-336791?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06b6d4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![GitDiagram](https://img.shields.io/badge/GitDiagram-Interactive_Architecture-7c3aed?style=flat-square&logo=github&logoColor=white)](https://gitdiagram.com/ptdat30/3DMapUTH)
+
+---
+
+## Codebase Visualizations
+
+- **Interactive Architecture (GitDiagram):** [Open 3DMapUTH on GitDiagram](https://gitdiagram.com/ptdat30/3DMapUTH)
+- **3D Code City (CodeCharta):** Open `visualizations/3dmaputh-codecity.cc.json` in [CodeCharta Web Studio](https://maibornwolff.github.io/codecharta/visualization/app/index.html)
+- **Interactive Architecture & Diagnosis (Archify):** `.archify/architecture-3dmaputh-20261127-033500/3dmaputh-architecture.html`
+- **Repository Structure (GitHub Octo Repo Visualizer):** Automatically updated on every push to `main` via `.github/workflows/repo-visualizer.yml`
+
+![Visualization of the 3DMapUTH codebase](./diagram.svg)
 
 ---
 

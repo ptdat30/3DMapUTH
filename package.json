@@ -11,7 +11,9 @@
     "cad:status": "cadgen +0.8.4 status",
     "cad:export": "cadgen +0.8.4 run cad_models/exports.py",
     "cad:build:h": "cadgen +0.8.4 run cad_models/building_h.py",
-    "models:optimize": "node scripts/optimize-models.mjs"
+    "models:optimize": "node scripts/optimize-models.mjs",
+    "viz:codecharta": "node scripts/generate-codecharta.mjs",
+    "viz:gource": "powershell -ExecutionPolicy Bypass -File scripts/render-gource.ps1"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

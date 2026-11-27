@@ -79,3 +79,5 @@ public/models/cs1/T*.glb
 public/models/cs1/*.zip
 *.skp
 tools/analyze_*.js
+tools/gource/
+visualizations/*.mp4

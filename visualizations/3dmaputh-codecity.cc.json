@@ -1,0 +1,1083 @@
+{
+  "projectName": "3DMapUTH",
+  "apiVersion": "1.3",
+  "nodes": [
+    {
+      "name": "root",
+      "type": "Folder",
+      "attributes": {},
+      "children": [
+        {
+          "name": "src",
+          "type": "Folder",
+          "attributes": {},
+          "children": [
+            {
+              "name": "app",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "api",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "init-qr",
+                      "type": "Folder",
+                      "attributes": {},
+                      "children": [
+                        {
+                          "name": "route.ts",
+                          "type": "File",
+                          "attributes": {
+                            "loc": 79,
+                            "rloc": 69,
+                            "functions": 1,
+                            "mcc": 5,
+                            "number_of_commits": 1,
+                            "number_of_authors": 1,
+                            "code_churn": 78
+                          },
+                          "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/app/api/init-qr/route.ts"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "route-path",
+                      "type": "Folder",
+                      "attributes": {},
+                      "children": [
+                        {
+                          "name": "route.ts",
+                          "type": "File",
+                          "attributes": {
+                            "loc": 288,
+                            "rloc": 255,
+                            "functions": 1,
+                            "mcc": 20,
+                            "number_of_commits": 2,
+                            "number_of_authors": 1,
+                            "code_churn": 325
+                          },
+                          "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/app/api/route-path/route.ts"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "globals.css",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 77,
+                    "rloc": 61,
+                    "functions": 0,
+                    "mcc": 2,
+                    "number_of_commits": 2,
+                    "number_of_authors": 1,
+                    "code_churn": 100
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/app/globals.css"
+                },
+                {
+                  "name": "layout.tsx",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 39,
+                    "rloc": 34,
+                    "functions": 1,
+                    "mcc": 1,
+                    "number_of_commits": 3,
+                    "number_of_authors": 1,
+                    "code_churn": 76
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/app/layout.tsx"
+                },
+                {
+                  "name": "navigation-2d",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "page.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 50,
+                        "rloc": 45,
+                        "functions": 1,
+                        "mcc": 1,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 49
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/app/navigation-2d/page.tsx"
+                    }
+                  ]
+                },
+                {
+                  "name": "page.tsx",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 327,
+                    "rloc": 284,
+                    "functions": 4,
+                    "mcc": 12,
+                    "number_of_commits": 8,
+                    "number_of_authors": 1,
+                    "code_churn": 708
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/app/page.tsx"
+                },
+                {
+                  "name": "qr-admin",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "page.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 150,
+                        "rloc": 134,
+                        "functions": 2,
+                        "mcc": 2,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 149
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/app/qr-admin/page.tsx"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "components",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "canvas",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "BuildingH.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 708,
+                        "rloc": 647,
+                        "functions": 1,
+                        "mcc": 1,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 709
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/BuildingH.tsx"
+                    },
+                    {
+                      "name": "BuildingModel.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 131,
+                        "rloc": 114,
+                        "functions": 2,
+                        "mcc": 2,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 136
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/BuildingModel.tsx"
+                    },
+                    {
+                      "name": "BuildingTooltip.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 117,
+                        "rloc": 101,
+                        "functions": 4,
+                        "mcc": 2,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 116
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/BuildingTooltip.tsx"
+                    },
+                    {
+                      "name": "CADBuildingModel.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 236,
+                        "rloc": 191,
+                        "functions": 5,
+                        "mcc": 17,
+                        "number_of_commits": 3,
+                        "number_of_authors": 1,
+                        "code_churn": 255
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/CADBuildingModel.tsx"
+                    },
+                    {
+                      "name": "CameraRig.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 72,
+                        "rloc": 57,
+                        "functions": 1,
+                        "mcc": 3,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 73
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/CameraRig.tsx"
+                    },
+                    {
+                      "name": "CampusCS3Scene.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 550,
+                        "rloc": 474,
+                        "functions": 5,
+                        "mcc": 5,
+                        "number_of_commits": 3,
+                        "number_of_authors": 1,
+                        "code_churn": 1743
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/CampusCS3Scene.tsx"
+                    },
+                    {
+                      "name": "CampusMaquetteScene.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 698,
+                        "rloc": 613,
+                        "functions": 12,
+                        "mcc": 3,
+                        "number_of_commits": 10,
+                        "number_of_authors": 2,
+                        "code_churn": 1717
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/CampusMaquetteScene.tsx"
+                    },
+                    {
+                      "name": "CampusScene.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 170,
+                        "rloc": 152,
+                        "functions": 1,
+                        "mcc": 1,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 171
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/CampusScene.tsx"
+                    },
+                    {
+                      "name": "CinematicTourManager.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 147,
+                        "rloc": 118,
+                        "functions": 1,
+                        "mcc": 3,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 146
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/CinematicTourManager.tsx"
+                    },
+                    {
+                      "name": "GlowingArrowPath.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 145,
+                        "rloc": 123,
+                        "functions": 2,
+                        "mcc": 3,
+                        "number_of_commits": 3,
+                        "number_of_authors": 1,
+                        "code_churn": 152
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/GlowingArrowPath.tsx"
+                    },
+                    {
+                      "name": "LandmarkPin.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 111,
+                        "rloc": 102,
+                        "functions": 1,
+                        "mcc": 1,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 114
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/LandmarkPin.tsx"
+                    },
+                    {
+                      "name": "NavigationPath3D.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 112,
+                        "rloc": 92,
+                        "functions": 1,
+                        "mcc": 4,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 111
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/NavigationPath3D.tsx"
+                    },
+                    {
+                      "name": "PathTube.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 111,
+                        "rloc": 93,
+                        "functions": 1,
+                        "mcc": 5,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 110
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/canvas/PathTube.tsx"
+                    }
+                  ]
+                },
+                {
+                  "name": "charts",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "AlertActionTable.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 131,
+                        "rloc": 118,
+                        "functions": 2,
+                        "mcc": 4,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 134
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/AlertActionTable.tsx"
+                    },
+                    {
+                      "name": "BuildingRankChart.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 101,
+                        "rloc": 91,
+                        "functions": 1,
+                        "mcc": 1,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 100
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/BuildingRankChart.tsx"
+                    },
+                    {
+                      "name": "ClientScatterChart.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 270,
+                        "rloc": 237,
+                        "functions": 2,
+                        "mcc": 4,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 269
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/ClientScatterChart.tsx"
+                    },
+                    {
+                      "name": "IssueTreemapChart.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 120,
+                        "rloc": 108,
+                        "functions": 1,
+                        "mcc": 7,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 119
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/IssueTreemapChart.tsx"
+                    },
+                    {
+                      "name": "QualityRadarChart.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 244,
+                        "rloc": 213,
+                        "functions": 4,
+                        "mcc": 2,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 243
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/QualityRadarChart.tsx"
+                    },
+                    {
+                      "name": "RfSpectrumChart.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 241,
+                        "rloc": 206,
+                        "functions": 3,
+                        "mcc": 6,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 240
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/RfSpectrumChart.tsx"
+                    },
+                    {
+                      "name": "SlaScoreRing.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 212,
+                        "rloc": 189,
+                        "functions": 2,
+                        "mcc": 3,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 211
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/SlaScoreRing.tsx"
+                    },
+                    {
+                      "name": "TelemetryLineChart.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 165,
+                        "rloc": 139,
+                        "functions": 2,
+                        "mcc": 4,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 186
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/charts/TelemetryLineChart.tsx"
+                    }
+                  ]
+                },
+                {
+                  "name": "common",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "ClientPatch.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 29,
+                        "rloc": 20,
+                        "functions": 1,
+                        "mcc": 3,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 28
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/common/ClientPatch.tsx"
+                    }
+                  ]
+                },
+                {
+                  "name": "hud",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "BottomTimelineBar.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 87,
+                        "rloc": 76,
+                        "functions": 2,
+                        "mcc": 2,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 150
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/hud/BottomTimelineBar.tsx"
+                    },
+                    {
+                      "name": "CompareModalDrawer.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 153,
+                        "rloc": 139,
+                        "functions": 2,
+                        "mcc": 4,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 152
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/hud/CompareModalDrawer.tsx"
+                    },
+                    {
+                      "name": "LayerFloatingPills.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 64,
+                        "rloc": 56,
+                        "functions": 1,
+                        "mcc": 1,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 65
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/hud/LayerFloatingPills.tsx"
+                    },
+                    {
+                      "name": "LeftAnalyticsDock.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 127,
+                        "rloc": 113,
+                        "functions": 1,
+                        "mcc": 2,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 230
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/hud/LeftAnalyticsDock.tsx"
+                    },
+                    {
+                      "name": "NocToggleBadge.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 67,
+                        "rloc": 59,
+                        "functions": 2,
+                        "mcc": 2,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 100
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/hud/NocToggleBadge.tsx"
+                    },
+                    {
+                      "name": "RightInspectorDock.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 253,
+                        "rloc": 234,
+                        "functions": 1,
+                        "mcc": 4,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 542
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/hud/RightInspectorDock.tsx"
+                    },
+                    {
+                      "name": "TopCommandBar.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 233,
+                        "rloc": 213,
+                        "functions": 1,
+                        "mcc": 1,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 276
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/hud/TopCommandBar.tsx"
+                    }
+                  ]
+                },
+                {
+                  "name": "navigation2d",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "Building2DNavigator.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 1052,
+                        "rloc": 966,
+                        "functions": 11,
+                        "mcc": 21,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 1051
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/navigation2d/Building2DNavigator.tsx"
+                    },
+                    {
+                      "name": "BuildingB2DNavigator.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 1519,
+                        "rloc": 1390,
+                        "functions": 9,
+                        "mcc": 39,
+                        "number_of_commits": 6,
+                        "number_of_authors": 1,
+                        "code_churn": 8232
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/navigation2d/BuildingB2DNavigator.tsx"
+                    },
+                    {
+                      "name": "WarmMinimalist2DNavigator.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 866,
+                        "rloc": 792,
+                        "functions": 2,
+                        "mcc": 13,
+                        "number_of_commits": 2,
+                        "number_of_authors": 1,
+                        "code_churn": 995
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/navigation2d/WarmMinimalist2DNavigator.tsx"
+                    }
+                  ]
+                },
+                {
+                  "name": "scene3d",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "AlertPillars.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 84,
+                        "rloc": 70,
+                        "functions": 1,
+                        "mcc": 7,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 83
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/scene3d/AlertPillars.tsx"
+                    },
+                    {
+                      "name": "ApNodesLayer.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 118,
+                        "rloc": 101,
+                        "functions": 1,
+                        "mcc": 11,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 117
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/scene3d/ApNodesLayer.tsx"
+                    },
+                    {
+                      "name": "BuildingHealthBadges.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 63,
+                        "rloc": 54,
+                        "functions": 1,
+                        "mcc": 2,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 62
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/scene3d/BuildingHealthBadges.tsx"
+                    },
+                    {
+                      "name": "FloorXRaySlice.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 96,
+                        "rloc": 73,
+                        "functions": 1,
+                        "mcc": 5,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 95
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/scene3d/FloorXRaySlice.tsx"
+                    },
+                    {
+                      "name": "TwinCameraRig.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 72,
+                        "rloc": 57,
+                        "functions": 1,
+                        "mcc": 3,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 71
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/scene3d/TwinCameraRig.tsx"
+                    }
+                  ]
+                },
+                {
+                  "name": "ui",
+                  "type": "Folder",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "name": "FloorClimbTransitionModal.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 481,
+                        "rloc": 435,
+                        "functions": 2,
+                        "mcc": 5,
+                        "number_of_commits": 1,
+                        "number_of_authors": 1,
+                        "code_churn": 480
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/ui/FloorClimbTransitionModal.tsx"
+                    },
+                    {
+                      "name": "FloorSelector.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 158,
+                        "rloc": 144,
+                        "functions": 4,
+                        "mcc": 17,
+                        "number_of_commits": 4,
+                        "number_of_authors": 1,
+                        "code_churn": 239
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/ui/FloorSelector.tsx"
+                    },
+                    {
+                      "name": "StepBottomSheet.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 286,
+                        "rloc": 265,
+                        "functions": 3,
+                        "mcc": 6,
+                        "number_of_commits": 4,
+                        "number_of_authors": 1,
+                        "code_churn": 639
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/ui/StepBottomSheet.tsx"
+                    },
+                    {
+                      "name": "TopSearchBar.tsx",
+                      "type": "File",
+                      "attributes": {
+                        "loc": 277,
+                        "rloc": 253,
+                        "functions": 3,
+                        "mcc": 13,
+                        "number_of_commits": 6,
+                        "number_of_authors": 3,
+                        "code_churn": 376
+                      },
+                      "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/components/ui/TopSearchBar.tsx"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "data",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "buildingB2dData.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 2190,
+                    "rloc": 2121,
+                    "functions": 7,
+                    "mcc": 4,
+                    "number_of_commits": 4,
+                    "number_of_authors": 1,
+                    "code_churn": 4443
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/buildingB2dData.ts"
+                },
+                {
+                  "name": "buildingK2dData.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 628,
+                    "rloc": 564,
+                    "functions": 3,
+                    "mcc": 27,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 627
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/buildingK2dData.ts"
+                },
+                {
+                  "name": "cs1Layout.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 265,
+                    "rloc": 213,
+                    "functions": 0,
+                    "mcc": 1,
+                    "number_of_commits": 4,
+                    "number_of_authors": 2,
+                    "code_churn": 302
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/cs1Layout.ts"
+                },
+                {
+                  "name": "cs1OutdoorRouting.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 197,
+                    "rloc": 163,
+                    "functions": 4,
+                    "mcc": 9,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 196
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/cs1OutdoorRouting.ts"
+                },
+                {
+                  "name": "cs1RoomsData.json",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 2435,
+                    "rloc": 2435,
+                    "functions": 0,
+                    "mcc": 1,
+                    "number_of_commits": 2,
+                    "number_of_authors": 1,
+                    "code_churn": 2565
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/cs1RoomsData.json"
+                },
+                {
+                  "name": "cs3Layout.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 260,
+                    "rloc": 182,
+                    "functions": 0,
+                    "mcc": 1,
+                    "number_of_commits": 3,
+                    "number_of_authors": 2,
+                    "code_churn": 277
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/cs3Layout.ts"
+                },
+                {
+                  "name": "mockNavigationData.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 527,
+                    "rloc": 499,
+                    "functions": 0,
+                    "mcc": 1,
+                    "number_of_commits": 6,
+                    "number_of_authors": 2,
+                    "code_churn": 1082
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/mockNavigationData.ts"
+                },
+                {
+                  "name": "realRoomsData.json",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 1734,
+                    "rloc": 1734,
+                    "functions": 0,
+                    "mcc": 1,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 1734
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/data/realRoomsData.json"
+                }
+              ]
+            },
+            {
+              "name": "hooks",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "useCinematicTour.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 331,
+                    "rloc": 226,
+                    "functions": 1,
+                    "mcc": 7,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 330
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/hooks/useCinematicTour.ts"
+                }
+              ]
+            },
+            {
+              "name": "lib",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "prisma.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 16,
+                    "rloc": 12,
+                    "functions": 0,
+                    "mcc": 2,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 15
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/lib/prisma.ts"
+                }
+              ]
+            },
+            {
+              "name": "simulation",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "campusGenerator.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 549,
+                    "rloc": 504,
+                    "functions": 2,
+                    "mcc": 16,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 548
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/simulation/campusGenerator.ts"
+                },
+                {
+                  "name": "healthMath.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 96,
+                    "rloc": 76,
+                    "functions": 6,
+                    "mcc": 21,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 95
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/simulation/healthMath.ts"
+                },
+                {
+                  "name": "prng.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 24,
+                    "rloc": 15,
+                    "functions": 4,
+                    "mcc": 1,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 23
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/simulation/prng.ts"
+                }
+              ]
+            },
+            {
+              "name": "store",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "useNavigationStore.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 270,
+                    "rloc": 228,
+                    "functions": 0,
+                    "mcc": 11,
+                    "number_of_commits": 4,
+                    "number_of_authors": 2,
+                    "code_churn": 305
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/store/useNavigationStore.ts"
+                },
+                {
+                  "name": "useTwinStore.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 223,
+                    "rloc": 181,
+                    "functions": 0,
+                    "mcc": 5,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 222
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/store/useTwinStore.ts"
+                }
+              ]
+            },
+            {
+              "name": "types",
+              "type": "Folder",
+              "attributes": {},
+              "children": [
+                {
+                  "name": "navigation.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 146,
+                    "rloc": 124,
+                    "functions": 0,
+                    "mcc": 1,
+                    "number_of_commits": 3,
+                    "number_of_authors": 2,
+                    "code_churn": 145
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/types/navigation.ts"
+                },
+                {
+                  "name": "wifiTwin.ts",
+                  "type": "File",
+                  "attributes": {
+                    "loc": 131,
+                    "rloc": 114,
+                    "functions": 0,
+                    "mcc": 2,
+                    "number_of_commits": 1,
+                    "number_of_authors": 1,
+                    "code_churn": 130
+                  },
+                  "link": "https://github.com/ptdat30/3DMapUTH/blob/main/src/types/wifiTwin.ts"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "attributeTypes": {
+    "nodes": {
+      "loc": "absolute",
+      "rloc": "absolute",
+      "functions": "absolute",
+      "mcc": "absolute",
+      "number_of_commits": "absolute",
+      "number_of_authors": "absolute",
+      "code_churn": "absolute"
+    }
+  },
+  "edges": [],
+  "blacklist": []
+}
